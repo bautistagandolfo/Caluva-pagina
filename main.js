@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Crear el contenedor SVG en el DOM
                     const svgContainer = document.createElement('div');
                     svgContainer.id = 'zoom-svg-container';
-                    svgContainer.style.position = 'absolute';
+                    svgContainer.style.position = 'fixed';
                     svgContainer.style.top = '0';
                     svgContainer.style.left = '0';
                     svgContainer.style.width = '1px';
