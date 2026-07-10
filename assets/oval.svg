@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 230" fill="none">
+  <!-- Trazado continuo: va por el oval exterior, vuelve por dentro creando efecto doble linea, con cola abajo-izquierda -->
+  <path d="
+    M 52,145
+    C 48,90 155,24 332,18
+    C 509,12 628,54 634,106
+    C 640,158 536,196 350,200
+    C 164,204 46,176 44,126
+    C 42,106 50,88 66,78
+    C 126,46 252,26 375,24
+    C 510,22 600,58 606,104
+  "
+    stroke="#4a2410"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  <!-- Cola inferior izquierda -->
+  <path d="M 46,130 C 38,148 44,162 60,166"
+    stroke="#4a2410"
+    stroke-width="5.5"
+    stroke-linecap="round"
+    fill="none"
+  />
+</svg>

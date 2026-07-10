@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALUVA | Agencia Creativa y Estratégica</title>
+    <meta name="description" content="CALUVA es una agencia creativa y estratégica. Ayudamos a las marcas a crecer a través de creatividad, estrategia y ejecución.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Fullscreen Menu -->
+    <nav class="fullscreen-menu" id="fullscreenMenu">
+        <div class="menu-content">
+            <ul class="menu-links">
+                <li><a href="index.html" class="menu-link">INICIO</a></li>
+                <li><a href="quienes-somos.html" class="menu-link">QUIENES SOMOS</a></li>
+                <li><a href="servicios.html" class="menu-link">SERVICIO</a></li>
+                <li><a href="#contacto" class="menu-link" id="contactoLink">CONTACTO</a></li>
+            </ul>
+        </div>
+        <div class="menu-logo-large-container">
+            <div class="menu-logo-large">MENU</div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="header" id="mainHeader">
+        <div class="logo">
+            <div class="spiral-icon"></div>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+            <div class="hamburger">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
+            <span class="menu-text">MENU</span>
+        </button>
+    </header>
+
+    <main>
+
+        <!-- VISTA 1: HERO -->
+        <section id="inicio">
+            <div class="hero-background">
+                <video autoplay loop muted playsinline>
+                    <source src="assets/IMG_3031.MOV" type="video/quicktime">
+                    <source src="assets/IMG_3031.MOV" type="video/mp4">
+                </video>
+                <div class="overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="sr-only">CALUVA - Agencia Creativa y Estratégica</h1>
+                <p class="hero-text fade-in-up">
+                    CREEMOS QUE LAS MEJORES IDEAS NACEN DE ENTENDER A LAS PERSONAS, OBSERVAR EL MUNDO Y TRANSFORMAR ESA INSPIRACIÓN EN ACCIONES CONCRETAS PARA LAS MARCAS.
+                </p>
+                <div class="hero-logo-large fade-in-up delay-1">CALUVA</div>
+            </div>
+        </section>
+        <!-- VISTA 2: QUIENES SOMOS -->
+        <section id="vista-2" class="reveal-section">
+            <div class="slide-content-v2">
+                <div class="v2-top">
+                    <div class="v2-logo ri"><div class="spiral-icon dark"></div></div>
+                    <div class="v2-text">
+                        <p class="v2-desc ri">CALUVA ES UNA AGENCIA CREATIVA Y ESTRATÉGICA.<br>AYUDAMOS A LAS MARCAS A CRECER A TRAVÉS DE CREATIVIDAD, ESTRATEGIA Y EJECUCIÓN, DESARROLLANDO IDEAS Y ACCIONES PENSADAS PARA COMUNICAR MEJOR, CONECTAR CON SU AUDIENCIA Y POTENCIAR SUS RESULTADOS.</p>
+                        <div class="v2-link-container ri">
+                            <a href="quienes-somos.html" class="v2-link">• VER MAS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="v2-bottom-wrapper">
+                <div class="v2-bottom ri">
+                    <a href="servicios.html" class="btn-ellipse-custom">
+                        <span class="btn-text">CONOCE NUESTROS SERVICIOS</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA 4: UNIVERSO DE MARCA + PAUTA -->
+        <section id="vista-4" class="split-section">
+            <!-- Mitad superior: Universo de Marca (crema clarito) -->
+            <div class="split-half bg-cream reveal-section">
+                <div class="split-content left-layout">
+                    <div class="split-text-area">
+                        <div class="spiral-icon dark small-spiral"></div>
+                        <div class="split-texts">
+                            <h2 class="split-title">UNIVERSO DE<br>MARCA</h2>
+                            <p class="split-subtitle">Punto de partida para ordenar, entender y potenciar una marca.</p>
+                            <p>Analizamos qué vende, a quién le habla, qué quiere lograr y qué valor puede comunicar mejor. A partir de eso, detectamos oportunidades y construimos una dirección clara.</p>
+                            <div class="split-link"><a href="universo-de-marca.html">VER MAS →</a></div>
+                        </div>
+                    </div>
+                    <div class="split-image">
+                        <img src="assets/laptop_book.png" alt="Universo de marca" loading="lazy">
+                    </div>
+                </div>
+            </div>
+            <!-- Mitad inferior: Pauta Publicitaria (arena) -->
+            <div class="split-half reveal-section">
+                <div class="split-bg">
+                    <img src="assets/arena.jpg" alt="Arena" loading="lazy">
+                </div>
+                <div class="arena-overlay"></div>
+                <div class="split-content right-layout on-dark" style="z-index:2;">
+                    <div class="split-texts">
+                        <h2 class="split-title">PAUTA<br>PUBLICITARIA</h2>
+                        <p>Impulsamos tu marca con campañas en Meta Ads y Google Ads pensadas para atraer, convertir y crecer.</p>
+                        <p>Creamos estrategias de pauta alineadas a tus objetivos, optimizando cada campaña para llegar a la audiencia correcta y generar resultados medibles.</p>
+                        <div class="split-link"><a href="pauta-publicitaria.html">VER MAS →</a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA 5: EMAIL MARKETING + SOCIAL MEDIA -->
+        <section id="vista-5" class="split-section">
+            <!-- Mitad superior: Email Marketing (crema clarito) -->
+            <div class="split-half bg-cream reveal-section">
+                <div class="split-content left-image-layout">
+                    <div class="split-image">
+                        <img src="assets/email_marketing.png" alt="Email Marketing" loading="lazy">
+                    </div>
+                    <div class="split-texts right-align">
+                        <h2 class="split-title">EMAIL MARKETING</h2>
+                        <p>Creamos campañas de email pensadas para conectar, fidelizar y vender.</p>
+                        <p>Diseñamos estrategias, textos y piezas visuales para que tu marca llegue a la persona indicada, en el momento justo, con un mensaje claro y efectivo.</p>
+                        <div class="split-link"><a href="email-marketing.html">VER MAS →</a></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mitad inferior: Social Media (gris oscuro) -->
+            <div class="split-half bg-grey reveal-section">
+                <div class="split-content left-layout on-dark">
+                    <div class="split-texts pl-5">
+                        <h2 class="split-title">SOCIAL MEDIA</h2>
+                        <p>Potenciamos tu presencia digital con contenido estratégico, creativo y alineado a tu marca.</p>
+                        <p>Trabajamos en ideas, diseño, textos y planificación para que tu Instagram comunique mejor, conecte con tu audiencia y acompañe el crecimiento de tu negocio.</p>
+                        <div class="split-link"><a href="social-media.html">VER MAS →</a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA 6: FOOTER / REDES -->
+        <section id="contacto" class="reveal-section">
+            <div class="v6-redes-container">
+                <div class="v6-redes">
+                    <h3>REDES</h3>
+                    <a href="https://www.instagram.com/caluva" target="_blank" class="instagram-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                        <span>Instagram</span>
+                    </a>
+                </div>
+            </div>
+            <div class="v6-logo">
+                <h2>CALUVA</h2>
+            </div>
+        </section>
+
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

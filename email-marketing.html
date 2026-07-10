@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - Caluva</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: var(--color-cream);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: var(--font-heading);
+            color: var(--color-brown);
+        }
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        .back-link {
+            position: absolute;
+            top: 2.5rem;
+            left: 6%;
+            text-decoration: none;
+            color: var(--color-brown);
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: opacity 0.3s ease;
+        }
+        .back-link:hover { opacity: 0.6; }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-link">← VOLVER</a>
+    <h1>EN PROCESO...</h1>
+</body>
+</html>

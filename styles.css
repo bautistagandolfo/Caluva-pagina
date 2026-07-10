@@ -1,0 +1,652 @@
+:root {
+    --color-brown: #4a2410;  
+    --color-cream: #f4f3ea;  /* Fondo clarito para secciones (Conoce nuestros servicios, Universo de Marca) */
+    --color-yellow: #ffffe6; /* Amarillo original para la tipografía sobre fondos oscuros */
+    --color-white: #ffffff;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-main: 'Montserrat', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-main);
+    background-color: #ffffff;  /* Fondo blanco puro en toda la página */
+    color: var(--color-brown);
+    overflow-x: hidden;
+    -ms-overflow-style: none;  /* IE y Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Ocultar barra de scroll lateral en Chrome, Safari y Edge */
+::-webkit-scrollbar {
+    display: none;
+}
+
+h1, h2, h3, .hero-logo-large, .menu-logo-large, .v6-logo h2 {
+    font-family: var(--font-main);
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+p { line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; text-align: justify; }
+a { text-decoration: none; color: inherit; }
+
+/* ─── HEADER ─── */
+/* Header se OCULTA inmediatamente al salir del hero */
+.header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    padding: 1.8rem 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.header.hidden {
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.menu-toggle {
+    background: none; border: none;
+    color: var(--color-cream);
+    font-family: var(--font-main);
+    font-weight: 700; font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    z-index: 101;
+    overflow: visible; /* Previene recorte de la X en algunos navegadores */
+}
+.hamburger {
+    width: 34px; height: 22px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    overflow: visible;
+}
+/* Transición para el menú hamburguesa */
+.hamburger .line {
+    display: block; width: 30px; height: 4px; /* Líneas más gorditas */
+    background-color: currentColor; margin: 0 auto;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+}
+/* Al abrir (clase .open manejada por JS) */
+.hamburger.open .line:nth-child(1) {
+    transform: translateY(10px) rotate(45deg); /* 10px exactos para cruzarse en el centro de los 22px */
+}
+.hamburger.open .line:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.open .line:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+}
+
+.menu-text { 
+    font-family: var(--font-heading); 
+    font-weight: 700; 
+    font-size: 0.9rem; 
+    letter-spacing: 2px; 
+    white-space: nowrap;
+    min-width: 75px;
+    text-align: left;
+}
+
+/* ─── SPIRAL ICON ─── */
+.spiral-icon {
+    width: 55px; height: 55px;
+    border-radius: 50%;
+    border: 5px solid var(--color-cream);
+    border-right-color: transparent;
+    position: relative; transform: rotate(45deg);
+}
+.spiral-icon::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 5px solid var(--color-cream); border-bottom-color: transparent;
+}
+.spiral-icon::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px; height: 8px;
+    background-color: var(--color-cream); border-radius: 50%;
+}
+.spiral-icon.dark { border-color: var(--color-brown); border-right-color: transparent; }
+.spiral-icon.dark::before { border-color: var(--color-brown); border-bottom-color: transparent; }
+.spiral-icon.dark::after { background-color: var(--color-brown); }
+.spiral-icon.large { width: 75px; height: 75px; border-width: 7px; }
+.spiral-icon.large::before { width: 37px; height: 37px; border-width: 7px; }
+.spiral-icon.large::after { width: 13px; height: 13px; }
+
+/* ─── FULLSCREEN MENU ─── */
+.fullscreen-menu {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100vh;
+    background-color: #f6f5ef;
+    z-index: 99;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10%;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+    overflow: hidden;
+}
+.fullscreen-menu.active { opacity: 1; pointer-events: all; }
+.menu-content { display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; position: relative; z-index: 2; }
+.menu-links { list-style: none; text-align: right; }
+.menu-links li {
+    margin: 1.2rem 0;
+    transform: translateY(20px); opacity: 0;
+    transition: all 0.4s ease;
+}
+.fullscreen-menu.active .menu-links li { transform: translateY(0); opacity: 1; }
+.fullscreen-menu.active .menu-links li:nth-child(1) { transition-delay: 0.1s; }
+.fullscreen-menu.active .menu-links li:nth-child(2) { transition-delay: 0.2s; }
+.fullscreen-menu.active .menu-links li:nth-child(3) { transition-delay: 0.3s; }
+.fullscreen-menu.active .menu-links li:nth-child(4) { transition-delay: 0.4s; }
+.menu-link {
+    font-family: var(--font-main); font-size: clamp(2rem, 4vw, 3rem); /* Links más chicos */
+    color: var(--color-brown); font-weight: 800;
+    position: relative; display: inline-block;
+    letter-spacing: -1px;
+}
+.menu-link::after {
+    content: ''; position: absolute; bottom: -4px; right: 0;
+    width: 0; height: 4px; background-color: var(--color-brown);
+    transition: width 0.3s ease;
+}
+.menu-link:hover::after { width: 100%; }
+
+.menu-logo-large-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+}
+.menu-logo-large {
+    font-size: clamp(6rem, 15vw, 15rem); color: var(--color-brown); 
+    line-height: 0.85; margin-bottom: -0.12em; /* Corte sutil */
+    font-family: var(--font-main); font-weight: 800;
+    letter-spacing: -2px;
+    transform: translateY(20px); opacity: 0;
+    transition: all 0.5s ease 0.5s;
+}
+.fullscreen-menu.active .menu-logo-large { transform: translateY(0); opacity: 1; }
+
+/* ─── SECCIONES BASE (sin scroll snap) ─── */
+.section {
+    width: 100%;
+    padding: 8rem 6%;
+    position: relative;
+}
+.section + .section { padding-top: 6rem; }
+
+/* ─── VISTA 1: HERO ─── */
+#inicio {
+    height: 100vh;
+    min-height: 600px;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1a2a3a;
+}
+.hero-background {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+}
+.hero-background img, .hero-background video { width: 100%; height: 100%; object-fit: cover; }
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
+
+.hero-content {
+    position: relative; z-index: 2;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 0 8%;
+    gap: 0;
+}
+.hero-text {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem); /* Un poco más grande */
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    text-align: justify;
+    text-align-last: center;
+    max-width: 800px;
+    margin-top: 22vh; /* Un poquito más arriba */
+    margin-bottom: 15vh;
+    color: var(--color-yellow);
+}
+.hero-logo-large {
+    font-family: var(--font-main);
+    font-weight: 800;
+    font-size: clamp(6rem, 15vw, 15rem);
+    color: var(--color-yellow);
+    /* CALUVA pegado al fondo y cortado sutilmente */
+    position: absolute;
+    bottom: 0;
+    left: 0; width: 100%;
+    text-align: center;
+    line-height: 0.85;
+    margin-bottom: -0.12em; /* Corte sutil */
+    letter-spacing: -2px;
+    z-index: 2;
+}
+/* Sin gradiente — el corte limpio es más elegante que un fundido que tapa el texto */
+
+/* La sección v2 tiene fondo blanco y su contenedor interno maneja los fondos */
+#vista-2 {
+    background: #ffffff;
+    width: 100%;
+}
+.slide-content-v2 {
+    width: 100%; max-width: 1300px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    padding: 10rem 6% 1rem;
+}
+.v2-top {
+    display: flex; gap: 6%;
+    align-items: flex-start;
+    padding-bottom: 4rem;
+}
+.v2-logo { flex-shrink: 0; padding-top: 0.5rem; }
+.v2-text { flex: 1; }
+.v2-title {
+    font-family: var(--font-main);
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.15;
+    color: var(--color-brown);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+.v2-desc {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    color: var(--color-brown);
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+}
+.v2-link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
+}
+.v2-link {
+    font-family: var(--font-main); font-weight: 800; font-size: 1.3rem; 
+    letter-spacing: 0.02em; color: var(--color-brown);
+    display: inline-block; transition: transform 0.3s ease;
+}
+.v2-link:hover { transform: translateY(-3px); }
+.v2-link-hint {
+    font-family: var(--font-main); font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 1px; color: var(--color-brown); margin-top: 0.5rem; text-align: center;
+}
+
+/* Contenedor full bleed natural para el botón */
+.v2-bottom-wrapper {
+    background-color: var(--color-cream);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Un padding hacia abajo intermedio para que cubra la pantalla sin ser excesivo */
+    padding: 4rem 6% 35vh; 
+}
+.v2-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ─── VISTA 3: ABOUT 2 ─── */
+#vista-3 {
+    background-color: #ffffff;  /* Blanco */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 10rem 6%; /* Más respiro */
+}
+.slide-content-v3 {
+    width: 100%; max-width: 1300px; margin: 0 auto;
+    display: flex; gap: 6%;
+}
+.v3-image { flex: 1; display: flex; align-items: center; }
+.v3-image img { width: 100%; max-height: 80vh; object-fit: cover; filter: grayscale(100%); }
+.v3-text {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; padding-right: 2%;
+}
+.v3-link-top { align-self: flex-end; margin-bottom: 3rem; }
+.btn-ellipse-custom {
+    display: inline-flex; justify-content: center; align-items: center; text-align: center;
+    width: 420px; height: 160px; /* Más alto y proporcionado */
+    border: 4px solid var(--color-brown); /* Grosor similar al dibujado */
+    border-radius: 50%;
+    text-decoration: none;
+    padding: 10px;
+}
+.btn-ellipse-custom .btn-text {
+    font-family: var(--font-main); font-weight: 700;
+    font-size: 0.95rem; letter-spacing: 0.05em;
+    color: var(--color-brown);
+    transition: transform 0.3s ease;
+}
+.btn-ellipse-custom:hover .btn-text { transform: scale(1.1); }
+.v3-paragraphs {
+    display: flex; flex-direction: column; gap: 1.5rem;
+}
+.v3-link-top a {
+    font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem;
+    color: var(--color-brown); display: inline-block; transition: transform 0.3s ease;
+}
+.v3-link-top a:hover { transform: translateX(5px); }
+.v3-paragraphs p {
+    font-family: var(--font-heading); font-weight: 700; font-size: 1rem;
+    line-height: 1.7; color: var(--color-brown);
+}
+.v3-logo { align-self: flex-end; margin-top: 3rem; }
+
+/* ─── VISTAS 4 & 5: SERVICIOS SPLIT ─── */
+.split-section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.split-half {
+    flex: 1; min-height: 50vh;
+    position: relative;
+    display: flex; align-items: center;
+}
+.split-bg { position: absolute; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
+.split-bg img {
+    width: 100%; height: 100%; object-fit: cover;
+    object-position: 70% center;
+    transform: scale(1.15);
+    transform-origin: right center;
+}
+
+.split-content {
+    width: 100%; max-width: 1400px; margin: 0 auto;
+    padding: 5rem 6%; display: flex; /* Respiro balanceado, menos alto */
+    position: relative; z-index: 1;
+}
+.split-texts { max-width: 650px; } /* Más ancho para que el texto no ocupe tanto espacio vertical */
+.split-title {
+    font-family: var(--font-main); font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    line-height: 1.05; margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+.split-subtitle { font-size: 1rem; margin-bottom: 1.2rem; font-weight: 500; line-height: 1.6; opacity: 0.9; }
+
+/* Enlaces "VER MAS" globales (para v2, v3, splits) */
+.v2-link a, .v3-link-top a, .split-link a {
+    font-family: var(--font-main); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em;
+    color: var(--color-brown); display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    margin-top: 1rem;
+}
+.v2-link a:hover, .v3-link-top a:hover, .split-link a:hover {
+    opacity: 0.5;
+    transform: translateX(6px);
+}
+
+/* Layouts */
+.left-layout { justify-content: flex-start; gap: 4%; align-items: center; }
+.right-layout { justify-content: flex-end; text-align: right; }
+.left-image-layout { justify-content: flex-start; gap: 5%; align-items: center; }
+.right-align { text-align: right; }
+.pl-5 { padding-left: 6%; }
+
+.split-text-area { display: flex; gap: 1.5rem; flex: 1; }
+.small-spiral { transform: scale(0.6); transform-origin: top left; flex-shrink: 0; margin-top: 4px; }
+
+/* Imágenes en secciones split: cuadradas y bien puestas */
+.split-image { 
+    flex: 1; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+.split-image img { 
+    width: 100%; 
+    aspect-ratio: 16/10; /* Más anchas y menos altas para no ocupar tanto espacio a lo largo */
+    object-fit: cover; 
+    object-position: center;
+    border-radius: 0; /* Cuadradas, sin bordes redondeados */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06); /* Sombra mucho más sutil y pegada */
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+.split-image:hover img { 
+    transform: translateY(-3px) scale(1.01); 
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1); 
+}
+
+/* Texto amarillo sobre fondos oscuros — explícito y sin ambigüedad */
+.on-dark,
+.on-dark p,
+.on-dark h2,
+.on-dark a,
+.on-dark .split-title,
+.on-dark .split-link,
+.on-dark .split-link a { 
+    color: var(--color-yellow) !important; 
+}
+
+/* Overlay oscuro sobre la imagen de arena para que se lea el texto */
+.arena-overlay {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    background: rgba(30, 15, 5, 0.55); /* Overlay oscuro marrón */
+    z-index: 1;
+}
+
+/* Fondo gris para Social Media */
+.bg-grey { background: linear-gradient(160deg, #3a3f47 0%, #2a2e35 100%); }
+
+/* Fondo crema clarito para secciones */
+.bg-cream { background-color: var(--color-cream); }
+
+/* ─── VISTA 6: FOOTER ─── */
+#contacto {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 6rem 8% 0;
+    border-top: 1px solid rgba(74,36,16,0.08);
+    overflow: hidden; /* Corta el logo por abajo */
+    min-height: 60vh;
+}
+.v6-redes-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 10%;
+    margin-bottom: auto;
+    margin-top: 2rem;
+}
+.v6-redes {
+    display: flex; flex-direction: column; align-items: flex-start;
+}
+.v6-redes h3 {
+    font-family: var(--font-main); font-weight: 600;
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    color: var(--color-brown);
+    margin-bottom: 1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+}
+.instagram-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-main); font-weight: 500;
+    font-size: 0.95rem; /* Discreto */
+    color: var(--color-brown);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+.instagram-link:hover {
+    opacity: 0.7;
+}
+.instagram-link svg {
+    width: 20px; height: 20px;
+}
+/* Logo CALUVA cortado al estilo Calvagni */
+.v6-logo {
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+}
+.v6-logo h2 {
+    font-family: var(--font-main); font-weight: 800;
+    font-size: clamp(6rem, 18vw, 18rem); /* Texto gigantesco */
+    color: var(--color-brown);
+    line-height: 0.85; margin-bottom: -0.25em; /* Apenitas más cortado */
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+/* ─── TRANSICIONES SUAVES ENTRE SECCIONES ───
+   Gradientes en los bordes de secciones para que
+   el cambio de color no sea un corte brusco sino
+   una fusión natural — como si la página fluyera.
+*/
+
+/* Las mitades oscuras de los splits (arena y gris) se solapan suavemente para no parecer encastradas */
+.split-section .split-half {
+    position: relative;
+}
+.split-section .split-half:nth-child(2) {
+    box-shadow: 0 -15px 40px rgba(0,0,0,0.04);
+    z-index: 2; /* Se eleva un poquito sobre la capa anterior para dar efecto de profundidad */
+}
+
+/* Sombra suave entre las dos mitades del split */
+.split-section .split-half:first-child {
+    box-shadow: 0 15px 40px rgba(0,0,0,0.02);
+    z-index: 1;
+}
+
+/* ─── REVEAL ANIMATIONS ─── */
+
+/* Secciones completas */
+.reveal-section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-section.visible { opacity: 1; transform: translateY(0); }
+
+/* Elementos individuales dentro de secciones */
+.ri {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ri.visible { opacity: 1; transform: translateY(0); }
+
+/* Delays en cascada para elements .ri (nth-child no aplica bien, usamos selectores) */
+.ri:nth-child(2) { transition-delay: 0.1s; }
+.ri:nth-child(3) { transition-delay: 0.2s; }
+.ri:nth-child(4) { transition-delay: 0.3s; }
+
+/* Hero tiene animación propia */
+.fade-in-up {
+    opacity: 0; transform: translateY(30px);
+    animation: fadeInUp 1.2s ease forwards;
+}
+.delay-1 { animation-delay: 0.5s; }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── SEO Y ACCESIBILIDAD ─── */
+.sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0;
+    margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+}
+.footer-bottom {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+.copyright {
+    font-family: var(--font-main); font-size: 0.8rem;
+    color: var(--color-brown); opacity: 0.6;
+    margin-bottom: 0; letter-spacing: 1px;
+}
+
+/* ─── RESPONSIVE DESIGN (MOBILE) ─── */
+@media (max-width: 768px) {
+    /* Header / Menú */
+    .header { padding: 1.5rem 5%; }
+    .menu-logo-large { font-size: 3.5rem; }
+    .menu-link { font-size: 2.2rem; }
+
+    /* Hero */
+    .hero-content { padding: 0 5%; }
+    .hero-text { font-size: 1.1rem; }
+    .hero-logo-large { font-size: 4.5rem; margin-top: 1.5rem; }
+
+    /* Secciones generales */
+    .section { padding: 5rem 5%; }
+    .section + .section { padding-top: 3rem; }
+
+    /* V2: Conoce Nuestros Servicios */
+    .v2-top, .v2-bottom { padding: 0 5%; flex-direction: column; align-items: flex-start; text-align: left; }
+    .v2-empty, .v2-text { width: 100%; }
+    .v2-title { font-size: 1.8rem; margin-bottom: 1.5rem; }
+    .v2-desc { margin-bottom: 2rem; font-size: 0.95rem; }
+    .btn-oval-custom { width: 100%; justify-content: center; padding: 1.2rem; margin-top: 2rem; }
+    
+    /* V3: Slide Quiénes Somos */
+    .slide-content-v3 { flex-direction: column; height: auto; margin: 0; }
+    .v3-image, .v3-text { width: 100%; height: auto; }
+    .v3-image { padding: 0; min-height: 350px; }
+    .v3-text { padding: 3rem 5%; }
+    .v3-paragraphs p { font-size: 1.1rem; }
+
+    /* Split Sections (Universo, Pauta, Email, Social) */
+    .split-section { flex-direction: column; height: auto; }
+    .split-section .split-half { width: 100%; height: auto; min-height: 500px; box-shadow: none !important; }
+    
+    /* Apilar fotos arriba y texto abajo */
+    .split-content.left-layout, 
+    .split-content.right-layout { 
+        flex-direction: column-reverse; padding: 0; 
+    }
+    .split-content.left-image-layout { 
+        flex-direction: column; padding: 0; 
+    }
+    
+    .split-text-area, .split-texts { 
+        width: 100%; padding: 4rem 8%; text-align: center; 
+        display: flex; flex-direction: column; align-items: center; 
+    }
+    .split-texts.pl-5, .split-texts.right-align { 
+        padding: 4rem 8%; text-align: center; 
+    }
+    .split-image { width: 100%; height: 400px; }
+    .split-title { font-size: 2.5rem; }
+    
+    /* Footer */
+    .v6-logo h2 { font-size: 4rem; }
+    .instagram-link { margin-bottom: 2rem; }
+}
