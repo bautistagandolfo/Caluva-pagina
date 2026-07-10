@@ -44,25 +44,30 @@
 
     <main>
 
-        <!-- VISTA 1: HERO -->
-        <section id="inicio">
-            <div class="hero-background">
-                <video autoplay loop muted playsinline>
-                    <source src="assets/IMG_3031.MOV" type="video/quicktime">
-                    <source src="assets/IMG_3031.MOV" type="video/mp4">
-                </video>
-                <div class="overlay"></div>
-            </div>
-            <div class="hero-content">
-                <h1 class="sr-only">CALUVA - Agencia Creativa y Estratégica</h1>
-                <p class="hero-text fade-in-up">
-                    CREEMOS QUE LAS MEJORES IDEAS NACEN DE ENTENDER A LAS PERSONAS, OBSERVAR EL MUNDO Y TRANSFORMAR ESA INSPIRACIÓN EN ACCIONES CONCRETAS PARA LAS MARCAS.
-                </p>
-                <div class="hero-logo-large fade-in-up delay-1">CALUVA</div>
-            </div>
-        </section>
+        <!-- WRAPPER PARA EL EFECTO DE SCROLL -->
+        <div id="zoom-spacer" style="height: 250vh; position: relative; z-index: 10;">
+            <!-- VISTA 1: HERO (Se queda pegada mientras scrolleamos) -->
+            <section id="inicio" style="position: sticky; top: 0; height: 100vh; overflow: hidden; z-index: 10;">
+                <div class="hero-background">
+                    <video autoplay loop muted playsinline>
+                        <source src="assets/IMG_3031.MOV" type="video/quicktime">
+                        <source src="assets/IMG_3031.MOV" type="video/mp4">
+                    </video>
+                    <div class="overlay"></div>
+                </div>
+                <div class="hero-content">
+                    <h1 class="sr-only">CALUVA - Agencia Creativa y Estratégica</h1>
+                    <p class="hero-text fade-in-up" id="hero-p-text">
+                        CREEMOS QUE LAS MEJORES IDEAS NACEN DE ENTENDER A LAS PERSONAS, OBSERVAR EL MUNDO Y TRANSFORMAR ESA INSPIRACIÓN EN ACCIONES CONCRETAS PARA LAS MARCAS.
+                    </p>
+                    <div class="hero-logo-large fade-in-up delay-1" id="hero-caluva-text">CALUVA</div>
+                </div>
+            </section>
+        </div>
+
         <!-- VISTA 2: QUIENES SOMOS -->
-        <section id="vista-2" class="reveal-section">
+        <!-- La colocamos con z-index 1 y position fixed al principio para que se vea a través del hueco del hero -->
+        <section id="vista-2" class="reveal-section" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1;">
             <div class="slide-content-v2">
                 <div class="v2-top">
                     <div class="v2-logo ri"><div class="spiral-icon dark"></div></div>

@@ -249,7 +249,7 @@ a { text-decoration: none; color: inherit; }
 .slide-content-v2 {
     width: 100%; max-width: 1300px; margin: 0 auto;
     display: flex; flex-direction: column;
-    padding: 10rem 6% 1rem;
+    padding: 4rem 6% 1rem;
 }
 .v2-top {
     display: flex; gap: 6%;
@@ -301,8 +301,8 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Un padding hacia abajo intermedio para que cubra la pantalla sin ser excesivo */
-    padding: 4rem 6% 35vh; 
+    /* Reducido para evitar el exceso de espacio blanco */
+    padding: 2rem 6% 8rem; 
 }
 .v2-bottom {
     display: flex;
@@ -348,10 +348,14 @@ a { text-decoration: none; color: inherit; }
     display: flex; flex-direction: column; gap: 1.5rem;
 }
 .v3-link-top a {
-    font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem;
-    color: var(--color-brown); display: inline-block; transition: transform 0.3s ease;
+    font-family: var(--font-main); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em;
+    color: var(--color-brown); display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
-.v3-link-top a:hover { transform: translateX(5px); }
+.v3-link-top a:hover {
+    opacity: 0.5;
+    transform: translateX(6px);
+}
 .v3-paragraphs p {
     font-family: var(--font-heading); font-weight: 700; font-size: 1rem;
     line-height: 1.7; color: var(--color-brown);
@@ -424,16 +428,16 @@ a { text-decoration: none; color: inherit; }
 }
 .split-image img { 
     width: 100%; 
-    aspect-ratio: 16/10; /* Más anchas y menos altas para no ocupar tanto espacio a lo largo */
-    object-fit: cover; 
+    height: auto;
+    max-height: 400px;
+    object-fit: contain; /* Para que la laptop no se corte al forzar el aspecto */
     object-position: center;
     border-radius: 0; /* Cuadradas, sin bordes redondeados */
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06); /* Sombra mucho más sutil y pegada */
-    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); /* Sombra para imágenes sin fondo */
+    transition: transform 0.6s ease;
 }
 .split-image:hover img { 
-    transform: translateY(-3px) scale(1.01); 
-    box-shadow: 0 12px 40px rgba(0,0,0,0.1); 
+    transform: translateY(-8px) scale(1.02); 
 }
 
 /* Texto amarillo sobre fondos oscuros — explícito y sin ambigüedad */
@@ -469,7 +473,7 @@ a { text-decoration: none; color: inherit; }
     justify-content: flex-end;
     padding: 6rem 8% 0;
     border-top: 1px solid rgba(74,36,16,0.08);
-    overflow: hidden; /* Corta el logo por abajo */
+    overflow: hidden; /* Corta el logo por abajo al estilo Calvagni */
     min-height: 60vh;
 }
 .v6-redes-container {
@@ -507,17 +511,25 @@ a { text-decoration: none; color: inherit; }
 .instagram-link svg {
     width: 20px; height: 20px;
 }
-/* Logo CALUVA cortado al estilo Calvagni */
+/* Logo CALUVA cortado al estilo Calvagni (Bulletproof para evitar bug de Chrome) */
 .v6-logo {
     width: 100%;
     text-align: center;
     margin-top: auto;
+    font-size: clamp(6rem, 18vw, 18rem); /* Pasamos el font-size al contenedor para usar em */
+    height: 0.60em; /* Alto estricto cortado (0.85 original - 0.25 de corte) */
+    overflow: hidden; /* Cortamos físicamente sin márgenes negativos */
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 .v6-logo h2 {
     font-family: var(--font-main); font-weight: 800;
-    font-size: clamp(6rem, 18vw, 18rem); /* Texto gigantesco */
+    font-size: 1em; /* Hereda el tamaño del contenedor */
     color: var(--color-brown);
-    line-height: 0.85; margin-bottom: -0.25em; /* Apenitas más cortado */
+    line-height: 0.85; 
+    margin: 0;
+    padding: 0;
     text-align: center;
     letter-spacing: -0.02em;
 }
