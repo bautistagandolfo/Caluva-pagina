@@ -25,7 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     menuToggle.addEventListener('click', toggleMenu);
-    menuLinks.forEach(link => link.addEventListener('click', () => { if (isMenuOpen) toggleMenu(); }));
+    menuLinks.forEach(link => {
+        link.addEventListener('click', (e) => { 
+            if (isMenuOpen) toggleMenu(); 
+            const targetId = link.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                e.preventDefault();
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
 
     // ── HEADER: OCULTAR al instante cuando termina el hero ──
     const checkHeaderColor = () => {
@@ -96,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     heroCaluvaText.style.opacity = "0"; 
                     
                     heroSectionEl.dataset.originalCenterY = rect.top + (rect.height / 2);
+                    heroSectionEl.dataset.targetCenterY = window.innerHeight / 2;
+                    heroSectionEl.dataset.centerX = window.innerWidth / 2;
                     
                     // Crear el contenedor SVG en el DOM
                     const svgContainer = document.createElement('div');
@@ -103,8 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     svgContainer.style.position = 'absolute';
                     svgContainer.style.top = '0';
                     svgContainer.style.left = '0';
-                    svgContainer.style.width = '0';
-                    svgContainer.style.height = '0';
+                    svgContainer.style.width = '1px';
+                    svgContainer.style.height = '1px';
+                    svgContainer.style.opacity = '0.01';
+                    svgContainer.style.zIndex = '-1';
                     svgContainer.style.overflow = 'hidden';
                     svgContainer.style.pointerEvents = 'none';
                     
@@ -118,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <mask id="dynamicVectorMask">
                                 <rect width="10000" height="10000" x="-5000" y="-5000" fill="white" />
                                 <g id="maskTextGroup" transform="translate(${centerX}, ${centerY}) scale(1)">
-                                    <text x="0" y="0" text-anchor="middle" dominant-baseline="central" 
+                                    <text x="0" y="0" dy="0.35em" text-anchor="middle"
                                           font-family="${style.fontFamily.replace(/"/g, "'")}" 
                                           font-weight="${style.fontWeight}" 
                                           font-size="${style.fontSize}" 
@@ -142,8 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Animaciones de MÁSCARA Vectorial
                 if (maskCreated) {
                     const originalCenterY = parseFloat(heroSectionEl.dataset.originalCenterY);
-                    const targetCenterY = window.innerHeight / 2;
-                    const centerX = window.innerWidth / 2;
+                    const targetCenterY = parseFloat(heroSectionEl.dataset.targetCenterY);
+                    const centerX = parseFloat(heroSectionEl.dataset.centerX);
                     
                     // Fase 1: Mover al centro
                     const currentCenterY = originalCenterY - (phase1 * (originalCenterY - targetCenterY));
