@@ -599,6 +599,8 @@ a { text-decoration: none; color: inherit; }
     .header { padding: 1.5rem 5%; }
     .menu-logo-large { font-size: 3.5rem; }
     .menu-link { font-size: 2.2rem; }
+    .menu-toggle { font-size: 1.4rem; } /* Texto "MENU" más grande en celulares */
+    .hamburger { transform: scale(1.2); } /* Hamburguesa un poco más grande para acompañar */
 
     /* Hero */
     .hero-content { padding: 0 5%; }
