@@ -45,7 +45,7 @@
     <main>
 
         <!-- WRAPPER PARA EL EFECTO DE SCROLL -->
-        <div id="zoom-spacer" style="height: 250vh; position: relative; z-index: 10;">
+        <div id="zoom-spacer" style="height: 450vh; position: relative; z-index: 10;">
             <!-- VISTA 1: HERO (Se queda pegada mientras scrolleamos) -->
             <section id="inicio" style="position: sticky; top: 0; overflow: hidden; z-index: 10;">
                 <div class="hero-background">
@@ -67,20 +67,21 @@
 
         <!-- VISTA 2: QUIENES SOMOS -->
         <!-- La colocamos con z-index 1 y position fixed al principio para que se vea a través del hueco del hero -->
-        <section id="vista-2" class="reveal-section" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1;">
+        <section id="vista-2" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1;">
             <div class="slide-content-v2">
                 <div class="v2-top">
-                    <div class="v2-logo ri"><div class="spiral-icon dark"></div></div>
+                    <div class="v2-logo" id="v2-logo"><div class="spiral-icon dark"></div></div>
                     <div class="v2-text">
-                        <p class="v2-desc ri">CALUVA ES UNA AGENCIA CREATIVA Y ESTRATÉGICA.<br>AYUDAMOS A LAS MARCAS A CRECER A TRAVÉS DE CREATIVIDAD, ESTRATEGIA Y EJECUCIÓN, DESARROLLANDO IDEAS Y ACCIONES PENSADAS PARA COMUNICAR MEJOR, CONECTAR CON SU AUDIENCIA Y POTENCIAR SUS RESULTADOS.</p>
-                        <div class="v2-link-container ri">
+                        <p class="v2-desc-part1" id="v2-part1">CALUVA ES UNA AGENCIA CREATIVA Y ESTRATÉGICA.</p>
+                        <p class="v2-desc-part2" id="v2-part2">AYUDAMOS A LAS MARCAS A CRECER A TRAVÉS DE CREATIVIDAD, ESTRATEGIA Y EJECUCIÓN, DESARROLLANDO IDEAS Y ACCIONES PENSADAS PARA COMUNICAR MEJOR, CONECTAR CON SU AUDIENCIA Y POTENCIAR SUS RESULTADOS.</p>
+                        <div class="v2-link-container" id="v2-link-container">
                             <a href="quienes-somos.html" class="v2-link">• VER MAS</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="v2-bottom-wrapper">
-                <div class="v2-bottom ri">
+            <div class="v2-bottom-wrapper" id="v2-yellow-bg">
+                <div class="v2-bottom" id="v2-bottom-bg">
                     <a href="servicios.html" class="btn-ellipse-custom">
                         <span class="btn-text">CONOCE NUESTROS SERVICIOS</span>
                     </a>
@@ -93,32 +94,32 @@
             <!-- Mitad superior: Universo de Marca (crema clarito) -->
             <div class="split-half bg-cream reveal-section">
                 <div class="split-content left-layout">
-                    <div class="split-text-area">
-                        <div class="spiral-icon dark small-spiral"></div>
+                    <div class="split-text-area sr-item sr-left">
+                        <div class="spiral-icon dark small-spiral sr-item sr-up sr-delay-1"></div>
                         <div class="split-texts">
-                            <h2 class="split-title">UNIVERSO DE<br>MARCA</h2>
-                            <p class="split-subtitle">Punto de partida para ordenar, entender y potenciar una marca.</p>
-                            <p>Analizamos qué vende, a quién le habla, qué quiere lograr y qué valor puede comunicar mejor. A partir de eso, detectamos oportunidades y construimos una dirección clara.</p>
-                            <div class="split-link"><a href="universo-de-marca.html">VER MAS →</a></div>
+                            <h2 class="split-title sr-item sr-up sr-delay-2">UNIVERSO DE<br>MARCA</h2>
+                            <p class="split-subtitle sr-item sr-up sr-delay-3">Punto de partida para ordenar, entender y potenciar una marca.</p>
+                            <p class="sr-item sr-up sr-delay-4">Analizamos qué vende, a quién le habla, qué quiere lograr y qué valor puede comunicar mejor. A partir de eso, detectamos oportunidades y construimos una dirección clara.</p>
+                            <div class="split-link sr-item sr-up sr-delay-4"><a href="universo-de-marca.html">VER MAS →</a></div>
                         </div>
                     </div>
-                    <div class="split-image">
+                    <div class="split-image sr-item sr-right">
                         <img src="assets/laptop_book.png" alt="Universo de marca" loading="lazy">
                     </div>
                 </div>
             </div>
             <!-- Mitad inferior: Pauta Publicitaria (arena) -->
             <div class="split-half reveal-section">
-                <div class="split-bg">
+                <div class="split-bg sr-item sr-scale">
                     <img src="assets/arena.jpg" alt="Arena" loading="lazy">
                 </div>
                 <div class="arena-overlay"></div>
                 <div class="split-content right-layout on-dark" style="z-index:2;">
                     <div class="split-texts">
-                        <h2 class="split-title">PAUTA<br>PUBLICITARIA</h2>
-                        <p>Impulsamos tu marca con campañas en Meta Ads y Google Ads pensadas para atraer, convertir y crecer.</p>
-                        <p>Creamos estrategias de pauta alineadas a tus objetivos, optimizando cada campaña para llegar a la audiencia correcta y generar resultados medibles.</p>
-                        <div class="split-link"><a href="pauta-publicitaria.html">VER MAS →</a></div>
+                        <h2 class="split-title sr-item sr-up sr-delay-1">PAUTA<br>PUBLICITARIA</h2>
+                        <p class="sr-item sr-up sr-delay-2">Impulsamos tu marca con campañas en Meta Ads y Google Ads pensadas para atraer, convertir y crecer.</p>
+                        <p class="sr-item sr-up sr-delay-3">Creamos estrategias de pauta alineadas a tus objetivos, optimizando cada campaña para llegar a la audiencia correcta y generar resultados medibles.</p>
+                        <div class="split-link sr-item sr-up sr-delay-4"><a href="pauta-publicitaria.html">VER MAS →</a></div>
                     </div>
                 </div>
             </div>
@@ -129,14 +130,14 @@
             <!-- Mitad superior: Email Marketing (crema clarito) -->
             <div class="split-half bg-cream reveal-section">
                 <div class="split-content left-image-layout">
-                    <div class="split-image">
+                    <div class="split-image sr-item sr-left">
                         <img src="assets/email_marketing.png" alt="Email Marketing" loading="lazy">
                     </div>
                     <div class="split-texts right-align">
-                        <h2 class="split-title">EMAIL MARKETING</h2>
-                        <p>Creamos campañas de email pensadas para conectar, fidelizar y vender.</p>
-                        <p>Diseñamos estrategias, textos y piezas visuales para que tu marca llegue a la persona indicada, en el momento justo, con un mensaje claro y efectivo.</p>
-                        <div class="split-link"><a href="email-marketing.html">VER MAS →</a></div>
+                        <h2 class="split-title sr-item sr-up sr-delay-1">EMAIL MARKETING</h2>
+                        <p class="sr-item sr-up sr-delay-2">Creamos campañas de email pensadas para conectar, fidelizar y vender.</p>
+                        <p class="sr-item sr-up sr-delay-3">Diseñamos estrategias, textos y piezas visuales para que tu marca llegue a la persona indicada, en el momento justo, con un mensaje claro y efectivo.</p>
+                        <div class="split-link sr-item sr-up sr-delay-4"><a href="email-marketing.html">VER MAS →</a></div>
                     </div>
                 </div>
             </div>
@@ -144,10 +145,10 @@
             <div class="split-half bg-grey reveal-section">
                 <div class="split-content left-layout on-dark">
                     <div class="split-texts pl-5">
-                        <h2 class="split-title">SOCIAL MEDIA</h2>
-                        <p>Potenciamos tu presencia digital con contenido estratégico, creativo y alineado a tu marca.</p>
-                        <p>Trabajamos en ideas, diseño, textos y planificación para que tu Instagram comunique mejor, conecte con tu audiencia y acompañe el crecimiento de tu negocio.</p>
-                        <div class="split-link"><a href="social-media.html">VER MAS →</a></div>
+                        <h2 class="split-title sr-item sr-up sr-delay-1">SOCIAL MEDIA</h2>
+                        <p class="sr-item sr-up sr-delay-2">Potenciamos tu presencia digital con contenido estratégico, creativo y alineado a tu marca.</p>
+                        <p class="sr-item sr-up sr-delay-3">Trabajamos en ideas, diseño, textos y planificación para que tu Instagram comunique mejor, conecte con tu audiencia y acompañe el crecimiento de tu negocio.</p>
+                        <div class="split-link sr-item sr-up sr-delay-4"><a href="social-media.html">VER MAS →</a></div>
                     </div>
                 </div>
             </div>

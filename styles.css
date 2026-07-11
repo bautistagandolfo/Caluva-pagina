@@ -266,16 +266,120 @@ a { text-decoration: none; color: inherit; }
     font-weight: 800;
     letter-spacing: -0.5px;
 }
-.v2-desc {
+.v2-desc-part1, .v2-desc-part2 {
     font-family: var(--font-main);
     font-weight: 700;
     font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-    margin-bottom: 2rem;
     text-transform: uppercase;
     color: var(--color-brown);
     line-height: 1.8;
     letter-spacing: 0.03em;
 }
+
+.v2-desc-part1 {
+    margin-bottom: 2rem;
+}
+
+.v2-desc-part2 {
+    margin-bottom: 2rem;
+    display: block;
+}
+
+/* Animaciones Premium Adrenalina */
+#v2-part2, #v2-link-container, #v2-bottom-bg, #v2-logo, #v2-logo .spiral-icon {
+    will-change: transform, opacity;
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); /* Mucho más elástico y explosivo */
+}
+
+/* Estado inicial (oculto y exagerado para adrenalina) */
+#v2-part2 { opacity: 0; transform: translateX(200px) skewX(10deg); }
+#v2-link-container { opacity: 0; transform: translateX(100px) skewX(5deg); }
+#v2-bottom-bg { opacity: 0; transform: translateY(100px) scale(0.8); }
+#v2-logo { opacity: 0; transform: scale(0.2); }
+#v2-logo .spiral-icon { transform: rotate(-360deg); } /* Va a girar el doble de rápido */
+
+/* --- EL GANCHO (Text Reveal) --- */
+#v2-part1 {
+    /* El JS va a meter spans adentro. Necesitamos que las líneas estén ocultas al inicio */
+    overflow: hidden;
+    line-height: 1.2;
+}
+#v2-part1 .word-wrap {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+}
+#v2-part1 .word-inner {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+#v2-part1.hook-active .word-inner {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Estados activos (gatillados por JS) */
+#v2-part2.reveal-active { opacity: 1; transform: translateX(0) skewX(0); }
+#v2-link-container.reveal-active { opacity: 1; transform: translateX(0) skewX(0); }
+#v2-bottom-bg.reveal-active { opacity: 1; transform: translateY(0) scale(1); }
+#v2-logo.reveal-active { opacity: 1; transform: scale(1); }
+#v2-logo.reveal-active .spiral-icon { transform: rotate(180deg); }
+
+/* --- DIFUMINADO BLANCO/CREMA --- */
+/* Le agregamos un gradiente por encima al wrapper para que al subir se mezcle con el blanco */
+#v2-yellow-bg {
+    position: relative;
+    /* Aseguramos que la transición de transform sea directa, sin lag */
+    will-change: transform;
+}
+#v2-yellow-bg::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to top, var(--color-cream) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+/* --- TRANSICIÓN STACKING PAGES --- */
+#vista-2 { 
+    /* Se mantiene normal para evitar bordes blancos */
+    background: #ffffff;
+    width: 100%;
+}
+#vista-4 {
+    position: relative;
+    z-index: 2; /* Pasa por encima de vista-2 */
+    background-color: #ffffff;
+    width: 100%;
+    /* Sutil sombra superior para dar el efecto de carta superpuesta */
+    box-shadow: 0 -20px 50px rgba(0,0,0,0.06);
+}
+
+/* --- SCROLL REVEAL (Intersection Observer) --- */
+.sr-item {
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sr-left { transform: translateX(-100px); }
+.sr-right { transform: translateX(100px); }
+.sr-up { transform: translateY(80px); }
+.sr-scale { transform: scale(0.8); }
+
+.sr-item.sr-active {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+}
+/* Escalado de delays para elementos en cascada */
+.sr-delay-1 { transition-delay: 0.1s; }
+.sr-delay-2 { transition-delay: 0.2s; }
+.sr-delay-3 { transition-delay: 0.3s; }
+.sr-delay-4 { transition-delay: 0.4s; }
 .v2-link-container {
     display: flex;
     flex-direction: column;
@@ -554,28 +658,7 @@ a { text-decoration: none; color: inherit; }
     z-index: 1;
 }
 
-/* ─── REVEAL ANIMATIONS ─── */
-
-/* Secciones completas */
-.reveal-section {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal-section.visible { opacity: 1; transform: translateY(0); }
-
-/* Elementos individuales dentro de secciones */
-.ri {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.ri.visible { opacity: 1; transform: translateY(0); }
-
-/* Delays en cascada para elements .ri (nth-child no aplica bien, usamos selectores) */
-.ri:nth-child(2) { transition-delay: 0.1s; }
-.ri:nth-child(3) { transition-delay: 0.2s; }
-.ri:nth-child(4) { transition-delay: 0.3s; }
+/* --- REVEAL ANIMATIONS ELIMINADAS (Ahora usamos .sr-item) --- */
 
 /* Hero tiene animación propia */
 .fade-in-up {
@@ -627,7 +710,7 @@ a { text-decoration: none; color: inherit; }
     .v2-top, .v2-bottom { padding: 0 5%; flex-direction: column; align-items: flex-start; text-align: left; }
     .v2-empty, .v2-text { width: 100%; }
     .v2-title { font-size: 1.8rem; margin-bottom: 1.5rem; }
-    .v2-desc { margin-bottom: 2rem; font-size: 0.95rem; }
+    .v2-desc-part1, .v2-desc-part2 { margin-bottom: 2rem; font-size: 0.95rem; }
     .btn-oval-custom { width: 100%; justify-content: center; padding: 1.2rem; margin-top: 2rem; }
     
     /* V3: Slide Quiénes Somos */

@@ -58,20 +58,75 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroPText = document.getElementById('hero-p-text');
     const vista2 = document.getElementById('vista-2');
     
+    // Variables para el Autoscroll
+    let isAutoScrolling = false;
+    let autoScrollStarted = false;
+
+    // Función de easing cúbico para un scroll muy cinematográfico
+    function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function smoothScrollTo(targetY, duration) {
+        isAutoScrolling = true;
+        const startY = window.scrollY;
+        const distance = targetY - startY;
+        const startTime = performance.now();
+
+        function step(currentTime) {
+            const timeElapsed = currentTime - startTime;
+            let progress = timeElapsed / duration;
+            if (progress > 1) progress = 1;
+
+            const easeProgress = easeInOutCubic(progress);
+            window.scrollTo(0, startY + (distance * easeProgress));
+
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                isAutoScrolling = false; // Liberamos el control al usuario
+            }
+        }
+        requestAnimationFrame(step);
+    }
+    
     if (zoomSpacer && heroSectionEl && heroCaluvaText && vista2) {
         let maskCreated = false;
         let yellowOverlay = null;
 
+        // Preparar "El Gancho" (Staggered Text Reveal)
+        const v2Part1 = document.getElementById('v2-part1');
+        if (v2Part1) {
+            const words = v2Part1.innerText.split(' ');
+            v2Part1.innerHTML = '';
+            words.forEach((word, index) => {
+                const wrap = document.createElement('span');
+                wrap.className = 'word-wrap';
+                
+                const inner = document.createElement('span');
+                inner.className = 'word-inner';
+                // Agregamos un delay progresivo para cada palabra
+                inner.style.transitionDelay = `${index * 0.05}s`;
+                inner.innerText = word + '\u00A0';
+                
+                wrap.appendChild(inner);
+                v2Part1.appendChild(wrap);
+            });
+        }
+
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
-            // Distancia de scroll exacta basándose en el alto del spacer
-            const maxScroll = zoomSpacer.offsetHeight - window.innerHeight;
+            
+            // Distancia de scroll exacta basándose en el alto del spacer (450vh ahora)
+            const totalMaxScroll = zoomSpacer.offsetHeight - window.innerHeight;
+            // El zoom termina a los 2.5vh (lo que antes era el 100%)
+            const zoomMaxScroll = (2.5 / 3.5) * totalMaxScroll;
             
             if (scrollY > 5) {
                 
-                // FASE 1: (0 a 30%) -> Desaparece lo extra y se crea la máscara
-                const progress = Math.min(scrollY / maxScroll, 1);
-                const phase1 = Math.min(progress / 0.3, 1);
+                // FASE 1: (0 a 30% del zoomMaxScroll) -> Desaparece lo extra y se crea la máscara
+                const zoomProgress = Math.min(scrollY / zoomMaxScroll, 1);
+                const phase1 = Math.min(zoomProgress / 0.3, 1);
                 
                 const moveY = -(phase1 * 100); 
                 if (heroPText) {
@@ -162,10 +217,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Fase 1: Mover al centro
                     const currentCenterY = originalCenterY - (phase1 * (originalCenterY - targetCenterY));
                     
+                    // Resetear autoScrollStarted si el usuario sube
+                    if (zoomProgress < 0.25) {
+                        autoScrollStarted = false;
+                    }
+                    
                     // Fase 2: Escala
                     let phase2 = 0;
-                    if (progress > 0.3) {
-                        phase2 = (progress - 0.3) / 0.7;
+                    if (zoomProgress > 0.3) {
+                        phase2 = (zoomProgress - 0.3) / 0.7;
                     }
                     
                     if (yellowOverlay) {
@@ -175,6 +235,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Escala progresiva y calculada para abarcar la pantalla justo al final
                     const scaleFactor = 1 + Math.pow(phase2, 4) * 60; 
                     
+                    // --- AUTO SCROLL TRIGGER ---
+                    if (zoomProgress > 0.32 && !autoScrollStarted) {
+                        autoScrollStarted = true;
+                        // Hacemos scroll suave hasta zoomMaxScroll en 1.2 segundos
+                        smoothScrollTo(zoomMaxScroll, 1200);
+                    }
+
                     // Aplicar transform al grupo SVG
                     const maskGroup = document.getElementById('maskTextGroup');
                     if (maskGroup) {
@@ -188,23 +255,97 @@ document.addEventListener('DOMContentLoaded', () => {
                         heroSectionEl.style.opacity = 1;
                     }
                     
-                    // Costura perfecta de scroll
-                    const isPastZoom = scrollY >= maxScroll;
-                    if (isPastZoom) {
-                        vista2.style.position = "relative";
-                        vista2.style.zIndex = "100";
-                        // Eliminamos el hueco en blanco creado por el spacer
-                        vista2.style.marginTop = "-100vh";
+                    // Costura perfecta de scroll y Parallax 3D
+                    const isPastZoom = scrollY >= zoomMaxScroll;
+                    const isPastReveal = scrollY >= totalMaxScroll;
+                    
+                    // --- EL GANCHO ---
+                    // Se activa cuando la máscara está desapareciendo (ej. 80% del zoom)
+                    if (v2Part1) {
+                        v2Part1.classList.toggle('hook-active', zoomProgress >= 0.8 || isPastZoom);
+                    }
+
+                    if (isPastReveal) {
+                        // --- STACKING PAGES ---
+                        // Calculamos cuánto hemos scrolleado DENTRO de Vista 3
+                        const overlapScroll = scrollY - totalMaxScroll;
+                        const vh = window.innerHeight;
+                        
+                        if (overlapScroll <= vh) {
+                            // Fase de Overlap: Vista 3 está subiendo y cubriendo a Vista 2
+                            vista2.style.position = "fixed";
+                            vista2.style.zIndex = "1";
+                            vista2.style.marginTop = "0";
+                            vista2.style.visibility = "visible";
+                            
+                            // Fade out en los últimos 150px para evitar que se asome por debajo de la sombra
+                            const fadeStart = vh - 150;
+                            if (overlapScroll > fadeStart) {
+                                vista2.style.opacity = Math.max(1 - ((overlapScroll - fadeStart) / 150), 0);
+                            } else {
+                                vista2.style.opacity = 1;
+                            }
+                        } else {
+                            // Vista 3 ya cubrió completamente a Vista 2. 
+                            vista2.style.position = "fixed";
+                            vista2.style.zIndex = "1";
+                            vista2.style.marginTop = "0";
+                            vista2.style.visibility = "hidden"; 
+                            vista2.style.opacity = 0;
+                        }
                     } else {
+                        // Comportamiento normal en Vista 2
                         vista2.style.position = "fixed";
                         vista2.style.zIndex = "1";
                         vista2.style.marginTop = "0";
+                        vista2.style.visibility = "visible";
+                        vista2.style.opacity = 1;
+                    }
+
+                    // --- ANIMACIÓN "PA PA PA" EN VISTA 2 (Scroll Triggers + Adrenalina) ---
+                    const v2Part2 = document.getElementById('v2-part2');
+                    const v2Link = document.getElementById('v2-link-container');
+                    const v2YellowBg = document.getElementById('v2-yellow-bg');
+                    const v2Bottom = document.getElementById('v2-bottom-bg');
+                    const v2Logo = document.getElementById('v2-logo');
+
+                    if (isPastZoom) {
+                        // El usuario scrollea dentro del 100vh extra
+                        const revealProgress = Math.min(Math.max((scrollY - zoomMaxScroll) / (totalMaxScroll - zoomMaxScroll), 0), 1);
+                        
+                        // 1. Textos entran con adrenalina (spring) por clase CSS
+                        if (v2Part2) {
+                            const showPart2 = revealProgress >= 0.10;
+                            v2Part2.classList.toggle('reveal-active', showPart2);
+                        }
+                        
+                        if (v2Link) v2Link.classList.toggle('reveal-active', revealProgress >= 0.30);
+                        
+                        // 2. Fondo amarillo Sube físicamente a medida que deslizamos (Scrubbing)
+                        // Inicia fuera de pantalla (100%) y sube hasta 0% entre el 30% y el 80% del scroll
+                        if (v2YellowBg) {
+                            const bgProgress = Math.min(Math.max((revealProgress - 0.3) / 0.5, 0), 1);
+                            v2YellowBg.style.transform = `translateY(${(1 - bgProgress) * 100}%)`;
+                        }
+                        
+                        // 3. Botón y logo explotan (Adrenalina) cuando el fondo ya subió casi del todo
+                        if (v2Bottom) v2Bottom.classList.toggle('reveal-active', revealProgress >= 0.70);
+                        if (v2Logo) v2Logo.classList.toggle('reveal-active', revealProgress >= 0.70);
+                        
+                    } else {
+                        // Antes del zoom, todo apagado y fondo abajo
+                        if (v2Part2) v2Part2.classList.remove('reveal-active');
+                        if (v2Link) v2Link.classList.remove('reveal-active');
+                        if (v2YellowBg) v2YellowBg.style.transform = `translateY(100%)`;
+                        if (v2Bottom) v2Bottom.classList.remove('reveal-active');
+                        if (v2Logo) v2Logo.classList.remove('reveal-active');
                     }
                 }
 
             } else if (scrollY <= 5 && maskCreated) {
                 // REVERTIR SI VOLVEMOS ARRIBA
                 maskCreated = false;
+                autoScrollStarted = false;
                 heroCaluvaText.style.opacity = "1";
                 heroSectionEl.style.mask = "none";
                 heroSectionEl.style.webkitMask = "none";
@@ -230,34 +371,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
-    // ── REVEAL ON SCROLL ──
-    const revealElements = document.querySelectorAll('.reveal-section');
-    const revealItems    = document.querySelectorAll('.ri');
+    // --- SCROLL REVEAL (INTERSECTION OBSERVER) ---
+    const srOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+    };
 
-    const observer = new IntersectionObserver((entries) => {
+    const srObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.classList.add('sr-active');
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    }, srOptions);
 
-    // Observe secciones completas
-    revealElements.forEach(el => observer.observe(el));
+    document.querySelectorAll('.sr-item').forEach(el => {
+        srObserver.observe(el);
+    });
 
-    // Observe elementos individuales con un pequeño delay adicional
-    const itemObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
-            if (entry.isIntersecting) {
-                // Delay escalonado según el orden dentro del viewport
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, 100);
-                itemObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15 });
-
-    revealItems.forEach(el => itemObserver.observe(el));
 });
