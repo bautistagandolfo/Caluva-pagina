@@ -53,6 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 🎬 EFECTO ZOOM SIMPLE Y FUNDIDO DE MAR (Transición CALUVA al bajar) 🎬
     if (document.getElementById('hero-caluva-text')) {
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#inicio",
