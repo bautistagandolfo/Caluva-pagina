@@ -51,183 +51,36 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', checkHeaderColor, { passive: true });
     checkHeaderColor();
 
-    // ── COREOGRAFÍA ZOOM CALUVA CON MASCARA DINÁMICA JS ──
-    const zoomSpacer = document.getElementById('zoom-spacer');
-    const heroSectionEl = document.getElementById('inicio');
-    const heroCaluvaText = document.getElementById('hero-caluva-text');
-    const heroPText = document.getElementById('hero-p-text');
-    const vista2 = document.getElementById('vista-2');
-    
-    if (zoomSpacer && heroSectionEl && heroCaluvaText && vista2) {
-        let maskCreated = false;
-        let yellowOverlay = null;
-
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            // Distancia de scroll exacta basándose en el alto del spacer
-            const maxScroll = zoomSpacer.offsetHeight - window.innerHeight;
-            
-            if (scrollY > 5) {
-                
-                // FASE 1: (0 a 30%) -> Desaparece lo extra y se crea la máscara
-                const progress = Math.min(scrollY / maxScroll, 1);
-                const phase1 = Math.min(progress / 0.3, 1);
-                
-                const moveY = -(phase1 * 100); 
-                if (heroPText) {
-                    // IMPORTANTE: Quitar la animación 'forwards' para que JS pueda cambiar opacity y transform
-                    heroPText.style.animation = "none";
-                    heroPText.style.transform = `translateY(${moveY}px)`;
-                    heroPText.style.opacity = 1 - phase1;
-                }
-                if (header && !isMenuOpen) {
-                    header.style.transform = `translateY(${moveY}px)`;
-                    header.style.opacity = 1 - phase1;
-                }
-                
-                // Crear la máscara dinámicamente si no existe
-                if (!maskCreated && phase1 > 0.02) {
-                    const rect = heroCaluvaText.getBoundingClientRect();
-                    const style = window.getComputedStyle(heroCaluvaText);
-                    
-                    // Agregamos un fondo amarillo a vista-2 para que el hueco arranque amarillo
-                    yellowOverlay = document.createElement('div');
-                    yellowOverlay.style.position = 'absolute';
-                    yellowOverlay.style.top = '0';
-                    yellowOverlay.style.left = '0';
-                    yellowOverlay.style.width = '100%';
-                    yellowOverlay.style.height = '100%';
-                    yellowOverlay.style.backgroundColor = style.color; // amarillo
-                    yellowOverlay.style.zIndex = '9999';
-                    yellowOverlay.style.pointerEvents = 'none';
-                    vista2.appendChild(yellowOverlay);
-
-                    heroCaluvaText.style.animation = "none";
-                    heroCaluvaText.style.opacity = "0"; 
-                    
-                    heroSectionEl.dataset.originalCenterY = rect.top + (rect.height / 2);
-                    heroSectionEl.dataset.targetCenterY = window.innerHeight / 2;
-                    heroSectionEl.dataset.centerX = window.innerWidth / 2;
-                    
-                    // Crear el contenedor SVG en el DOM
-                    const svgContainer = document.createElement('div');
-                    svgContainer.id = 'zoom-svg-container';
-                    svgContainer.style.position = 'fixed';
-                    svgContainer.style.top = '0';
-                    svgContainer.style.left = '0';
-                    svgContainer.style.width = '1px';
-                    svgContainer.style.height = '1px';
-                    svgContainer.style.opacity = '0.01';
-                    svgContainer.style.zIndex = '-1';
-                    svgContainer.style.overflow = 'hidden';
-                    svgContainer.style.pointerEvents = 'none';
-                    
-                    const centerX = window.innerWidth / 2;
-                    const centerY = rect.top + (rect.height / 2);
-                    
-                    // Usamos un SVG en el DOM para poder escalar el vector internamente
-                    svgContainer.innerHTML = `
-                    <svg>
-                        <defs>
-                            <mask id="dynamicVectorMask">
-                                <rect width="10000" height="10000" x="-5000" y="-5000" fill="white" />
-                                <g id="maskTextGroup" transform="translate(${centerX}, ${centerY}) scale(1)">
-                                    <text x="0" y="0" dy="0.35em" text-anchor="middle"
-                                          font-family="${style.fontFamily.replace(/"/g, "'")}" 
-                                          font-weight="${style.fontWeight}" 
-                                          font-size="${style.fontSize}" 
-                                          letter-spacing="${style.letterSpacing}" 
-                                          fill="black">
-                                        CALUVA
-                                    </text>
-                                </g>
-                            </mask>
-                        </defs>
-                    </svg>`;
-                    document.body.appendChild(svgContainer);
-                    
-                    // Aplicamos la máscara apuntando al ID del DOM
-                    heroSectionEl.style.mask = `url(#dynamicVectorMask)`;
-                    heroSectionEl.style.webkitMask = `url(#dynamicVectorMask)`;
-                    
-                    maskCreated = true;
-                }
-
-                // Animaciones de MÁSCARA Vectorial
-                if (maskCreated) {
-                    const originalCenterY = parseFloat(heroSectionEl.dataset.originalCenterY);
-                    const targetCenterY = parseFloat(heroSectionEl.dataset.targetCenterY);
-                    const centerX = parseFloat(heroSectionEl.dataset.centerX);
-                    
-                    // Fase 1: Mover al centro
-                    const currentCenterY = originalCenterY - (phase1 * (originalCenterY - targetCenterY));
-                    
-                    // Fase 2: Escala
-                    let phase2 = 0;
-                    if (progress > 0.3) {
-                        phase2 = (progress - 0.3) / 0.7;
-                    }
-                    
-                    if (yellowOverlay) {
-                        yellowOverlay.style.opacity = 1 - Math.min(phase2 / 0.2, 1);
-                    }
-                    
-                    // Escala progresiva y calculada para abarcar la pantalla justo al final
-                    const scaleFactor = 1 + Math.pow(phase2, 4) * 60; 
-                    
-                    // Aplicar transform al grupo SVG
-                    const maskGroup = document.getElementById('maskTextGroup');
-                    if (maskGroup) {
-                        maskGroup.setAttribute('transform', `translate(${centerX}, ${currentCenterY}) scale(${scaleFactor})`);
-                    }
-                    
-                    // Desvanecer suavemente el hero en el último 10% de la fase 2
-                    if (phase2 > 0.9) {
-                        heroSectionEl.style.opacity = 1 - ((phase2 - 0.9) / 0.1);
-                    } else {
-                        heroSectionEl.style.opacity = 1;
-                    }
-                    
-                    // Costura perfecta de scroll
-                    const isPastZoom = scrollY >= maxScroll;
-                    if (isPastZoom) {
-                        vista2.style.position = "relative";
-                        vista2.style.zIndex = "100";
-                        // Eliminamos el hueco en blanco creado por el spacer
-                        vista2.style.marginTop = "-100vh";
-                    } else {
-                        vista2.style.position = "fixed";
-                        vista2.style.zIndex = "1";
-                        vista2.style.marginTop = "0";
-                    }
-                }
-
-            } else if (scrollY <= 5 && maskCreated) {
-                // REVERTIR SI VOLVEMOS ARRIBA
-                maskCreated = false;
-                heroCaluvaText.style.opacity = "1";
-                heroSectionEl.style.mask = "none";
-                heroSectionEl.style.webkitMask = "none";
-                heroSectionEl.style.opacity = 1;
-                
-                if (yellowOverlay) {
-                    yellowOverlay.remove();
-                    yellowOverlay = null;
-                }
-                const svgCont = document.getElementById('zoom-svg-container');
-                if (svgCont) svgCont.remove();
-                
-                if (heroPText) {
-                    heroPText.style.transform = `translateY(0)`;
-                    heroPText.style.opacity = 1;
-                }
-                const headerEl = document.getElementById('mainHeader');
-                if (headerEl) {
-                    headerEl.style.transform = `translateY(0)`;
-                    headerEl.style.opacity = 1;
-                }
+    // 🎬 EFECTO ZOOM SIMPLE Y FUNDIDO DE MAR (Transición CALUVA al bajar) 🎬
+    if (document.getElementById('hero-caluva-text')) {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#inicio",
+                start: "top top",
+                end: "+=200%", // Dura 2 pantallas para que sea suave
+                pin: true,     // Fija la sección inicio
+                scrub: 1       // Suavizado del scrub
             }
-        }, { passive: true });
+        });
+
+        // 1. Desvanece el texto de arriba ("CREEMOS QUE...") y el header (opcional) rápidamente
+        tl.to("#hero-p", { opacity: 0, duration: 0.1 }, 0);
+        tl.to("#mainHeader", { opacity: 0, duration: 0.1 }, 0);
+
+        // 2. Aumenta el texto CALUVA (mantiene su color crema y llena la pantalla)
+        tl.to("#hero-caluva-text", {
+            scale: 80, // Se vuelve gigante
+            ease: "power2.inOut",
+            duration: 1
+        }, 0);
+
+        // 3. El mar de fondo (video) se va difuminando
+        // Como #inicio tiene background: var(--color-cream); el video se funde con el crema.
+        tl.to(".hero-background", {
+            opacity: 0,
+            ease: "power2.inOut",
+            duration: 1
+        }, 0);
     }
 
     // ── REVEAL ON SCROLL ──
