@@ -55,35 +55,72 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('hero-caluva-text')) {
         if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger);
-        }
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#inicio",
-                start: "top top",
-                end: "+=200%", // Dura 2 pantallas para que sea suave
-                pin: true,     // Fija la sección inicio
-                scrub: 1       // Suavizado del scrub
+
+            // 1. ANIMACIÓN INICIAL (Blindaje de Reconstrucción)
+            // Esperamos a que la entrada termine ANTES de crear el ScrollTrigger. 
+            // Esto le asegura a GSAP que grabe el "100% reconstruido" real (opacidad 1, y 0).
+            const initTl = gsap.timeline({
+                onComplete: () => {
+                    initHeroScroll();
+                }
+            });
+            initTl.fromTo("#hero-p", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, 0);
+            initTl.fromTo("#hero-caluva-text", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, 0.3);
+
+            function initHeroScroll() {
+                // Niveles de profundidad para que #vista-2 asome libremente por detrás
+                gsap.set("#inicio", { zIndex: 10, position: "relative" });
+                gsap.set("#vista-2", { zIndex: 5, position: "relative" });
+
+                // 2. EL ANCLA VISUAL (#inicio)
+                const scrubTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "#inicio",
+                        start: "top top",
+                        end: "+=200%", // EXACTAMENTE 200vh de anclaje (depende dinámicamente de tu pantalla)
+                        pin: true,
+                        pinSpacing: false, // Permite que la vista-2 suba naturalmente por el fondo
+                        scrub: 1
+                    }
+                });
+                
+                // La primera mitad del anclaje (los primeros 100vh de scroll) movemos CALUVA al centro
+                scrubTl.to("#hero-p, #mainHeader", { opacity: 0, duration: 0.5 }, 0);
+                scrubTl.to("#hero-caluva-text", {
+                    y: () => {
+                        const el = document.getElementById('hero-caluva-text');
+                        return -(window.innerHeight / 2 - el.offsetHeight / 2); 
+                    },
+                    ease: "none", 
+                    duration: 0.5
+                }, 0);
+                // Rellenamos el timeline vacío hasta 1.0 para que la animación ocupe EXACTAMENTE el 50% inicial
+                scrubTl.set({}, {}, 1.0);
+
+                // 3. LA TRAMPA DE INERCIA Y TRANSICIÓN (#vista-2)
+                ScrollTrigger.create({
+                    trigger: "#vista-2",
+                    start: "top top", // Ocurre matemáticamente en el centro de la transición anterior (a los 100vh exactos)
+                    end: "+=1200", // Pinea la vista 2 creando un "colchón" de scroll. Impide llegar a la vista 3.
+                    pin: true, 
+                    pinSpacing: true, // Empuja todo lo demás hacia abajo
+                    onEnter: () => {
+                        // Transición Automática: CALUVA toma la pantalla, el mar se desvanece
+                        gsap.to("#hero-caluva-text", { scale: 150, duration: 1.2, ease: "power2.inOut" });
+                        gsap.to("#inicio", { autoAlpha: 0, duration: 1.2, ease: "power2.inOut" });
+                    },
+                    onLeaveBack: () => {
+                        // RECONSTRUCCIÓN 100% AL VOLVER ARRIBA
+                        // IMPORTANTE: Solo matamos la escala y opacidad, SIN matar la posición Y que controla el scrub
+                        gsap.killTweensOf("#hero-caluva-text", "scale");
+                        gsap.killTweensOf("#inicio", "opacity,visibility,autoAlpha");
+                        
+                        gsap.to("#hero-caluva-text", { scale: 1, duration: 0.8, ease: "power2.out" });
+                        gsap.to("#inicio", { autoAlpha: 1, duration: 0.8, ease: "power2.out" });
+                    }
+                });
             }
-        });
-
-        // 1. Desvanece el texto de arriba ("CREEMOS QUE...") y el header (opcional) rápidamente
-        tl.to("#hero-p", { opacity: 0, duration: 0.1 }, 0);
-        tl.to("#mainHeader", { opacity: 0, duration: 0.1 }, 0);
-
-        // 2. Aumenta el texto CALUVA (mantiene su color crema y llena la pantalla)
-        tl.to("#hero-caluva-text", {
-            scale: 80, // Se vuelve gigante
-            ease: "power2.inOut",
-            duration: 1
-        }, 0);
-
-        // 3. El mar de fondo (video) se va difuminando
-        // Como #inicio tiene background: var(--color-cream); el video se funde con el crema.
-        tl.to(".hero-background", {
-            opacity: 0,
-            ease: "power2.inOut",
-            duration: 1
-        }, 0);
+        }
     }
 
     // ── REVEAL ON SCROLL ──
