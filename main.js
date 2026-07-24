@@ -118,10 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             
-            // Distancia de scroll exacta basándose en el alto del spacer (450vh ahora)
+            // Distancia de scroll exacta basándose en el alto del spacer
             const totalMaxScroll = zoomSpacer.offsetHeight - window.innerHeight;
-            // El zoom termina a los 2.5vh (lo que antes era el 100%)
-            const zoomMaxScroll = (2.5 / 3.5) * totalMaxScroll;
+            // El zoom termina exactamente al final del spacer
+            const zoomMaxScroll = totalMaxScroll;
             
             if (scrollY > 5) {
                 
