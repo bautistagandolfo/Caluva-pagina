@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (zoomSpacer && heroSectionEl && heroCaluvaText && vista2) {
         let maskCreated = false;
         let yellowOverlay = null;
+        let v2Revealed = false; // una vez revelada, vista-2 no se vuelve a ocultar por oscilación del scroll
 
         // Preparar "El Gancho" (Staggered Text Reveal)
         const v2Part1 = document.getElementById('v2-part1');
@@ -221,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (zoomProgress < 0.25) {
                         autoScrollStarted = false;
                     }
+                    // NOTA: v2Revealed solo se resetea en el bloque de revert (scrollY <= 5)
                     
                     // Fase 2: Escala
                     let phase2 = 0;
@@ -238,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // --- AUTO SCROLL TRIGGER ---
                     if (zoomProgress > 0.32 && !autoScrollStarted) {
                         autoScrollStarted = true;
-                        // Hacemos scroll suave hasta zoomMaxScroll en 1.2 segundos
+                        v2Revealed = true; // Marcar como revelada desde el inicio del autoscroll
                         smoothScrollTo(zoomMaxScroll, 1200);
                     }
 
@@ -248,22 +250,21 @@ document.addEventListener('DOMContentLoaded', () => {
                         maskGroup.setAttribute('transform', `translate(${centerX}, ${currentCenterY}) scale(${scaleFactor})`);
                     }
                     
-                    // Desvanecer suavemente el hero en el último 10% de la fase 2
-                    if (phase2 > 0.9) {
-                        heroSectionEl.style.opacity = 1 - ((phase2 - 0.9) / 0.1);
+                    // El mar se desvanece gradualmente desde el inicio del zoom (no solo al final)
+                    // El mar se desvanece gradualmente desde el inicio del zoom (no solo al final)
+                    if (phase2 > 0.3) {
+                        heroSectionEl.style.opacity = 1 - ((phase2 - 0.3) / 0.7);
+                        heroSectionEl.style.pointerEvents = "none";
                     } else {
                         heroSectionEl.style.opacity = 1;
+                        heroSectionEl.style.pointerEvents = "auto";
                     }
                     
                     // Costura perfecta de scroll y Parallax 3D
                     const isPastZoom = scrollY >= zoomMaxScroll;
                     const isPastReveal = scrollY >= totalMaxScroll;
                     
-                    // --- EL GANCHO ---
-                    // Se activa cuando la máscara está desapareciendo (ej. 80% del zoom)
-                    if (v2Part1) {
-                        v2Part1.classList.toggle('hook-active', zoomProgress >= 0.8 || isPastZoom);
-                    }
+                    // --- EL GANCHO se activa junto con el resto de vista-2 post-transición ---
 
                     if (isPastReveal) {
                         // --- STACKING PAGES ---
@@ -309,34 +310,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     const v2Bottom = document.getElementById('v2-bottom-bg');
                     const v2Logo = document.getElementById('v2-logo');
 
-                    if (isPastZoom) {
-                        // El usuario scrollea dentro del 100vh extra
-                        const revealProgress = Math.min(Math.max((scrollY - zoomMaxScroll) / (totalMaxScroll - zoomMaxScroll), 0), 1);
-                        
-                        // 1. Textos entran con adrenalina (spring) por clase CSS
-                        if (v2Part2) {
-                            const showPart2 = revealProgress >= 0.10;
-                            v2Part2.classList.toggle('reveal-active', showPart2);
-                        }
-                        
-                        if (v2Link) v2Link.classList.toggle('reveal-active', revealProgress >= 0.30);
-                        
-                        // 2. Fondo amarillo Sube físicamente a medida que deslizamos (Scrubbing)
-                        // Inicia fuera de pantalla (100%) y sube hasta 0% entre el 30% y el 80% del scroll
-                        if (v2YellowBg) {
-                            const bgProgress = Math.min(Math.max((revealProgress - 0.3) / 0.5, 0), 1);
-                            v2YellowBg.style.transform = `translateY(${(1 - bgProgress) * 100}%)`;
-                        }
-                        
-                        // 3. Botón y logo explotan (Adrenalina) cuando el fondo ya subió casi del todo
-                        if (v2Bottom) v2Bottom.classList.toggle('reveal-active', revealProgress >= 0.70);
-                        if (v2Logo) v2Logo.classList.toggle('reveal-active', revealProgress >= 0.70);
-                        
+                    if (isPastZoom || v2Revealed) {
+                        v2Revealed = true;
+                        // Revelar vista-2 completa e instantánea al terminar la transición
+                        if (v2Part1) v2Part1.classList.add('hook-active');
+                        if (v2Part2) v2Part2.classList.add('reveal-active');
+                        if (v2Link) v2Link.classList.add('reveal-active');
+                        if (v2YellowBg) v2YellowBg.style.transform = 'translateY(0%)';
+                        if (v2Bottom) v2Bottom.classList.add('reveal-active');
+                        if (v2Logo) v2Logo.classList.add('reveal-active');
                     } else {
-                        // Antes del zoom, todo apagado y fondo abajo
+                        // Antes del zoom, todo oculto
+                        if (v2Part1) v2Part1.classList.remove('hook-active');
                         if (v2Part2) v2Part2.classList.remove('reveal-active');
                         if (v2Link) v2Link.classList.remove('reveal-active');
-                        if (v2YellowBg) v2YellowBg.style.transform = `translateY(100%)`;
+                        if (v2YellowBg) v2YellowBg.style.transform = 'translateY(100%)';
                         if (v2Bottom) v2Bottom.classList.remove('reveal-active');
                         if (v2Logo) v2Logo.classList.remove('reveal-active');
                     }
@@ -346,10 +334,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // REVERTIR SI VOLVEMOS ARRIBA
                 maskCreated = false;
                 autoScrollStarted = false;
+                v2Revealed = false;
                 heroCaluvaText.style.opacity = "1";
                 heroSectionEl.style.mask = "none";
                 heroSectionEl.style.webkitMask = "none";
                 heroSectionEl.style.opacity = 1;
+                heroSectionEl.style.pointerEvents = "";
                 
                 if (yellowOverlay) {
                     yellowOverlay.remove();
@@ -390,5 +380,50 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.sr-item').forEach(el => {
         srObserver.observe(el);
     });
+
+    // ── MODAL: AGENDEMOS UNA CALL ──
+    const callModal    = document.getElementById('call-modal');
+    const btnAgendemos = document.getElementById('btn-agendemos');
+    const btnModalClose = document.getElementById('call-modal-close');
+    const btnServicios  = document.getElementById('btn-servicios');
+
+    const openModal = () => {
+        if (!callModal) return;
+        callModal.classList.add('active');
+        callModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    };
+    const closeModal = () => {
+        if (!callModal) return;
+        callModal.classList.remove('active');
+        callModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+
+    if (btnAgendemos) btnAgendemos.addEventListener('click', openModal);
+    if (btnModalClose) btnModalClose.addEventListener('click', closeModal);
+    if (callModal) callModal.addEventListener('click', e => { if (e.target === callModal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // Formulario: feedback visual de envío (sin backend por ahora)
+    const callForm = document.getElementById('call-form');
+    if (callForm) {
+        callForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = callForm.querySelector('.call-form-submit');
+            btn.textContent = '¡ENVIADO!';
+            btn.style.opacity = '0.6';
+            setTimeout(closeModal, 1200);
+            setTimeout(() => { btn.textContent = 'ENVIAR'; btn.style.opacity = ''; callForm.reset(); }, 1600);
+        });
+    }
+
+    // CONOCE NUESTROS SERVICIOS → scroll suave a #vista-4
+    if (btnServicios) {
+        btnServicios.addEventListener('click', () => {
+            const vista4 = document.getElementById('vista-4');
+            if (vista4) vista4.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
 
 });
