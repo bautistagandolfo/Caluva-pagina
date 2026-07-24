@@ -627,6 +627,86 @@ a { text-decoration: none; color: inherit; }
 
 /* Fondo crema clarito para secciones */
 .bg-cream { background-color: var(--color-cream); }
+/* ─── VISTA CTA PRE-FOOTER ─── */
+#vista-cta {
+    background: linear-gradient(to bottom, var(--color-cream) 0%, #ffffff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12rem 6%;
+    position: relative;
+    overflow: hidden;
+}
+.cta-container {
+    text-align: center;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cta-spiral {
+    margin: 0 auto 3.5rem;
+    animation: spin-slow 12s linear infinite;
+    opacity: 0.8;
+}
+@keyframes spin-slow { 100% { transform: rotate(360deg); } }
+
+.cta-title {
+    font-family: var(--font-main);
+    color: var(--color-brown);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 4.5rem;
+}
+.cta-title-small {
+    font-size: clamp(0.75rem, 2vw, 0.95rem);
+    letter-spacing: 0.25em;
+    font-weight: 700;
+    opacity: 0.65;
+    text-transform: uppercase;
+}
+.cta-title-large {
+    font-size: clamp(4.5rem, 12vw, 9rem);
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 0.9;
+}
+.cta-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.cta-btn {
+    background: var(--color-brown);
+    color: var(--color-cream);
+    border: 2px solid var(--color-brown);
+    cursor: pointer;
+    padding: 1.1rem 3.5rem;
+    font-family: var(--font-main);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cta-btn:hover {
+    background: transparent;
+    color: var(--color-brown);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(74, 36, 16, 0.08);
+}
+.cta-btn-arrow {
+    font-size: 1.1rem;
+    transition: transform 0.4s ease;
+}
+.cta-btn:hover .cta-btn-arrow {
+    transform: translateX(4px) rotate(-45deg);
+}
 
 /* ─── VISTA 6: FOOTER ─── */
 #contacto {
@@ -636,7 +716,6 @@ a { text-decoration: none; color: inherit; }
     align-items: center;
     justify-content: flex-end;
     padding: 6rem 8% 0;
-    border-top: 1px solid rgba(74,36,16,0.08);
     overflow: hidden; /* Corta el logo por abajo al estilo Calvagni */
     min-height: 60vh;
 }

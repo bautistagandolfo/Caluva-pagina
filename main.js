@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── MODAL: AGENDEMOS UNA CALL ──
     const callModal    = document.getElementById('call-modal');
-    const btnAgendemos = document.getElementById('btn-agendemos');
+    const btnAgendemosList = document.querySelectorAll('.btn-agendemos-trigger');
     const btnModalClose = document.getElementById('call-modal-close');
     const btnServicios  = document.getElementById('btn-servicios');
 
@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     };
 
-    if (btnAgendemos) btnAgendemos.addEventListener('click', openModal);
+    btnAgendemosList.forEach(btn => btn.addEventListener('click', openModal));
     if (btnModalClose) btnModalClose.addEventListener('click', closeModal);
     if (callModal) callModal.addEventListener('click', e => { if (e.target === callModal) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
