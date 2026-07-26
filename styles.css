@@ -93,32 +93,48 @@ a { text-decoration: none; color: inherit; }
     text-align: left;
 }
 
-/* ─── SPIRAL ICON ─── */
+/* ─── STICKY MENU BUTTON (POST-HERO) ─── */
+.sticky-menu-btn {
+    position: fixed;
+    top: 2.2rem;
+    right: 6%;
+    z-index: 1000;
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    mix-blend-mode: difference;
+    padding: 0;
+}
+.sticky-menu-btn.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+/* ─── SPIRAL ICON (Logo real — color controlado con background-color) ─── */
 .spiral-icon {
-    width: 55px; height: 55px;
-    border-radius: 50%;
-    border: 5px solid var(--color-cream);
-    border-right-color: transparent;
-    position: relative; transform: rotate(45deg);
+    display: block;
+    flex-shrink: 0;
+    width: 110px;
+    height: 110px;
+    -webkit-mask-image: url('assets/caluva-spiral.png');
+    mask-image: url('assets/caluva-spiral.png');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    background-color: var(--color-cream);
 }
-.spiral-icon::before {
-    content: ''; position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 26px; height: 26px; border-radius: 50%;
-    border: 5px solid var(--color-cream); border-bottom-color: transparent;
-}
-.spiral-icon::after {
-    content: ''; position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px; height: 8px;
-    background-color: var(--color-cream); border-radius: 50%;
-}
-.spiral-icon.dark { border-color: var(--color-brown); border-right-color: transparent; }
-.spiral-icon.dark::before { border-color: var(--color-brown); border-bottom-color: transparent; }
-.spiral-icon.dark::after { background-color: var(--color-brown); }
-.spiral-icon.large { width: 75px; height: 75px; border-width: 7px; }
-.spiral-icon.large::before { width: 37px; height: 37px; border-width: 7px; }
-.spiral-icon.large::after { width: 13px; height: 13px; }
+.spiral-icon.dark        { background-color: var(--color-brown); }
+.spiral-icon.large       { width: 130px; height: 130px; }
+.spiral-icon.small-spiral{ width: 70px; height: 70px; }
 
 /* ─── FULLSCREEN MENU ─── */
 .fullscreen-menu {
@@ -537,6 +553,7 @@ a { text-decoration: none; color: inherit; }
     flex: 1; min-height: 50vh;
     position: relative;
     display: flex; align-items: center;
+    overflow: hidden;
 }
 .split-bg { position: absolute; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
 .split-bg img {
@@ -544,6 +561,11 @@ a { text-decoration: none; color: inherit; }
     object-position: 70% center;
     transform: scale(1.15);
     transform-origin: right center;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s ease;
+}
+.split-half:hover .split-bg img {
+    transform: scale(1.22);
+    filter: brightness(1.04);
 }
 
 .split-content {
@@ -636,6 +658,7 @@ a { text-decoration: none; color: inherit; }
     padding: 12rem 6%;
     position: relative;
     overflow: hidden;
+    isolation: isolate; /* evita que el spinner cree conflicto de z-index con el menú */
 }
 .cta-container {
     text-align: center;
@@ -645,9 +668,11 @@ a { text-decoration: none; color: inherit; }
     align-items: center;
 }
 .cta-spiral {
+    width: 220px !important;
+    height: 220px !important;
     margin: 0 auto 3.5rem;
     animation: spin-slow 12s linear infinite;
-    opacity: 0.8;
+    opacity: 0.85;
 }
 @keyframes spin-slow { 100% { transform: rotate(360deg); } }
 
@@ -697,8 +722,8 @@ a { text-decoration: none; color: inherit; }
 .cta-btn:hover {
     background: transparent;
     color: var(--color-brown);
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(74, 36, 16, 0.08);
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(74, 36, 16, 0.15);
 }
 .cta-btn-arrow {
     font-size: 1.1rem;
@@ -835,6 +860,7 @@ a { text-decoration: none; color: inherit; }
     .menu-link { font-size: 2.2rem; }
     .menu-text { font-size: 1.15rem; } /* Aumentamos el texto "MENU" en celulares */
     .menu-toggle { font-size: 1.4rem; } 
+    .sticky-menu-btn { top: 1.8rem; right: 5%; font-size: 1.4rem; }
     .hamburger { transform: scale(1.2); } /* Hamburguesa un poco más grande para acompañar */
 
     /* Hero */
@@ -944,6 +970,10 @@ a { text-decoration: none; color: inherit; }
     gap: 1.2rem;
     margin-bottom: 0.6rem;
 }
+.call-modal-header .spiral-icon {
+    width: 75px !important;
+    height: 75px !important;
+}
 .call-modal-title {
     font-family: var(--font-main);
     font-weight: 800;
@@ -991,28 +1021,45 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-brown);
     opacity: 0.4;
 }
-.call-input:focus { opacity: 1; }
+.call-input:focus {
+    opacity: 1;
+    border-bottom: 2px solid var(--color-brown);
+    background: rgba(255, 255, 255, 0.45);
+    padding-left: 0.5rem;
+}
 .call-textarea {
     resize: none;
     border: 1.5px solid var(--color-brown);
     padding: 0.7rem;
     margin-top: 0.25rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.call-textarea:focus {
+    background: rgba(255, 255, 255, 0.45);
+    border-color: var(--color-brown);
+    box-shadow: 0 4px 15px rgba(74, 36, 16, 0.08);
 }
 .call-form-submit {
     align-self: flex-end;
     margin-top: 0.75rem;
     background: var(--color-brown);
     color: var(--color-cream);
-    border: none;
+    border: 2px solid var(--color-brown);
     cursor: pointer;
     font-family: var(--font-main);
     font-weight: 800;
     font-size: 0.78rem;
     letter-spacing: 0.15em;
     padding: 0.95rem 2.5rem;
-    transition: opacity 0.2s;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.call-form-submit:hover { opacity: 0.82; }
+.call-form-submit:hover {
+    background: transparent;
+    color: var(--color-brown);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(74, 36, 16, 0.12);
+}
 @media (max-width: 480px) {
     .call-form-row { grid-template-columns: 1fr; }
     .call-modal-box { padding: 2.5rem 1.75rem 2rem; }
