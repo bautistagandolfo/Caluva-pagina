@@ -78,7 +78,9 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            padding-right: 140px; /* Margen reservado a la derecha para que el logo de 130px jamás pise el texto */
+            padding-right: 5%;
+            /* ESTE PADDING ES LA CLAVE: hace que la columna sea más alta que el texto. 
+               Se aumenta mucho el top para compensar el line-height y asegurar que la foto nace antes */
             padding-top: 35px; 
             padding-bottom: 25px;
         }
