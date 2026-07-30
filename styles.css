@@ -677,8 +677,8 @@ a { text-decoration: none; color: inherit; }
 }
 .cta-left-col {
     position: absolute;
-    left: 5%;
-    top: 50%;
+    left: 18%; /* Más cerca del bloque central */
+    top: 60%;  /* Un poquito más abajo */
     transform: translateY(-50%);
     z-index: 2;
 }
