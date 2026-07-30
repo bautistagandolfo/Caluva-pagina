@@ -279,7 +279,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 5rem 6% 6rem; /* 6rem de padding bottom para subir bastante el título */
+    padding: 5rem 6% 10rem; /* 10rem de padding bottom para subir bastante el título */
     overflow: hidden;
 }
 
@@ -413,7 +413,7 @@ a { text-decoration: none; color: inherit; }
     letter-spacing: -0.5px;
     line-height: 1;
     align-self: start;
-    margin-top: -1.2rem; /* subir la palabra mucho más para juntarla */
+    margin-top: -2.5rem; /* subir la palabra mucho más para juntarla */
 }
 
 /* Col 2, filas 1 y 2: texto descriptivo */
