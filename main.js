@@ -250,11 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const scaleFactor = 1 + Math.pow(phase2, 4) * 60; 
                     
                     // --- AUTO SCROLL TRIGGER ---
-                    // Eliminado por pedido del usuario: ya no escrollea solo por inercia.
                     if (zoomProgress > 0.32 && !autoScrollStarted) {
                         autoScrollStarted = true;
-                        v2Revealed = true; 
-                        // smoothScrollTo(zoomMaxScroll, 1200); // <- Desactivado
+                        v2Revealed = true; // Marcar como revelada desde el inicio del autoscroll
+                        smoothScrollTo(zoomMaxScroll, 1200);
                     }
 
                     // Aplicar transform al grupo SVG
