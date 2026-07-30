@@ -813,37 +813,33 @@ a { text-decoration: none; color: inherit; }
 .v6-redes-container {
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end; /* Alineado a la derecha como en la foto */
     padding: 0 10%;
     margin-bottom: auto;
-    margin-top: 2rem;
+    margin-top: 4rem; /* Bajado un poco para que conviva mejor con el CTA superior */
 }
 .v6-redes {
     display: flex; flex-direction: column; align-items: flex-start;
 }
 .v6-redes h3 {
-    font-family: var(--font-main); font-weight: 600;
-    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    font-family: var(--font-main); font-weight: 800; /* Más negrita según la foto */
+    font-size: 1rem; /* Mismo tamaño base que los links */
     color: var(--color-brown);
-    margin-bottom: 1rem;
-    letter-spacing: 0.25em;
+    margin-bottom: 0.2rem; /* Pegadito a los links */
+    letter-spacing: 0;
     text-transform: uppercase;
 }
 .social-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--font-main); font-weight: 500;
-    font-size: 0.95rem; /* Discreto */
+    display: block; /* Sin flex porque ya no hay íconos */
+    font-family: var(--font-main); font-weight: 600; /* Medium-bold */
+    font-size: 1rem;
     color: var(--color-brown);
     text-decoration: none;
     transition: opacity 0.3s ease;
+    margin-top: 0.2rem; /* Pegaditos entre sí */
 }
 .social-link:hover {
     opacity: 0.7;
-}
-.social-link svg {
-    width: 20px; height: 20px;
 }
 /* Logo CALUVA cortado al estilo Calvagni (Bulletproof para evitar bug de Chrome) */
 .v6-logo {
@@ -851,7 +847,7 @@ a { text-decoration: none; color: inherit; }
     text-align: center;
     margin-top: auto;
     font-size: clamp(6rem, 18vw, 18rem); /* Pasamos el font-size al contenedor para usar em */
-    height: 0.60em; /* Alto estricto cortado (0.85 original - 0.25 de corte) */
+    height: 0.75em; /* Aumentado a 0.75 para que esté "menos recortado" (se vea más texto) */
     overflow: hidden; /* Cortamos físicamente sin márgenes negativos */
     display: flex;
     align-items: flex-start;
