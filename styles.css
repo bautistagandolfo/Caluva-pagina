@@ -662,31 +662,42 @@ a { text-decoration: none; color: inherit; }
 }
 /* ─── VISTA 5: CTA (Llamado a la acción) ─── */
 #vista-cta {
-    padding-top: 1rem;
+    padding-top: 0;
     padding-bottom: 2rem;
 }
 .cta-container {
-    text-align: center;
-    max-width: 1000px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
+    padding: 0 10%;
+    gap: 3rem;
+    max-width: none;
+}
+.cta-left-col {
+    flex-shrink: 0;
 }
 .cta-spiral {
-    width: 220px !important;
-    height: 220px !important;
-    margin: 0 auto 3.5rem;
+    width: 160px !important;
+    height: 160px !important;
+    margin: 0;
     animation: spin-slow 12s linear infinite;
     opacity: 0.85;
 }
 @keyframes spin-slow { 100% { transform: rotate(360deg); } }
 
+.cta-right-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
 .cta-title {
     font-family: var(--font-main);
     color: var(--color-brown);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
     margin-bottom: 2rem;
 }
@@ -705,7 +716,7 @@ a { text-decoration: none; color: inherit; }
 }
 .cta-btn-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 .cta-btn {
     background: var(--color-brown);
@@ -876,6 +887,14 @@ a { text-decoration: none; color: inherit; }
     /* Secciones generales */
     .section { padding: 5rem 5%; }
     .section + .section { padding-top: 3rem; }
+
+    /* CTA (Vista 5) */
+    #vista-cta { padding-bottom: 3rem; }
+    .cta-container { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .cta-left-col { margin-bottom: 0; }
+    .cta-right-col { align-items: center; text-align: center; }
+    .cta-title { align-items: center; }
+    .cta-btn-wrapper { justify-content: center; }
 
     /* V2: Conoce Nuestros Servicios */
     .v2-top, .v2-bottom { padding: 0 5%; flex-direction: column; align-items: flex-start; text-align: left; }
