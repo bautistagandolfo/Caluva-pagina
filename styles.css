@@ -279,7 +279,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 5rem 6% 3rem; /* 3rem de padding bottom para subir el título */
+    padding: 5rem 6% 6rem; /* 6rem de padding bottom para subir bastante el título */
     overflow: hidden;
 }
 
@@ -397,8 +397,8 @@ a { text-decoration: none; color: inherit; }
     letter-spacing: -0.5px;
 }
 .v2-prev-de {
-    /* "DE" separado del "UNIVERSO" con espacio visible pero no en el extremo */
-    margin-left: 2rem;
+    /* "DE" separado del "UNIVERSO" un poco más a la derecha */
+    margin-left: 4.5rem;
 }
 
 /* Fila 2, col 1: "MARCA" */
@@ -413,7 +413,7 @@ a { text-decoration: none; color: inherit; }
     letter-spacing: -0.5px;
     line-height: 1;
     align-self: start;
-    margin-top: -0.4rem; /* subir la palabra para que el espacio parezca normal */
+    margin-top: -1.2rem; /* subir la palabra mucho más para juntarla */
 }
 
 /* Col 2, filas 1 y 2: texto descriptivo */
