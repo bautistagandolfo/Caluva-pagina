@@ -261,13 +261,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (maskGroup) {
                         maskGroup.setAttribute('transform', `translate(${centerX}, ${currentCenterY}) scale(${scaleFactor})`);
                     }
-                    
-                    const isPastZoom = scrollY >= zoomMaxScroll;
 
                     // El hero section NUNCA baja su opacidad para que no se mezcle de forma
                     // traslúcida con la Vista 2 (que tiene que ser 100% sólida).
-                    // Sin embargo, si ya pasó el zoom (isPastZoom), ocultamos el hero por completo.
-                    if (isPastZoom) {
+                    // Sin embargo, si ya pasó el zoom (scrollY >= zoomMaxScroll), ocultamos el hero por completo.
+                    if (scrollY >= zoomMaxScroll) {
                         heroSectionEl.style.opacity = 0;
                         heroSectionEl.style.pointerEvents = "none";
                     } else {
