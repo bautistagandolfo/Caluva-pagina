@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     
                     // Escala progresiva y calculada para abarcar la pantalla justo al final
-                    const scaleFactor = 1 + Math.pow(phase2, 4) * 60; 
+                    const scaleFactor = 1 + Math.pow(phase2, 4) * 250; 
                     
                     // --- AUTO SCROLL TRIGGER ---
                     if (zoomProgress > 0.32 && !autoScrollStarted) {
@@ -262,13 +262,21 @@ document.addEventListener('DOMContentLoaded', () => {
                         maskGroup.setAttribute('transform', `translate(${centerX}, ${currentCenterY}) scale(${scaleFactor})`);
                     }
                     
+                    const isPastZoom = scrollY >= zoomMaxScroll;
+
                     // El hero section NUNCA baja su opacidad para que no se mezcle de forma
                     // traslúcida con la Vista 2 (que tiene que ser 100% sólida).
-                    // Al expandirse la máscara infinitamente, el mar se oculta solo.
-                    if (phase2 > 0.3) {
+                    // Sin embargo, si ya pasó el zoom (isPastZoom), ocultamos el hero por completo.
+                    if (isPastZoom) {
+                        heroSectionEl.style.opacity = 0;
                         heroSectionEl.style.pointerEvents = "none";
                     } else {
-                        heroSectionEl.style.pointerEvents = "auto";
+                        heroSectionEl.style.opacity = 1;
+                        if (phase2 > 0.3) {
+                            heroSectionEl.style.pointerEvents = "none";
+                        } else {
+                            heroSectionEl.style.pointerEvents = "auto";
+                        }
                     }
                     
                     // Costura perfecta de scroll y Parallax 3D
