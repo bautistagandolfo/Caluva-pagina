@@ -269,11 +269,15 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* Un único bloque con una transición corta y sutil (difuminado ligero) */
+    /* Un único bloque con un difuminado perfecto (interpolación manual de color 
+       para evitar bandas grises y lograr un fundido ultra suave estilo Photoshop) */
     background: linear-gradient(to bottom, 
         var(--color-white) 0%, 
-        var(--color-white) 50%, 
-        var(--color-navy) 58%, 
+        var(--color-white) 40%, 
+        #cfdbe4 47%,
+        #9bb6c9 55%,
+        #618fae 63%,
+        var(--color-navy) 70%, 
         var(--color-navy) 100%
     );
 }
