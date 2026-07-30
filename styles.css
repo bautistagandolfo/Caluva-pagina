@@ -338,22 +338,13 @@ a { text-decoration: none; color: inherit; }
 }
 .v2-elegant-link:hover { opacity: 0.65; }
 
-/* Título grande — pegado al fondo del bloque blanco, justo sobre el navy */
-.v2-services-title {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    color: var(--color-navy);
-    text-align: center;
-    font-size: clamp(1.8rem, 3.5vw, 3.2rem);
-    margin: 2rem 0 0 0;
-    padding: 1.5rem 0 1.5rem;
-    letter-spacing: -1px;
-    text-transform: uppercase;
-    border-top: none;
+/* Esfumado (integración suave entre blanco y navy) */
+.v2-fade-to-navy {
+    display: block;
+    width: 100%;
+    height: 6vh;
+    background: linear-gradient(to bottom, var(--color-white) 0%, var(--color-navy) 100%);
 }
-
-/* Sin gradiente: corte sólido limpio */
-.v2-fade-to-navy { display: none; }
 
 /* ─── SECCIÓN NAVY: layout exacto de la imagen ─── */
 .v2-navy-preview {
@@ -361,92 +352,65 @@ a { text-decoration: none; color: inherit; }
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 2rem 6% 1.5rem;
+    padding: 1.5rem 10% 2.5rem;
 }
 
-/*
-  Grid de 2 columnas:
-  - Col 1 (izquierda ~38%): UNIVERSO/DE en fila 1, MARCA en fila 2
-  - Col 2 (derecha): texto descriptivo que ocupa ambas filas
-*/
-.v2-preview-grid {
-    display: grid;
-    grid-template-columns: 38% 1fr;
-    grid-template-rows: auto auto;
-    gap: 0;
-    flex: 1;
-}
-
-/* Fila 1, col 1: "UNIVERSO   DE" */
-.v2-prev-title-row {
-    grid-column: 1;
-    grid-row: 1;
+.v2-prev-header {
     display: flex;
     align-items: baseline;
-    gap: 0;
-    justify-content: flex-start; /* acercar el DE */
-    padding-right: 1rem;
+    justify-content: flex-start;
+    gap: 15%; /* Espacio entre UNIVERSO y DE */
 }
+
 .v2-prev-word {
     font-family: var(--font-heading);
     font-weight: 800;
-    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
     color: var(--color-white);
     text-transform: uppercase;
     line-height: 1;
     letter-spacing: -0.5px;
 }
-.v2-prev-de {
-    /* "DE" separado del "UNIVERSO" un poco más a la derecha */
-    margin-left: 4.5rem;
-}
 
-/* Fila 2, col 1: "MARCA" */
 .v2-prev-marca {
-    grid-column: 1;
-    grid-row: 2;
     font-family: var(--font-heading);
     font-weight: 800;
-    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
     color: var(--color-white);
     text-transform: uppercase;
     letter-spacing: -0.5px;
     line-height: 1;
-    align-self: start;
-    margin-top: -2.5rem; /* subir la palabra mucho más para juntarla */
+    margin-top: 0.5rem; /* Margen normal como salto de línea */
 }
 
-/* Col 2, filas 1 y 2: texto descriptivo */
+/* Texto descriptivo: debajo y con sangría (indented) */
 .v2-prev-desc {
-    grid-column: 2;
-    grid-row: 1 / 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-left: 2rem;
+    margin-top: 2rem;
+    margin-left: 12%; /* Sangría respecto al título */
+    width: 75%;
 }
 
 .v2-preview-sub {
     font-family: var(--font-main);
     font-weight: 400;
-    font-size: clamp(0.8rem, 1vw, 0.9rem);
-    color: rgba(255,255,255,0.9);
+    font-size: clamp(0.85rem, 1.1vw, 1rem);
+    color: rgba(255,255,255,0.95);
     line-height: 1.6;
-    margin: 0 0 0.75rem 0;
-    text-align: justify;
+    margin: 0 0 1rem 0;
+    text-align: left;
 }
 
 .v2-preview-body {
     font-family: var(--font-main);
     font-weight: 400;
-    font-size: clamp(0.78rem, 0.95vw, 0.88rem);
-    color: rgba(255,255,255,0.8);
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+    color: rgba(255,255,255,0.85);
     line-height: 1.7;
     margin: 0;
-    text-align: justify;
+    text-align: left;
 }
 
-/* VER MAS centrado debajo del grid */
+/* VER MAS centrado al fondo */
 .v2-preview-link {
     display: block;
     font-family: var(--font-main);
@@ -458,21 +422,23 @@ a { text-decoration: none; color: inherit; }
     text-transform: uppercase;
     text-align: center;
     margin-top: auto;
-    padding-top: 1.5rem;
+    padding-top: 2rem;
     transition: opacity 0.3s;
 }
 .v2-preview-link:hover { opacity: 0.75; }
 
-
+/* Título CONOCE NUESTROS SERVICIOS */
 .v2-title {
     font-family: var(--font-main);
     font-size: clamp(1.6rem, 2.8vw, 2.4rem);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     line-height: 1.15;
-    color: var(--color-brown);
+    color: var(--color-navy); /* Es navy en la imagen */
     font-weight: 800;
     letter-spacing: -0.5px;
+    text-align: center; /* Perfectamente centrado */
 }
+
 .v2-desc-part1, .v2-desc-part2 {
     font-family: var(--font-main);
     font-weight: 300;
