@@ -281,7 +281,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Empuja el título al fondo automáticamente */
-    padding: 5rem 6% 3rem; /* 3rem abajo para subir el título un poco */
+    padding: 5rem 6% 1.5rem; /* Reducido de 3rem a 1.5rem para que el título baje más */
 }
 
 .slide-content-v2 {
@@ -347,7 +347,7 @@ a { text-decoration: none; color: inherit; }
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 10% 2.5rem;
+    padding: 1.5rem 10% 4rem; /* Aumentado a 4rem el bottom para subir el VER MAS */
 }
 
 .v2-prev-header {
