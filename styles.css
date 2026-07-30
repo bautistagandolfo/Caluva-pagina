@@ -814,7 +814,7 @@ a { text-decoration: none; color: inherit; }
     width: 100%;
     display: flex;
     justify-content: flex-end; /* Alineado a la derecha como en la foto */
-    padding: 0 10%;
+    padding: 0 5%; /* Menos padding para pegarlo más al borde derecho */
     margin-top: auto; /* Empuja el contenedor hacia abajo para pegarlo al logo */
     margin-bottom: 0;
     transform: translateY(30%); /* Lo acerca muchísimo al logo, flotando justo arriba como en la imagen */
@@ -825,7 +825,7 @@ a { text-decoration: none; color: inherit; }
 }
 .v6-redes h3 {
     font-family: var(--font-main); font-weight: 800; /* Más negrita según la foto */
-    font-size: 1rem; /* Mismo tamaño base que los links */
+    font-size: 1.25rem; /* Un poco más grande y robusto */
     color: var(--color-brown);
     margin-bottom: 0.2rem; /* Pegadito a los links */
     letter-spacing: 0;
@@ -834,7 +834,7 @@ a { text-decoration: none; color: inherit; }
 .social-link {
     display: block; /* Sin flex porque ya no hay íconos */
     font-family: var(--font-main); font-weight: 600; /* Medium-bold */
-    font-size: 1rem;
+    font-size: 1.15rem; /* Más grande para acompañar al título */
     color: var(--color-brown);
     text-decoration: none;
     transition: opacity 0.3s ease;
