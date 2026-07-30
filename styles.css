@@ -341,17 +341,6 @@ a { text-decoration: none; color: inherit; }
 
 
 
-/* Transición amigable con Curva SVG */
-.v2-wave {
-    display: block;
-    width: 100%;
-    height: 8vh;
-    background-color: var(--color-white); /* Fondo blanco detrás de la ola navy */
-    margin: 0;
-    padding: 0;
-    flex-shrink: 0;
-}
-
 /* ─── SECCIÓN NAVY ─── */
 .v2-navy-preview {
     background-color: var(--color-navy);
