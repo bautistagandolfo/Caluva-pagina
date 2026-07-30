@@ -279,7 +279,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 5rem 6% 0;
+    padding: 5rem 6% 3rem; /* 3rem de padding bottom para subir el título */
     overflow: hidden;
 }
 
@@ -384,7 +384,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     align-items: baseline;
     gap: 0;
-    justify-content: space-between;
+    justify-content: flex-start; /* acercar el DE */
     padding-right: 1rem;
 }
 .v2-prev-word {
@@ -393,12 +393,12 @@ a { text-decoration: none; color: inherit; }
     font-size: clamp(1.5rem, 2.2vw, 2rem);
     color: var(--color-white);
     text-transform: uppercase;
-    line-height: 1.15;
+    line-height: 1;
     letter-spacing: -0.5px;
 }
 .v2-prev-de {
-    /* "DE" separado del "UNIVERSO" con espacio visible */
-    margin-left: 0.5rem;
+    /* "DE" separado del "UNIVERSO" con espacio visible pero no en el extremo */
+    margin-left: 2rem;
 }
 
 /* Fila 2, col 1: "MARCA" */
@@ -411,8 +411,9 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-white);
     text-transform: uppercase;
     letter-spacing: -0.5px;
-    line-height: 1.15;
+    line-height: 1;
     align-self: start;
+    margin-top: -0.4rem; /* subir la palabra para que el espacio parezca normal */
 }
 
 /* Col 2, filas 1 y 2: texto descriptivo */
