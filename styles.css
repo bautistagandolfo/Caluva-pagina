@@ -625,6 +625,9 @@ a { text-decoration: none; color: inherit; }
     z-index: 2; /* Se posiciona sobre Vista 2 (z-index:1, fixed) al hacer scroll */
     flex-direction: column;
 }
+.split-section.single-half {
+    min-height: 50vh;
+}
 .split-half {
     flex: 1; min-height: 50vh;
     position: relative;
