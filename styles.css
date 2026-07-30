@@ -361,7 +361,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-heading);
     font-weight: 800;
     font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    color: var(--color-white);
+    color: #f8f8f0; /* Amarillo claro */
     text-transform: uppercase;
     line-height: 1;
     letter-spacing: -0.5px;
@@ -371,7 +371,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-heading);
     font-weight: 800;
     font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    color: var(--color-white);
+    color: #f8f8f0; /* Amarillo claro */
     text-transform: uppercase;
     letter-spacing: -0.5px;
     line-height: 1; /* Aumentado ligeramente para alejar MARCA */
@@ -389,7 +389,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-main);
     font-weight: 400;
     font-size: clamp(0.85rem, 1.1vw, 1rem);
-    color: rgba(255,255,255,0.95);
+    color: #f8f8f0;
     line-height: 1.6;
     margin: 0 0 1rem 0;
     text-align: left;
@@ -399,7 +399,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-main);
     font-weight: 400;
     font-size: clamp(0.8rem, 1vw, 0.95rem);
-    color: rgba(255,255,255,0.85);
+    color: #f8f8f0;
     line-height: 1.7;
     margin: 0;
     text-align: left;
@@ -412,7 +412,7 @@ a { text-decoration: none; color: inherit; }
     font-weight: 700;
     font-size: 0.85rem;
     letter-spacing: 0.1em;
-    color: var(--color-white);
+    color: #f8f8f0;
     text-decoration: none;
     text-transform: uppercase;
     text-align: center;
@@ -428,7 +428,7 @@ a { text-decoration: none; color: inherit; }
     font-size: clamp(1.6rem, 2.8vw, 2.4rem);
     margin-bottom: 0;
     line-height: 1.15;
-    color: var(--color-navy); /* Es navy en la imagen, el error era porque no tenía clase */
+    color: #143b50; /* Celeste oscuro */
     font-weight: 800;
     letter-spacing: -0.5px;
     text-align: center; /* Perfectamente centrado */
