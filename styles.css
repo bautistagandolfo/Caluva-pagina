@@ -269,12 +269,11 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* Un único bloque con transición amigable e integrada, similar a la del CTA */
+    /* Un único bloque con una transición corta y sutil (difuminado ligero) */
     background: linear-gradient(to bottom, 
         var(--color-white) 0%, 
-        var(--color-white) 40%, 
-        #4a7594 52%,
-        var(--color-navy) 65%, 
+        var(--color-white) 50%, 
+        var(--color-navy) 58%, 
         var(--color-navy) 100%
     );
 }
@@ -380,8 +379,8 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-white);
     text-transform: uppercase;
     letter-spacing: -0.5px;
-    line-height: 0.85; /* Súper ajustado para que MARCA quede muy arriba */
-    margin-top: 0; /* Sin margen para que quede pegado a UNIVERSO */
+    line-height: 1; /* Aumentado ligeramente para alejar MARCA */
+    margin-top: 0.3rem; /* Separación sutil añadida */
 }
 
 /* Texto descriptivo: debajo y con sangría (indented) */
