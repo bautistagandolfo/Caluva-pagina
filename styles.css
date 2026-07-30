@@ -271,15 +271,15 @@ a { text-decoration: none; color: inherit; }
     overflow: hidden;
 }
 
-/* Área blanca superior: logo + textos + título — ocupa todo menos el esfumado */
+/* Área blanca superior: logo + textos + título — ocupa ~60% de la pantalla */
 .v2-white-area {
     background-color: var(--color-white);
     width: 100%;
-    flex: 1;
+    flex: 0 0 62vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 6rem 6% 0;
+    padding: 4rem 6% 2rem;
     overflow: hidden;
 }
 
@@ -337,25 +337,23 @@ a { text-decoration: none; color: inherit; }
 }
 .v2-elegant-link:hover { opacity: 0.65; }
 
-/* Título grande al pie del área blanca */
+/* Título grande — pegado al fondo del bloque blanco, justo sobre el navy */
 .v2-services-title {
     font-family: var(--font-heading);
     font-weight: 800;
     color: var(--color-navy);
     text-align: center;
-    font-size: clamp(2rem, 4.5vw, 4rem);
-    margin: 4rem 0 0 0;
-    padding-bottom: 3rem;
+    font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+    margin: 2rem 0 0 0;
+    padding: 1.5rem 0 1.5rem;
     letter-spacing: -1px;
     text-transform: uppercase;
+    border-top: none;
 }
 
-/* Esfumado: de blanco a navy usando CSS puro */
+/* Sin degradado: corte sólido limpio entre blanco y navy */
 .v2-fade-to-navy {
-    width: 100%;
-    height: 80px;
-    flex-shrink: 0;
-    background: linear-gradient(to bottom, var(--color-white) 0%, var(--color-navy) 100%);
+    display: none;
 }
 
 /* Sección navy inferior: muestra Universo de Marca en la misma pantalla */
@@ -579,6 +577,8 @@ a { text-decoration: none; color: inherit; }
     width: 100%;
     min-height: 100vh;
     display: flex;
+    position: relative;
+    z-index: 2; /* Se posiciona sobre Vista 2 (z-index:1, fixed) al hacer scroll */
     flex-direction: column;
 }
 .split-half {
@@ -697,7 +697,8 @@ a { text-decoration: none; color: inherit; }
 #vista-cta {
     padding-top: 5rem;
     padding-bottom: 2rem;
-    position: relative; /* Para posicionar el logo absoluto */
+    position: relative;
+    z-index: 2; /* Sobre Vista 2 fixed */
 }
 .cta-container {
     display: flex;
@@ -791,6 +792,8 @@ a { text-decoration: none; color: inherit; }
 #contacto {
     background-color: #ffffff;
     display: flex;
+    position: relative;
+    z-index: 2;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
