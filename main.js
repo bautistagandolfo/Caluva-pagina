@@ -80,6 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function smoothScrollTo(targetY, duration) {
         isAutoScrolling = true;
+        // Bloquear el scroll nativo momentáneamente para matar cualquier
+        // inercia residual del trackpad/rueda del mouse.
+        document.body.style.overflow = 'hidden'; 
+        
         const startY = window.scrollY;
         const distance = targetY - startY;
         const startTime = performance.now();
@@ -96,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 requestAnimationFrame(step);
             } else {
                 isAutoScrolling = false; // Liberamos el control al usuario
+                document.body.style.overflow = ''; // Restaurar scroll nativo
             }
         }
         requestAnimationFrame(step);
@@ -285,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (!v2SwitchedToRelative) {
                             v2SwitchedToRelative = true;
                             vista2.style.position = 'relative';
-                            vista2.style.marginTop = (-window.innerHeight) + 'px';
+                            vista2.style.marginTop = '-100vh'; // Consistencia exacta con CSS
                             vista2.style.top = '';
                             vista2.style.left = '';
                             vista2.style.width = '100%';
