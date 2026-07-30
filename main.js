@@ -277,66 +277,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // --- EL GANCHO se activa junto con el resto de vista-2 post-transición ---
 
-                    if (isPastReveal) {
-                        // --- STACKING PAGES ---
-                        // Calculamos cuánto hemos scrolleado DENTRO de Vista 3
-                        const overlapScroll = scrollY - totalMaxScroll;
-                        const vh = window.innerHeight;
-                        
-                        if (overlapScroll <= vh) {
-                            // Fase de Overlap: Vista 3 está subiendo y cubriendo a Vista 2
-                            vista2.style.position = "fixed";
-                            vista2.style.zIndex = "1";
-                            vista2.style.marginTop = "0";
-                            vista2.style.visibility = "visible";
-                            
-                            // Fade out en los últimos 150px para evitar que se asome por debajo de la sombra
-                            const fadeStart = vh - 150;
-                            if (overlapScroll > fadeStart) {
-                                vista2.style.opacity = Math.max(1 - ((overlapScroll - fadeStart) / 150), 0);
-                            } else {
-                                vista2.style.opacity = 1;
-                            }
-                        } else {
-                            // Vista 3 ya cubrió completamente a Vista 2. 
-                            vista2.style.position = "fixed";
-                            vista2.style.zIndex = "1";
-                            vista2.style.marginTop = "0";
-                            vista2.style.visibility = "hidden"; 
-                            vista2.style.opacity = 0;
-                        }
-                    } else {
-                        // Comportamiento normal en Vista 2
-                        vista2.style.position = "fixed";
-                        vista2.style.zIndex = "1";
-                        vista2.style.marginTop = "0";
-                        vista2.style.visibility = "visible";
-                        vista2.style.opacity = 1;
-                    }
-
-                    // --- ANIMACIÓN "PA PA PA" EN VISTA 2 (Scroll Triggers + Adrenalina) ---
+                    // --- ANIMACIÓN EN VISTA 2: Reveal de logo, párrafo y enlace ---
                     const v2Part2 = document.getElementById('v2-part2');
                     const v2Link = document.getElementById('v2-link-container');
-                    const v2YellowBg = document.getElementById('v2-yellow-bg');
-                    const v2Bottom = document.getElementById('v2-bottom-bg');
                     const v2Logo = document.getElementById('v2-logo');
 
                     if (isPastZoom || v2Revealed) {
                         v2Revealed = true;
-                        // Revelar vista-2 completa e instantánea al terminar la transición
                         if (v2Part1) v2Part1.classList.add('hook-active');
                         if (v2Part2) v2Part2.classList.add('reveal-active');
                         if (v2Link) v2Link.classList.add('reveal-active');
-                        if (v2YellowBg) v2YellowBg.style.transform = 'translateY(0%)';
-                        if (v2Bottom) v2Bottom.classList.add('reveal-active');
                         if (v2Logo) v2Logo.classList.add('reveal-active');
                     } else {
-                        // Antes del zoom, todo oculto
                         if (v2Part1) v2Part1.classList.remove('hook-active');
                         if (v2Part2) v2Part2.classList.remove('reveal-active');
                         if (v2Link) v2Link.classList.remove('reveal-active');
-                        if (v2YellowBg) v2YellowBg.style.transform = 'translateY(100%)';
-                        if (v2Bottom) v2Bottom.classList.remove('reveal-active');
                         if (v2Logo) v2Logo.classList.remove('reveal-active');
                     }
                 }

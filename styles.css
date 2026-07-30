@@ -257,34 +257,95 @@ a { text-decoration: none; color: inherit; }
 }
 /* Sin gradiente — el corte limpio es más elegante que un fundido que tapa el texto */
 
-/* La sección v2 tiene fondo blanco y su contenedor interno maneja los fondos */
-#vista-2 {
-    background: #ffffff;
+/* ─── VISTA 2: QUIENES SOMOS ─── */
+/* Sección en el flujo normal del documento (NO fixed) */
+.v2-section {
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    background: transparent;
 }
+
+/* Área blanca superior: logo + textos + título */
+.v2-white-area {
+    background-color: var(--color-white);
+    width: 100%;
+    padding: 6rem 6% 0;
+}
+
 .slide-content-v2 {
     width: 100%; max-width: 1300px; margin: 0 auto;
-    display: flex; flex-direction: column;
-    padding: 4rem 6% 1rem;
 }
-.v2-top {
-    display: flex; gap: 6%;
+
+.v2-top-inner {
+    display: flex;
+    gap: 6%;
     align-items: flex-start;
     padding-bottom: 4rem;
 }
-.v2-top-column {
-    flex-direction: column;
-    align-items: stretch;
-}
-.v2-top-inner {
-    display: flex; gap: 6%;
-    align-items: flex-start;
-    margin-bottom: 2rem;
-}
+
 .v2-logo { flex-shrink: 0; padding-top: 0.5rem; }
 .v2-text { flex: 1; }
+
+.v2-desc-part1 {
+    font-family: var(--font-main);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.5vw, 1.4rem);
+    color: var(--color-brown);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+}
+
+.v2-desc-part2 {
+    font-family: var(--font-main);
+    font-weight: 300;
+    font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+    color: var(--color-brown);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+}
+
+.v2-elegant-link-container {
+    width: 100%;
+    text-align: right;
+    margin-top: 0.5rem;
+}
+
+.v2-elegant-link {
+    font-family: var(--font-main);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    color: var(--color-brown);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: opacity 0.3s;
+}
+.v2-elegant-link:hover { opacity: 0.65; }
+
+/* Título grande al pie del área blanca */
+.v2-services-title {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    color: var(--color-navy);
+    text-align: center;
+    font-size: clamp(2rem, 4.5vw, 4rem);
+    margin: 4rem 0 0 0;
+    padding-bottom: 3rem;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+/* Esfumado: de blanco a navy usando CSS puro */
+.v2-fade-to-navy {
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(to bottom, var(--color-white) 0%, var(--color-navy) 100%);
+}
+
+
 .v2-title {
     font-family: var(--font-main);
     font-size: clamp(1.6rem, 2.8vw, 2.4rem);
@@ -375,162 +436,16 @@ a { text-decoration: none; color: inherit; }
 #v2-logo.reveal-active { opacity: 1; transform: scale(1); }
 #v2-logo.reveal-active .spiral-icon { transform: rotate(0deg); }
 
-/* --- DIFUMINADO BLANCO A AZUL OSCURO --- */
-#v2-yellow-bg {
-    position: relative;
-    will-change: transform;
-    background-color: var(--color-navy); /* Base azul oscura que sube */
-}
-#v2-yellow-bg::before {
-    content: '';
-    position: absolute;
-    top: -100px;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: linear-gradient(to top, var(--color-navy) 0%, transparent 100%);
-    pointer-events: none;
-}
 
-.v2-services-title {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    color: var(--color-navy); /* Azul oscuro sobre blanco o al limite */
-    text-align: center;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    margin: 4rem auto 1rem auto; /* Separación del top */
-    letter-spacing: -1px;
-    text-transform: uppercase;
-    position: relative;
-    z-index: 2; /* Para que quede por encima del esfumado si hace falta */
-}
-
-/* --- TRANSICIÓN STACKING PAGES --- */
-#vista-2 { 
-    background: #ffffff;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
+/* ─── VISTA 4 (empalme continuo del navy) ─── */
 #vista-4 {
     position: relative;
-    z-index: 2; /* Pasa por encima de vista-2 */
-    background-color: #ffffff;
+    z-index: 2;
+    background-color: var(--color-navy);
     width: 100%;
-    /* Sutil sombra superior para dar el efecto de carta superpuesta */
-    box-shadow: 0 -20px 50px rgba(0,0,0,0.06);
 }
 
-/* --- SCROLL REVEAL (Intersection Observer) --- */
-.sr-item {
-    opacity: 0;
-    will-change: transform, opacity;
-    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.sr-left { transform: translateX(-100px); }
-.sr-right { transform: translateX(100px); }
-.sr-up { transform: translateY(80px); }
-.sr-scale { transform: scale(0.8); }
 
-.sr-item.sr-active {
-    opacity: 1;
-    transform: translateX(0) translateY(0) scale(1);
-}
-/* Escalado de delays para elementos en cascada */
-.sr-delay-1 { transition-delay: 0.1s; }
-.sr-delay-2 { transition-delay: 0.2s; }
-.sr-delay-3 { transition-delay: 0.3s; }
-.sr-delay-4 { transition-delay: 0.4s; }
-.v2-link-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 4rem;
-}
-.v2-link {
-    font-family: var(--font-main); font-weight: 800; font-size: 1.3rem; 
-    letter-spacing: 0.02em; color: var(--color-brown);
-    display: inline-block; transition: transform 0.3s ease;
-}
-.v2-link:hover { transform: translateY(-3px); }
-.v2-link-hint {
-    font-family: var(--font-main); font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 1px; color: var(--color-brown); margin-top: 0.5rem; text-align: center;
-}
-
-/* Contenedor full bleed natural para el botón */
-.v2-bottom-wrapper {
-    background-color: var(--color-cream);
-    width: 100%;
-    flex: 1; /* ocupa el espacio restante de los 100vh — el vacío queda crema, no blanco */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem 6% 8rem; 
-}
-/* Layout de 3 acciones en la parte inferior de vista-2 */
-.v2-actions {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: stretch;
-}
-.v2-action-col {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-}
-.v2-action-main { flex: 1.6; } /* CTA principal con más espacio */
-.v2-action-sep {
-    width: 1px;
-    background: rgba(74, 36, 16, 0.15);
-    margin: 1.75rem 0;
-}
-.v2-action-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem 0;
-    font-family: var(--font-main);
-    font-weight: 800;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    color: var(--color-brown);
-    text-decoration: none;
-    text-transform: uppercase;
-    position: relative;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-    white-space: nowrap;
-}
-.v2-action-btn::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1.5px;
-    background: var(--color-brown);
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.v2-action-btn:hover { opacity: 1; }
-.v2-action-btn:hover::after { width: 100%; }
-.v2-action-main .v2-action-btn {
-    font-size: 0.84rem;
-    opacity: 0.88;
-}
-.v2-action-arrow {
-    display: inline-block;
-    transition: transform 0.3s ease;
-    font-size: 0.95rem;
-}
-.v2-action-btn:hover .v2-action-arrow { transform: translateX(4px); }
-#btn-servicios:hover .v2-action-arrow { transform: translateY(4px) translateX(0) !important; }
 
 /* ─── VISTA 3: ABOUT 2 ─── */
 #vista-3 {
@@ -887,7 +802,25 @@ a { text-decoration: none; color: inherit; }
     z-index: 1;
 }
 
-/* --- REVEAL ANIMATIONS ELIMINADAS (Ahora usamos .sr-item) --- */
+/* --- SCROLL REVEAL (Intersection Observer) --- */
+.sr-item {
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sr-left { transform: translateX(-100px); }
+.sr-right { transform: translateX(100px); }
+.sr-up { transform: translateY(80px); }
+.sr-scale { transform: scale(0.8); }
+.sr-item.sr-active {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+}
+.sr-delay-1 { transition-delay: 0.1s; }
+.sr-delay-2 { transition-delay: 0.2s; }
+.sr-delay-3 { transition-delay: 0.3s; }
+.sr-delay-4 { transition-delay: 0.4s; }
+
 
 /* Hero tiene animación propia */
 .fade-in-up {

@@ -66,10 +66,11 @@
         </div>
 
         <!-- VISTA 2: QUIENES SOMOS -->
-        <!-- La colocamos con z-index 1 y position fixed al principio para que se vea a través del hueco del hero -->
-        <section id="vista-2" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1; background-color: var(--color-white);">
-            <div class="slide-content-v2">
-                <div class="v2-top v2-top-column">
+        <!-- Sección normal en el flujo, se muestra después de que el hero desaparece -->
+        <section id="vista-2" class="v2-section">
+            <!-- Parte superior: blanca con logo y textos -->
+            <div class="v2-white-area">
+                <div class="slide-content-v2">
                     <div class="v2-top-inner">
                         <div class="v2-logo" id="v2-logo"><div class="spiral-icon dark"></div></div>
                         <div class="v2-text">
@@ -80,20 +81,17 @@
                             </div>
                         </div>
                     </div>
-                    <h2 class="v2-services-title">CONOCE NUESTROS SERVICIOS</h2>
                 </div>
+                <!-- Título grande al pie de la zona blanca -->
+                <h2 class="v2-services-title" id="v2-services-heading">CONOCE NUESTROS SERVICIOS</h2>
             </div>
-            
-            <div class="v2-bottom-wrapper" id="v2-yellow-bg">
-                <div class="v2-actions" id="v2-bottom-bg">
-                    <!-- Vacío, se usa solo para el fondo azul esfumado que sube -->
-                </div>
-            </div>
+            <!-- Esfumado blanco a navy -->
+            <div class="v2-fade-to-navy"></div>
         </section>
 
         <!-- VISTA 4: UNIVERSO DE MARCA + PAUTA -->
         <section id="vista-4" class="split-section">
-            <!-- Mitad superior: Universo de Marca (crema clarito) -->
+            <!-- Mitad superior: Universo de Marca (fondo azul oscuro) -->
             <div class="split-half bg-navy on-dark reveal-section">
                 <div class="split-content left-layout">
                     <div class="split-text-area sr-item sr-left">
