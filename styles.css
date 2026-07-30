@@ -269,18 +269,25 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    /* Un único bloque con transición amigable e integrada, similar a la del CTA */
+    background: linear-gradient(to bottom, 
+        var(--color-white) 0%, 
+        var(--color-white) 40%, 
+        #4a7594 52%,
+        var(--color-navy) 65%, 
+        var(--color-navy) 100%
+    );
 }
 
-/* Área blanca: logo arriba, título pegado al fondo */
+/* Área blanca (ahora transparente, el fondo lo da v2-section) */
 .v2-white-area {
-    background-color: var(--color-white);
+    background-color: transparent;
     width: 100%;
-    flex: 0 0 48vh; /* Más espacio para asegurar que CONOCE NUESTROS SERVICIOS no se desborde y se pierda */
+    flex: 1; /* Toma exactamente el espacio necesario sin forzar overflow */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Empuja el título al fondo automáticamente */
     padding: 5rem 6% 3rem; /* 3rem abajo para subir el título un poco */
-    overflow: hidden;
 }
 
 .slide-content-v2 {
@@ -338,18 +345,11 @@ a { text-decoration: none; color: inherit; }
 }
 .v2-elegant-link:hover { opacity: 0.65; }
 
-/* Esfumado (integración suave entre blanco y navy) */
-.v2-fade-to-navy {
-    display: block;
-    width: 100%;
-    height: 8vh; /* Más concentrado para ser elegante */
-    /* Usamos un color intermedio vibrante (#4a7594) para evitar la horrible franja gris que genera el CSS al interpolar blanco puro con azul oscuro */
-    background: linear-gradient(to bottom, var(--color-white) 0%, #4a7594 50%, var(--color-navy) 100%);
-}
 
-/* ─── SECCIÓN NAVY: layout exacto de la imagen ─── */
+
+/* ─── SECCIÓN NAVY (ahora transparente) ─── */
 .v2-navy-preview {
-    background-color: var(--color-navy);
+    background-color: transparent;
     flex: 1;
     display: flex;
     flex-direction: column;
