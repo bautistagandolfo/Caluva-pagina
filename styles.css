@@ -271,20 +271,21 @@ a { text-decoration: none; color: inherit; }
     overflow: hidden;
 }
 
-/* Área blanca superior: logo + textos + título — ocupa ~60% de la pantalla */
+/* Área blanca: logo arriba, título pegado al fondo */
 .v2-white-area {
     background-color: var(--color-white);
     width: 100%;
-    flex: 0 0 62vh;
+    flex: 0 0 60vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 4rem 6% 2rem;
+    justify-content: flex-start;
+    padding: 5rem 6% 0;
     overflow: hidden;
 }
 
 .slide-content-v2 {
     width: 100%; max-width: 1300px; margin: 0 auto;
+    flex: 1; /* empuja el título hacia abajo */
 }
 
 .v2-top-inner {
@@ -351,72 +352,115 @@ a { text-decoration: none; color: inherit; }
     border-top: none;
 }
 
-/* Sin degradado: corte sólido limpio entre blanco y navy */
-.v2-fade-to-navy {
-    display: none;
-}
+/* Sin gradiente: corte sólido limpio */
+.v2-fade-to-navy { display: none; }
 
-/* Sección navy inferior: muestra Universo de Marca en la misma pantalla */
+/* ─── SECCIÓN NAVY: layout exacto de la imagen ─── */
 .v2-navy-preview {
     background-color: var(--color-navy);
     flex: 1;
     display: flex;
-    align-items: center;
-    padding: 2rem 6%;
+    flex-direction: column;
+    padding: 2rem 6% 1.5rem;
 }
-.v2-preview-inner {
-    display: flex;
-    gap: 8%;
-    width: 100%;
-    max-width: 1300px;
-    margin: 0 auto;
-    align-items: flex-start;
-}
-.v2-preview-left {
-    flex-shrink: 0;
-    width: 240px;
-}
-.v2-preview-title {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    color: var(--color-white);
-    line-height: 1.1;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-    margin: 0;
-}
-.v2-preview-right {
+
+/*
+  Grid de 2 columnas:
+  - Col 1 (izquierda ~38%): UNIVERSO/DE en fila 1, MARCA en fila 2
+  - Col 2 (derecha): texto descriptivo que ocupa ambas filas
+*/
+.v2-preview-grid {
+    display: grid;
+    grid-template-columns: 38% 1fr;
+    grid-template-rows: auto auto;
+    gap: 0;
     flex: 1;
 }
+
+/* Fila 1, col 1: "UNIVERSO   DE" */
+.v2-prev-title-row {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    justify-content: space-between;
+    padding-right: 1rem;
+}
+.v2-prev-word {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    color: var(--color-white);
+    text-transform: uppercase;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+}
+.v2-prev-de {
+    /* "DE" separado del "UNIVERSO" con espacio visible */
+    margin-left: 0.5rem;
+}
+
+/* Fila 2, col 1: "MARCA" */
+.v2-prev-marca {
+    grid-column: 1;
+    grid-row: 2;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    align-self: start;
+}
+
+/* Col 2, filas 1 y 2: texto descriptivo */
+.v2-prev-desc {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 2rem;
+}
+
 .v2-preview-sub {
     font-family: var(--font-main);
     font-weight: 400;
-    font-size: clamp(0.85rem, 1.1vw, 1rem);
-    color: rgba(255,255,255,0.85);
+    font-size: clamp(0.8rem, 1vw, 0.9rem);
+    color: rgba(255,255,255,0.9);
     line-height: 1.6;
-    margin-bottom: 0.75rem;
+    margin: 0 0 0.75rem 0;
+    text-align: justify;
 }
+
 .v2-preview-body {
     font-family: var(--font-main);
     font-weight: 400;
-    font-size: clamp(0.8rem, 1vw, 0.95rem);
-    color: rgba(255,255,255,0.7);
+    font-size: clamp(0.78rem, 0.95vw, 0.88rem);
+    color: rgba(255,255,255,0.8);
     line-height: 1.7;
-    margin-bottom: 1rem;
+    margin: 0;
+    text-align: justify;
 }
+
+/* VER MAS centrado debajo del grid */
 .v2-preview-link {
+    display: block;
     font-family: var(--font-main);
     font-weight: 700;
     font-size: 0.85rem;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     color: var(--color-white);
     text-decoration: none;
     text-transform: uppercase;
-    opacity: 0.9;
+    text-align: center;
+    margin-top: auto;
+    padding-top: 1.5rem;
     transition: opacity 0.3s;
 }
-.v2-preview-link:hover { opacity: 1; }
+.v2-preview-link:hover { opacity: 0.75; }
 
 
 .v2-title {
