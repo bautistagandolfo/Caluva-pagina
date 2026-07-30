@@ -248,7 +248,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     
                     if (yellowOverlay) {
-                        yellowOverlay.style.opacity = 1 - Math.min(phase2 / 0.2, 1);
+                        // Mantener las letras sólidas (color amarillo) durante la mayor
+                        // parte del zoom, desvaneciendo el relleno solo en el último 20%
+                        yellowOverlay.style.opacity = 1 - Math.max(0, (phase2 - 0.8) / 0.2);
                     }
                     
                     // Escala progresiva y calculada para abarcar la pantalla justo al final
