@@ -258,17 +258,29 @@ a { text-decoration: none; color: inherit; }
 /* Sin gradiente — el corte limpio es más elegante que un fundido que tapa el texto */
 
 /* ─── VISTA 2: QUIENES SOMOS ─── */
-/* Sección en el flujo normal del documento (NO fixed) */
+/* DEBE ser position fixed para que el zoom del hero la revele por detrás */
 .v2-section {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    background: transparent;
+    height: 100vh;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-/* Área blanca superior: logo + textos + título */
+/* Área blanca superior: logo + textos + título — ocupa todo menos el esfumado */
 .v2-white-area {
     background-color: var(--color-white);
     width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 6rem 6% 0;
+    overflow: hidden;
 }
 
 .slide-content-v2 {

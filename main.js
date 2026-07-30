@@ -277,6 +277,33 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // --- EL GANCHO se activa junto con el resto de vista-2 post-transición ---
 
+                    if (isPastReveal) {
+                        // --- STACKING: Vista 4 sube y cubre Vista 2 ---
+                        const overlapScroll = scrollY - totalMaxScroll;
+                        const vh = window.innerHeight;
+
+                        if (overlapScroll <= vh) {
+                            vista2.style.position = "fixed";
+                            vista2.style.zIndex = "1";
+                            vista2.style.visibility = "visible";
+                            // Fade out suave en los últimos 200px
+                            const fadeStart = vh - 200;
+                            if (overlapScroll > fadeStart) {
+                                vista2.style.opacity = Math.max(1 - ((overlapScroll - fadeStart) / 200), 0);
+                            } else {
+                                vista2.style.opacity = 1;
+                            }
+                        } else {
+                            vista2.style.visibility = "hidden";
+                            vista2.style.opacity = 0;
+                        }
+                    } else {
+                        vista2.style.position = "fixed";
+                        vista2.style.zIndex = "1";
+                        vista2.style.visibility = "visible";
+                        vista2.style.opacity = 1;
+                    }
+
                     // --- ANIMACIÓN EN VISTA 2: Reveal de logo, párrafo y enlace ---
                     const v2Part2 = document.getElementById('v2-part2');
                     const v2Link = document.getElementById('v2-link-container');
