@@ -815,8 +815,10 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     justify-content: flex-end; /* Alineado a la derecha como en la foto */
     padding: 0 10%;
-    margin-bottom: auto;
-    margin-top: 4rem; /* Bajado un poco para que conviva mejor con el CTA superior */
+    margin-top: auto; /* Empuja el contenedor hacia abajo para pegarlo al logo */
+    margin-bottom: 0;
+    transform: translateY(30%); /* Lo acerca muchísimo al logo, flotando justo arriba como en la imagen */
+    z-index: 10;
 }
 .v6-redes {
     display: flex; flex-direction: column; align-items: flex-start;
@@ -845,9 +847,9 @@ a { text-decoration: none; color: inherit; }
 .v6-logo {
     width: 100%;
     text-align: center;
-    margin-top: auto;
-    font-size: clamp(6rem, 18vw, 18rem); /* Pasamos el font-size al contenedor para usar em */
-    height: 0.75em; /* Aumentado a 0.75 para que esté "menos recortado" (se vea más texto) */
+    margin-top: 0; /* Se pega al contenedor de redes que está justo arriba */
+    font-size: clamp(4rem, 13vw, 14rem); /* Muchísimo más chico para respetar los márgenes laterales de la foto */
+    height: 0.75em; /* Menos recortado (se ve más de la U, V, A) */
     overflow: hidden; /* Cortamos físicamente sin márgenes negativos */
     display: flex;
     align-items: flex-start;
