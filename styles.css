@@ -275,17 +275,17 @@ a { text-decoration: none; color: inherit; }
 .v2-white-area {
     background-color: var(--color-white);
     width: 100%;
-    flex: 0 0 40vh; /* Se achicó para darle más espacio al texto navy y que VER MAS no se corte */
+    flex: 0 0 48vh; /* Más espacio para asegurar que CONOCE NUESTROS SERVICIOS no se desborde y se pierda */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    padding: 5rem 6% 1.5rem; /* Poco padding inferior para que el título quede abajo */
+    justify-content: space-between; /* Empuja el título al fondo automáticamente */
+    padding: 5rem 6% 3rem; /* 3rem abajo para subir el título un poco */
     overflow: hidden;
 }
 
 .slide-content-v2 {
     width: 100%; max-width: 1300px; margin: 0 auto;
-    flex: 1; /* empuja el título hacia abajo */
+    /* No flex: 1, así solo ocupa lo necesario y space-between se encarga del resto */
 }
 
 .v2-top-inner {
@@ -342,8 +342,9 @@ a { text-decoration: none; color: inherit; }
 .v2-fade-to-navy {
     display: block;
     width: 100%;
-    height: 15vh;
-    background: linear-gradient(to bottom, var(--color-white) 0%, var(--color-navy) 100%);
+    height: 8vh; /* Más concentrado para ser elegante */
+    /* Usamos un color intermedio vibrante (#4a7594) para evitar la horrible franja gris que genera el CSS al interpolar blanco puro con azul oscuro */
+    background: linear-gradient(to bottom, var(--color-white) 0%, #4a7594 50%, var(--color-navy) 100%);
 }
 
 /* ─── SECCIÓN NAVY: layout exacto de la imagen ─── */
@@ -359,7 +360,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     align-items: baseline;
     justify-content: flex-start;
-    gap: 15%; /* Espacio entre UNIVERSO y DE */
+    gap: 8%; /* Acercar el DE a UNIVERSO según feedback */
 }
 
 .v2-prev-word {
@@ -379,8 +380,8 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-white);
     text-transform: uppercase;
     letter-spacing: -0.5px;
-    line-height: 1;
-    margin-top: 0.5rem; /* Margen normal como salto de línea */
+    line-height: 0.85; /* Súper ajustado para que MARCA quede muy arriba */
+    margin-top: 0; /* Sin margen para que quede pegado a UNIVERSO */
 }
 
 /* Texto descriptivo: debajo y con sangría (indented) */
