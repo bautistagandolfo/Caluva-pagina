@@ -262,13 +262,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         maskGroup.setAttribute('transform', `translate(${centerX}, ${currentCenterY}) scale(${scaleFactor})`);
                     }
                     
-                    // El mar se desvanece gradualmente desde el inicio del zoom (no solo al final)
-                    // El mar se desvanece gradualmente desde el inicio del zoom (no solo al final)
+                    // El hero section NUNCA baja su opacidad para que no se mezcle de forma
+                    // traslúcida con la Vista 2 (que tiene que ser 100% sólida).
+                    // Al expandirse la máscara infinitamente, el mar se oculta solo.
                     if (phase2 > 0.3) {
-                        heroSectionEl.style.opacity = 1 - ((phase2 - 0.3) / 0.7);
                         heroSectionEl.style.pointerEvents = "none";
                     } else {
-                        heroSectionEl.style.opacity = 1;
                         heroSectionEl.style.pointerEvents = "auto";
                     }
                     
