@@ -662,7 +662,7 @@ a { text-decoration: none; color: inherit; }
 }
 /* ─── VISTA 5: CTA (Llamado a la acción) ─── */
 #vista-cta {
-    padding-top: 0;
+    padding-top: 5rem; /* Restaurado el espacio blanco arriba */
     padding-bottom: 2rem;
 }
 .cta-container {
@@ -670,8 +670,8 @@ a { text-decoration: none; color: inherit; }
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding: 0 10%;
-    gap: 3rem;
+    padding: 0 5%; /* Movido un poquito más a la izquierda */
+    gap: 4rem;
     max-width: none;
 }
 .cta-left-col {
@@ -702,10 +702,11 @@ a { text-decoration: none; color: inherit; }
     margin-bottom: 2rem;
 }
 .cta-title-small {
-    font-size: clamp(0.75rem, 2vw, 0.95rem);
-    letter-spacing: 0.25em;
-    font-weight: 700;
-    opacity: 0.65;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -1px;
+    font-weight: 800;
+    opacity: 1;
+    line-height: 1.1;
     text-transform: uppercase;
 }
 .cta-title-large {
