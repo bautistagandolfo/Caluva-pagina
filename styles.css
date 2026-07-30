@@ -269,22 +269,13 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* Un único bloque con un difuminado perfecto (interpolación manual de color 
-       para evitar bandas grises y lograr un fundido ultra suave estilo Photoshop) */
-    background: linear-gradient(to bottom, 
-        var(--color-white) 0%, 
-        var(--color-white) 40%, 
-        #cfdbe4 47%,
-        #9bb6c9 55%,
-        #618fae 63%,
-        var(--color-navy) 70%, 
-        var(--color-navy) 100%
-    );
+    /* Fondo transparente, los colores sólidos los dan los contenedores internos */
+    background: transparent;
 }
 
-/* Área blanca (ahora transparente, el fondo lo da v2-section) */
+/* Área blanca superior */
 .v2-white-area {
-    background-color: transparent;
+    background-color: var(--color-white);
     width: 100%;
     flex: 1; /* Toma exactamente el espacio necesario sin forzar overflow */
     display: flex;
@@ -350,9 +341,20 @@ a { text-decoration: none; color: inherit; }
 
 
 
-/* ─── SECCIÓN NAVY (ahora transparente) ─── */
+/* Transición amigable con Curva SVG */
+.v2-wave {
+    display: block;
+    width: 100%;
+    height: 8vh;
+    background-color: var(--color-white); /* Fondo blanco detrás de la ola navy */
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+/* ─── SECCIÓN NAVY ─── */
 .v2-navy-preview {
-    background-color: transparent;
+    background-color: var(--color-navy);
     flex: 1;
     display: flex;
     flex-direction: column;
