@@ -660,6 +660,11 @@ a { text-decoration: none; color: inherit; }
     overflow: hidden;
     isolation: isolate; /* evita que el spinner cree conflicto de z-index con el menú */
 }
+/* ─── VISTA 5: CTA (Llamado a la acción) ─── */
+#vista-cta {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
 .cta-container {
     text-align: center;
     max-width: 1000px;
@@ -683,7 +688,7 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 4.5rem;
+    margin-bottom: 2rem;
 }
 .cta-title-small {
     font-size: clamp(0.75rem, 2vw, 0.95rem);
@@ -740,9 +745,9 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding: 6rem 8% 0;
+    padding: 2rem 8% 0;
     overflow: hidden; /* Corta el logo por abajo al estilo Calvagni */
-    min-height: 60vh;
+    min-height: 50vh;
 }
 .v6-redes-container {
     width: 100%;
