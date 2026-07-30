@@ -104,7 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (zoomSpacer && heroSectionEl && heroCaluvaText && vista2) {
         let maskCreated = false;
         let yellowOverlay = null;
-        let v2Revealed = false; // una vez revelada, vista-2 no se vuelve a ocultar por oscilación del scroll
+        let v2Revealed = false;
+        let v2SwitchedToRelative = false; // controla si Vista 2 ya pasó a flujo normal
 
         // Preparar "El Gancho" (Staggered Text Reveal)
         const v2Part1 = document.getElementById('v2-part1');
@@ -276,6 +277,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     const isPastReveal = scrollY >= totalMaxScroll;
                     
 
+                    // ── SWITCH FIXED → RELATIVE ──
+                    // Durante el zoom: Vista 2 fija (necesario para el efecto).
+                    // Una vez que el zoom termina: pasa a flujo normal con margin negativo
+                    // para que quede en el mismo lugar visual y luego scrollee hacia arriba
+                    // como cualquier sección de la página. SIN efecto de tapar.
+                    if (isPastZoom) {
+                        if (!v2SwitchedToRelative) {
+                            v2SwitchedToRelative = true;
+                            vista2.style.position = 'relative';
+                            vista2.style.marginTop = (-window.innerHeight) + 'px';
+                            vista2.style.top = '';
+                            vista2.style.left = '';
+                            vista2.style.width = '100%';
+                        }
+                    } else {
+                        if (v2SwitchedToRelative) {
+                            v2SwitchedToRelative = false;
+                            vista2.style.position = 'fixed';
+                            vista2.style.top = '0';
+                            vista2.style.left = '0';
+                            vista2.style.width = '100%';
+                            vista2.style.marginTop = '';
+                        }
+                    }
+
                     // --- ANIMACIÓN EN VISTA 2: Reveal de logo, párrafo y enlace ---
                     const v2Part2 = document.getElementById('v2-part2');
                     const v2Link = document.getElementById('v2-link-container');
@@ -300,6 +326,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 maskCreated = false;
                 autoScrollStarted = false;
                 v2Revealed = false;
+                // Resetear Vista 2 a fixed para que el zoom vuelva a funcionar
+                if (v2SwitchedToRelative) {
+                    v2SwitchedToRelative = false;
+                    vista2.style.position = 'fixed';
+                    vista2.style.top = '0';
+                    vista2.style.left = '0';
+                    vista2.style.width = '100%';
+                    vista2.style.marginTop = '';
+                }
                 heroCaluvaText.style.opacity = "1";
                 heroSectionEl.style.mask = "none";
                 heroSectionEl.style.webkitMask = "none";
