@@ -634,6 +634,12 @@ a { text-decoration: none; color: inherit; }
     transform: scale(1.22);
     filter: brightness(1.04);
 }
+/* Deshabilitar zoom en hover para imágenes específicas */
+.split-bg.no-img-zoom img,
+.split-half:hover .split-bg.no-img-zoom img {
+    transform: scale(1.15); /* Mantiene el scale inicial sin zoom extra */
+    filter: none;
+}
 
 .split-content {
     width: 100%; max-width: 1400px; margin: 0 auto;
