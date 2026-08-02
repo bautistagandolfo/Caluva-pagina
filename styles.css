@@ -1027,75 +1027,148 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ─── RESPONSIVE DESIGN (MOBILE) ─── */
-@media (max-width: 768px) {
-    /* Header / Menú */
-    .header { padding: 1.5rem 5%; }
-    .menu-logo-large { font-size: 3.5rem; }
-    .menu-link { font-size: 2.2rem; }
-    .menu-text { font-size: 1.15rem; } /* Aumentamos el texto "MENU" en celulares */
-    .menu-toggle { font-size: 1.4rem; } 
-    .sticky-menu-btn { top: 1.8rem; right: 5%; font-size: 1.4rem; }
-    .hamburger { transform: scale(1.2); } /* Hamburguesa un poco más grande para acompañar */
 
-    /* Hero */
-    .hero-content { padding: 0 5%; }
-    .hero-text { font-size: 1.1rem; }
-    .hero-logo-large { font-size: 4.5rem; margin-top: 1.5rem; }
-
-    /* Secciones generales */
-    .section { padding: 5rem 5%; }
-    .section + .section { padding-top: 3rem; }
-
-    /* CTA (Vista 5) */
-    #vista-cta { padding-bottom: 3rem; }
-    .cta-container { flex-direction: column; gap: 1.5rem; text-align: center; }
-    .cta-left-col { position: relative; left: auto; top: auto; transform: none; margin-bottom: 2rem; }
-    .cta-right-col { align-items: center; text-align: center; }
-    .cta-title { align-items: center; }
-    .cta-btn-wrapper { justify-content: center; }
-
-    /* V2: Conoce Nuestros Servicios */
-    .v2-top, .v2-bottom, .v2-top-inner { padding: 0 5%; flex-direction: column; align-items: flex-start; text-align: left; gap: 1rem; }
-    .v2-empty, .v2-text { width: 100%; }
-    .v2-title { font-size: 1.8rem; margin-bottom: 1.5rem; }
-    .v2-desc-part1 { font-size: 1.2rem; }
-    .v2-desc-part2 { font-size: 0.95rem; }
-    .btn-oval-custom { width: 100%; justify-content: center; padding: 1.2rem; margin-top: 2rem; }
-    
-    /* V3: Slide Quiénes Somos */
-    .slide-content-v3 { flex-direction: column; height: auto; margin: 0; }
-    .v3-image, .v3-text { width: 100%; height: auto; }
-    .v3-image { padding: 0; min-height: 350px; }
-    .v3-text { padding: 3rem 5%; }
-    .v3-paragraphs p { font-size: 1.1rem; }
-
-    /* Split Sections (Universo, Pauta, Email, Social) */
-    .split-section { flex-direction: column; height: auto; }
-    .split-section .split-half { width: 100%; height: auto; min-height: 500px; box-shadow: none !important; }
-    
-    /* Apilar fotos arriba y texto abajo */
-    .split-content.left-layout, 
-    .split-content.right-layout { 
-        flex-direction: column-reverse; padding: 0; 
-    }
-    .split-content.left-image-layout { 
-        flex-direction: column; padding: 0; 
-    }
-    
-    .split-text-area, .split-texts { 
-        width: 100%; padding: 4rem 8%; text-align: center; 
-        display: flex; flex-direction: column; align-items: center; 
-    }
-    .split-texts.pl-5, .split-texts.right-align { 
-        padding: 4rem 8%; text-align: center; 
-    }
-    .split-image { width: 100%; height: 400px; }
-    .split-title { font-size: 2.5rem; }
-    
-    /* Footer */
-    .v6-logo h2 { font-size: 4rem; }
-    .social-link { margin-bottom: 2rem; }
+/* Ocultar cursor custom en touch */
+@media (hover: none) and (pointer: coarse) {
+    #cursor, #cursor-follower { display: none !important; }
 }
+
+@media (max-width: 768px) {
+
+    /* ── HEADER ── */
+    .header { padding: 1.4rem 5%; }
+    .menu-text { font-size: 0.85rem; min-width: auto; }
+    .sticky-menu-btn { top: 1.6rem; right: 5%; }
+
+    /* ── FULLSCREEN MENU ── */
+    .menu-link { font-size: 2rem; }
+    .menu-logo-large { font-size: clamp(3rem, 10vw, 5rem); }
+
+    /* ── HERO ── */
+    /* En mobile el zoom-spacer se reduce a 100vh — la animación se deshabilita desde JS */
+    #zoom-spacer { height: 100vh !important; }
+    #inicio { height: 100vh; height: 100dvh; }
+    .hero-content { padding: 0 6%; justify-content: flex-end; padding-bottom: 8vh; gap: 0; }
+    .hero-text {
+        font-size: clamp(0.75rem, 3.5vw, 1rem);
+        margin-top: 0;
+        margin-bottom: 4vh;
+        text-align: center;
+        text-align-last: center;
+        max-width: 100%;
+        line-height: 1.5;
+    }
+    .hero-logo-large {
+        font-size: clamp(4.5rem, 22vw, 8rem);
+        letter-spacing: -1px;
+        margin-bottom: -0.08em;
+    }
+
+    /* ── VISTA 2 (Quienes Somos) ── */
+    /* En mobile siempre está en flujo normal (el zoom no existe) */
+    .v2-section {
+        position: relative !important;
+        height: auto !important;
+        min-height: 100vh;
+    }
+    .v2-white-area {
+        padding: 5rem 6% 2rem;
+        flex: none;
+        min-height: 60vh;
+    }
+    .v2-top-inner {
+        flex-direction: column;
+        gap: 2rem;
+        padding-bottom: 2rem;
+    }
+    .v2-logo {
+        padding-top: 0;
+    }
+    .v2-logo .spiral-icon {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    .v2-desc-part1 { font-size: clamp(1.1rem, 4vw, 1.3rem); }
+    .v2-desc-part2 { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+    .v2-elegant-link-container { text-align: left; }
+    .v2-services-title { font-size: clamp(1.2rem, 5vw, 1.8rem); text-align: left; }
+    .v2-navy-preview { padding: 2rem 6% 3rem; }
+    .v2-prev-header { gap: 4%; }
+    .v2-prev-word { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+    .v2-prev-marca { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+    .v2-prev-desc { margin-left: 0; width: 100%; margin-top: 1.5rem; }
+    /* En mobile los contenidos de v2 aparecen directamente sin animación */
+    #v2-part1 .word-inner { transform: translateY(0) !important; opacity: 1 !important; }
+    #v2-part2, #v2-link-container, #v2-logo { opacity: 1 !important; transform: none !important; }
+
+    /* ── SECCIONES GENERALES ── */
+    .section { padding: 4rem 6%; }
+
+    /* ── SPLIT SECTIONS (Servicios) ── */
+    .split-section { flex-direction: column; }
+    .split-section.single-half { min-height: auto; }
+    .split-half { min-height: 60vw; width: 100%; box-shadow: none !important; }
+    .split-content {
+        padding: 2.5rem 6%;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    .split-content.left-layout,
+    .split-content.right-layout,
+    .split-content.left-image-layout {
+        flex-direction: column;
+        text-align: left;
+        align-items: flex-start;
+        justify-content: flex-end;
+    }
+    .split-texts { max-width: 100%; padding: 0; text-align: left; }
+    .split-texts.pl-5 { padding-left: 0; }
+    .split-texts.right-align { text-align: left; }
+    .split-title { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 0.8rem; }
+    .split-image { width: 100%; height: 250px; margin-bottom: 1rem; }
+    .split-image img { max-height: 250px; }
+    .split-link a { margin-top: 0.75rem; }
+
+    /* ── CTA ── */
+    #vista-cta { padding: 5rem 6% 4rem; }
+    .cta-container { flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
+    .cta-left-col {
+        position: relative; left: auto; top: auto; transform: none;
+        display: flex; justify-content: center;
+    }
+    .cta-spiral { width: 100px !important; height: 100px !important; }
+    .cta-right-col { align-items: center; text-align: center; width: 100%; }
+    .cta-title { align-items: center; margin-bottom: 1.5rem; }
+    .cta-btn-wrapper { justify-content: center; }
+    .cta-btn { padding: 1rem 2.5rem; font-size: 0.75rem; }
+
+    /* ── FOOTER ── */
+    #contacto { padding: 3rem 6% 0; min-height: auto; align-items: flex-start; }
+    .v6-redes-container {
+        transform: none;
+        justify-content: flex-start;
+        padding: 0;
+        margin-top: 0;
+        margin-bottom: 2rem;
+    }
+    .v6-redes h3 { font-size: 1rem; }
+    .social-link { font-size: 1rem; }
+    .v6-logo {
+        font-size: clamp(3.5rem, 20vw, 8rem);
+        height: 0.75em;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Modal en pantallas muy chicas */
+    .call-form-row { grid-template-columns: 1fr; }
+    .call-modal-box { padding: 2.5rem 1.5rem 2rem; width: 95vw; }
+    .hero-logo-large { font-size: clamp(3.5rem, 18vw, 6rem); }
+    .split-half { min-height: 55vw; }
+}
+
 
 /* ─── MODAL: AGENDEMOS UNA CALL ─── */
 .call-modal-overlay {

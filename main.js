@@ -113,6 +113,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (zoomSpacer && heroSectionEl && heroCaluvaText && vista2) {
+
+        // En mobile deshabilitamos toda la animación de zoom:
+        // Vista 2 queda en flujo normal y el contenido aparece directamente.
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+            vista2.style.position = 'relative';
+            vista2.style.marginTop = '0';
+            // Revelar todos los elementos de Vista 2 inmediatamente
+            const v2Part1 = document.getElementById('v2-part1');
+            const v2Part2 = document.getElementById('v2-part2');
+            const v2Link  = document.getElementById('v2-link-container');
+            const v2Logo  = document.getElementById('v2-logo');
+            if (v2Part1) v2Part1.classList.add('hook-active');
+            if (v2Part2) v2Part2.classList.add('reveal-active');
+            if (v2Link)  v2Link.classList.add('reveal-active');
+            if (v2Logo)  v2Logo.classList.add('reveal-active');
+            heroCaluvaText.style.opacity = '1';
+            heroCaluvaText.style.animation = '';
+            // No continuar con la lógica del zoom
+        } else {
         let maskCreated = false;
         let yellowOverlay = null;
         let v2Revealed = false;
@@ -390,6 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 delete heroSectionEl.dataset.centerX;
             }
         }, { passive: true });
+        } // cierre del else (desktop only)
     }
 
     // --- SCROLL REVEAL (INTERSECTION OBSERVER) ---
