@@ -582,4 +582,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ── FOOTER LOGO MOBILE INTERACTION ──
+    const footerLogo = document.querySelector('.v6-logo');
+    if (footerLogo) {
+        footerLogo.addEventListener('click', () => {
+            // Solo en móviles o pantallas táctiles tiene sentido el toggle manual
+            if (window.innerWidth <= 768 || window.matchMedia("(hover: none)").matches) {
+                footerLogo.classList.toggle('toggled');
+            }
+        });
+    }
+
 });
