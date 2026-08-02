@@ -404,6 +404,23 @@ document.addEventListener('DOMContentLoaded', () => {
         callModal.classList.remove('active');
         callModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        
+        // Resetear vista por si se envió el formulario
+        setTimeout(() => {
+            const callForm = document.getElementById('call-form');
+            const successMessage = document.getElementById('call-success-message');
+            if (callForm) {
+                callForm.reset();
+                callForm.style.display = 'flex';
+                const btn = callForm.querySelector('.call-form-submit');
+                if (btn) {
+                    btn.textContent = 'LISTO!';
+                    btn.style.opacity = '';
+                    btn.disabled = false;
+                }
+            }
+            if (successMessage) successMessage.style.display = 'none';
+        }, 300); // 300ms espera a que termine la animación de cierre
     };
 
     btnAgendemosList.forEach(btn => btn.addEventListener('click', openModal));
@@ -411,16 +428,44 @@ document.addEventListener('DOMContentLoaded', () => {
     if (callModal) callModal.addEventListener('click', e => { if (e.target === callModal) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    // Formulario: feedback visual de envío (sin backend por ahora)
+    // Formulario: enviar datos a Google Apps Script
     const callForm = document.getElementById('call-form');
+    const successMessage = document.getElementById('call-success-message');
+    // IMPORTANTE: El cliente debe reemplazar esta URL por la que le genere Google Apps Script
+    const scriptURL = '<TU_URL_DE_APPS_SCRIPT_AQUI>'; 
+
     if (callForm) {
         callForm.addEventListener('submit', e => {
             e.preventDefault();
             const btn = callForm.querySelector('.call-form-submit');
-            btn.textContent = '¡ENVIADO!';
+            
+            if (scriptURL === '<TU_URL_DE_APPS_SCRIPT_AQUI>') {
+                alert('Falta configurar la URL de Google Apps Script. Contactate con tu desarrollador para activarla.');
+                return;
+            }
+
+            // Cambiar estado del botón
+            btn.textContent = 'ENVIANDO...';
             btn.style.opacity = '0.6';
-            setTimeout(closeModal, 1200);
-            setTimeout(() => { btn.textContent = 'ENVIAR'; btn.style.opacity = ''; callForm.reset(); }, 1600);
+            btn.disabled = true;
+
+            const formData = new FormData(callForm);
+            
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => {
+                    // Ocultar formulario y mostrar éxito
+                    callForm.style.display = 'none';
+                    if (successMessage) successMessage.style.display = 'flex';
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('Hubo un error al enviar. Por favor, intentá nuevamente.');
+                })
+                .finally(() => {
+                    btn.textContent = 'LISTO!';
+                    btn.style.opacity = '';
+                    btn.disabled = false;
+                });
         });
     }
 
