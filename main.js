@@ -68,18 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', checkHeaderColor, { passive: true });
     checkHeaderColor();
 
-    // ── PARALLAX SUTIL DEL VIDEO DEL HERO ──
-    const heroBg = document.querySelector('#inicio .hero-background video');
-    window.addEventListener('scroll', () => {
-        if (!heroBg) return;
-        const scrollY = window.scrollY;
-        const heroH = window.innerHeight;
-        if (scrollY < heroH) {
-            // Mueve el video hacia arriba sutilmente mientras scrolleamos
-            heroBg.style.transform = `translateY(${scrollY * 0.15}px) scale(1.05)`;
-        }
-    }, { passive: true });
-
     // ── COREOGRAFÍA ZOOM CALUVA CON MASCARA DINÁMICA JS ──
     const zoomSpacer = document.getElementById('zoom-spacer');
     const heroSectionEl = document.getElementById('inicio');
