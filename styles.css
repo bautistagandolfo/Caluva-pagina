@@ -674,7 +674,7 @@ a { text-decoration: none; color: inherit; }
 }
 /* Flecha animada en los links VER MAS */
 .split-link a::after, .v2-link a::after {
-    content: '→';
+    content: ' →';
     display: inline-block;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1042,7 +1042,7 @@ a { text-decoration: none; color: inherit; }
 
     /* ── FULLSCREEN MENU ── */
     .menu-link { font-size: 2rem; }
-    .menu-logo-large { font-size: clamp(3rem, 10vw, 5rem); }
+    .menu-logo-large { font-size: clamp(4.5rem, 20vw, 8rem); letter-spacing: -1px; }
 
     /* ── HERO ── */
     /* En mobile el zoom-spacer se reduce a 100vh — la animación se deshabilita desde JS */
@@ -1100,6 +1100,12 @@ a { text-decoration: none; color: inherit; }
     /* En mobile los contenidos de v2 aparecen directamente sin animación */
     #v2-part1 .word-inner { transform: translateY(0) !important; opacity: 1 !important; }
     #v2-part2, #v2-link-container, #v2-logo { opacity: 1 !important; transform: none !important; }
+    
+    /* Forzar visibilidad de animaciones en servicios (VER MAS, títulos) en mobile */
+    .split-content .sr-item, .v2-section .sr-item, .split-half .sr-item {
+        opacity: 1 !important;
+        transform: none !important;
+    }
 
     /* ── SECCIONES GENERALES ── */
     .section { padding: 4rem 6%; }
@@ -1144,11 +1150,11 @@ a { text-decoration: none; color: inherit; }
     .cta-btn { padding: 1rem 2.5rem; font-size: 0.75rem; }
 
     /* ── FOOTER ── */
-    #contacto { padding: 3rem 6% 0; min-height: auto; align-items: flex-start; }
+    #contacto { padding: 3rem 0 0; min-height: auto; align-items: flex-start; overflow-x: hidden; }
     .v6-redes-container {
         transform: none;
         justify-content: flex-start;
-        padding: 0;
+        padding: 0 6%;
         margin-top: 0;
         margin-bottom: 2rem;
     }
@@ -1157,7 +1163,9 @@ a { text-decoration: none; color: inherit; }
     .v6-logo {
         font-size: clamp(3.5rem, 20vw, 8rem);
         height: 0.75em;
-        width: 100%;
+        width: 100vw;
+        max-width: 100%;
+        margin-left: 0;
     }
 }
 
