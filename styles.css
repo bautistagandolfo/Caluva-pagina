@@ -524,6 +524,24 @@ a { text-decoration: none; color: inherit; }
     width: 100%;
 }
 
+/* Imagen Duna Collection rotada 90 grados para Pauta Publicitaria */
+.duna-bg {
+    position: absolute;
+    /* Hacemos el div más grande que el contenedor para que al rotar 90deg no queden bordes */
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url('assets/DUNA COLLECTION - JOEL ESCALONA.jpeg');
+    background-size: cover;
+    background-position: center center;
+    transform: rotate(90deg);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.split-half:hover .duna-bg {
+    transform: rotate(90deg) scale(1.05);
+}
+
 
 
 /* ─── VISTA 3: ABOUT 2 ─── */
