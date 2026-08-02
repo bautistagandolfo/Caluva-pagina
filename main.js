@@ -306,11 +306,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         if (v2SwitchedToRelative) {
                             v2SwitchedToRelative = false;
-                            vista2.style.position = 'fixed';
-                            vista2.style.top = '0';
-                            vista2.style.left = '0';
-                            vista2.style.width = '100%';
-                            vista2.style.marginTop = '';
+                            // Fade rápido para esconder el salto de layout fixed→relative
+                            vista2.style.transition = 'opacity 0.15s ease';
+                            vista2.style.opacity = '0';
+                            requestAnimationFrame(() => {
+                                vista2.style.position = 'fixed';
+                                vista2.style.top = '0';
+                                vista2.style.left = '0';
+                                vista2.style.width = '100%';
+                                vista2.style.marginTop = '';
+                                requestAnimationFrame(() => {
+                                    vista2.style.opacity = '1';
+                                    setTimeout(() => { vista2.style.transition = ''; }, 200);
+                                });
+                            });
                         }
                     }
 
