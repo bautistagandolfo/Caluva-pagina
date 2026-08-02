@@ -1130,6 +1130,41 @@ a { text-decoration: none; color: inherit; }
     border-color: var(--color-brown);
     box-shadow: 0 4px 15px rgba(74, 36, 16, 0.08);
 }
+.call-select-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.call-label {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: var(--color-brown);
+    margin-bottom: 0.1rem;
+    text-transform: uppercase;
+}
+.call-select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--color-brown);
+    padding: 0.7rem 0;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--color-brown);
+    cursor: pointer;
+    opacity: 0.9;
+    outline: none;
+}
+.call-select:focus {
+    opacity: 1;
+    border-bottom: 2px solid var(--color-brown);
+    padding-left: 0.5rem;
+    background: rgba(255, 255, 255, 0.45);
+}
 .call-form-submit {
     align-self: flex-end;
     margin-top: 0.75rem;

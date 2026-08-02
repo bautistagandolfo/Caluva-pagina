@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pauta Publicitaria - Caluva</title>
+    <title>Servicios - Caluva</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
             background-color: var(--color-cream);
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             margin: 0;
-            padding: 5rem 5%;
-            font-family: var(--font-main);
+            font-family: var(--font-heading);
             color: var(--color-brown);
+        }
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            letter-spacing: 2px;
+            text-align: center;
         }
         .back-link {
             position: absolute;
@@ -30,218 +34,10 @@
             transition: opacity 0.3s ease;
         }
         .back-link:hover { opacity: 0.6; }
-        
-        .form-container {
-            background-color: #fff;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-            max-width: 700px;
-            width: 100%;
-            margin-top: 2rem;
-        }
-
-        h1 {
-            font-family: var(--font-heading);
-            font-size: clamp(2rem, 4vw, 3rem);
-            letter-spacing: 1px;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            color: var(--color-brown);
-        }
-        
-        /* Reutilizamos diseño del modal */
-        .call-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .form-section-title {
-            font-family: var(--font-main);
-            font-weight: 800;
-            font-size: 1rem;
-            margin-top: 1.5rem;
-            margin-bottom: -0.5rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        .call-input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1.5px solid var(--color-brown);
-            padding: 0.7rem 0;
-            font-family: var(--font-main);
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            color: var(--color-brown);
-            transition: border-color 0.2s, opacity 0.2s;
-            opacity: 0.9;
-        }
-        .call-input::placeholder {
-            color: var(--color-brown);
-            opacity: 0.4;
-        }
-        .call-input:focus {
-            outline: none;
-            opacity: 1;
-            border-bottom: 2px solid var(--color-brown);
-            background: rgba(255, 255, 255, 0.45);
-            padding-left: 0.5rem;
-        }
-        
-        .call-textarea {
-            resize: vertical;
-            border: 1.5px solid var(--color-brown);
-            padding: 0.7rem;
-            min-height: 80px;
-        }
-        
-        /* Estilos para los selects / radio groups */
-        .call-select-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .call-label {
-            font-family: var(--font-main);
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-            color: var(--color-brown);
-            margin-bottom: 0.3rem;
-            text-transform: uppercase;
-        }
-        .call-select {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1.5px solid var(--color-brown);
-            padding: 0.7rem 0;
-            font-family: var(--font-main);
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: var(--color-brown);
-            cursor: pointer;
-            opacity: 0.9;
-            outline: none;
-            appearance: none;
-        }
-        .call-select:focus {
-            opacity: 1;
-            border-bottom: 2px solid var(--color-brown);
-            padding-left: 0.5rem;
-        }
-        
-        .call-form-submit {
-            align-self: center;
-            margin-top: 2rem;
-            background: var(--color-brown);
-            color: var(--color-cream);
-            border: 2px solid var(--color-brown);
-            cursor: pointer;
-            font-family: var(--font-main);
-            font-weight: 800;
-            font-size: 0.9rem;
-            letter-spacing: 0.15em;
-            padding: 0.8rem 3rem;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-        }
-        .call-form-submit:hover {
-            background: transparent;
-            color: var(--color-brown);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(74, 36, 16, 0.12);
-        }
-
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 2rem 1.5rem;
-                margin-top: 3rem;
-            }
-        }
     </style>
 </head>
 <body>
     <a href="javascript:history.back()" class="back-link">← VOLVER</a>
-    
-    <div class="form-container">
-        <h1>PAUTA PUBLICITARIA CON CALUVA :)</h1>
-        
-        <form class="call-form" id="pauta-form">
-            <!-- Info básica -->
-            <input type="text" class="call-input" name="negocio" placeholder="¿CÓMO SE LLAMA TU NEGOCIO? *" required>
-            <input type="text" class="call-input" name="instagram" placeholder="USUARIO DE INSTAGRAM *" required>
-            <input type="text" class="call-input" name="nombre" placeholder="TU NOMBRE :) *" required>
-            
-            <!-- Selects -->
-            <div class="call-select-group">
-                <label class="call-label">¿Alguna vez pautaste publicidad online? *</label>
-                <select class="call-select" name="experiencia_pauta" required>
-                    <option value="" disabled selected>Seleccioná una opción...</option>
-                    <option value="si_actualmente">Sí, actualmente pauto</option>
-                    <option value="nunca">Nunca</option>
-                    <option value="pocas_veces">Pocas veces</option>
-                </select>
-            </div>
-
-            <div class="call-select-group">
-                <label class="call-label">¿Cuál es tu principal objetivo con la publicidad?</label>
-                <select class="call-select" name="objetivo">
-                    <option value="" disabled selected>Seleccioná una opción...</option>
-                    <option value="ventas">Ventas (para productos)</option>
-                    <option value="clientes_turnos">Conseguir clientes, turnos, consultas (para servicios)</option>
-                    <option value="dar_a_conocer">Dar a conocer mi marca y llegar a más gente</option>
-                    <option value="otro">¡Otro!</option>
-                </select>
-            </div>
-
-            <textarea class="call-input call-textarea" name="descripcion_negocio" placeholder="CONTAME UN POCO SOBRE TU NEGOCIO, ¿QUÉ VENDÉS? *" rows="3" required></textarea>
-
-            <div class="call-select-group">
-                <label class="call-label">¿Tenés tienda online? *</label>
-                <select class="call-select" name="tienda_online" required>
-                    <option value="" disabled selected>Seleccioná una opción...</option>
-                    <option value="si">Sí</option>
-                    <option value="todavia_no">Todavía no</option>
-                    <option value="solo_local">Solo vendo en local físico</option>
-                </select>
-            </div>
-
-            <div class="call-select-group">
-                <label class="call-label">Facturación promedio *</label>
-                <select class="call-select" name="facturacion" required>
-                    <option value="" disabled selected>Seleccioná una opción...</option>
-                    <option value="menos_1000">Menos de USD 1.000</option>
-                    <option value="1000_5000">Entre USD 1.000 y USD 5.000</option>
-                    <option value="5000_15000">Entre USD 5.000 y USD 15.000</option>
-                    <option value="mas_15000">Más de USD 15.000</option>
-                </select>
-            </div>
-
-            <div class="call-select-group">
-                <label class="call-label">¿Cuánto estás dispuesto a invertir en Meta Ads? *</label>
-                <select class="call-select" name="inversion" required>
-                    <option value="" disabled selected>Seleccioná una opción...</option>
-                    <option value="menos_300">Menos de 300 USD</option>
-                    <option value="300_500">Entre 300 y 500 USD</option>
-                    <option value="500_700">Entre 500 y 700 USD</option>
-                    <option value="mas_700">Más de 700 USD</option>
-                </select>
-            </div>
-
-            <h3 class="form-section-title">DEJANOS TU CONTACTO PARA AGENDAR UNA CALL :)</h3>
-            
-            <input type="tel" class="call-input" name="telefono" placeholder="TELÉFONO *" required>
-            <input type="email" class="call-input" name="email" placeholder="MAIL *" required>
-
-            <button type="submit" class="call-form-submit">LISTO!</button>
-        </form>
-    </div>
+    <h1>EN PROCESO...</h1>
 </body>
 </html>

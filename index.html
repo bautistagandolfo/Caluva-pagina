@@ -191,17 +191,78 @@
             <button class="call-modal-close" id="call-modal-close" aria-label="Cerrar">✕</button>
             <div class="call-modal-header">
                 <div class="spiral-icon dark"></div>
-                <h2 class="call-modal-title" id="call-modal-title">AGENDEMOS<br>UNA CALL</h2>
+                <h2 class="call-modal-title" id="call-modal-title">PAUTA PUBLICITARIA<br>CON CALUVA :)</h2>
             </div>
-            <p class="call-modal-sub">Contános sobre tu proyecto y te contactamos a la brevedad.</p>
             <form class="call-form" id="call-form">
-                <div class="call-form-row">
-                    <input type="text" class="call-input" name="nombre" placeholder="NOMBRE" required>
-                    <input type="email" class="call-input" name="email" placeholder="EMAIL" required>
+                <!-- Text inputs -->
+                <input type="text" class="call-input" name="negocio" placeholder="¿CÓMO SE LLAMA TU NEGOCIO? *" required>
+                <input type="text" class="call-input" name="instagram" placeholder="USUARIO DE INSTAGRAM *" required>
+                <input type="text" class="call-input" name="nombre" placeholder="TU NOMBRE :) *" required>
+                
+                <!-- Selects -->
+                <div class="call-select-group">
+                    <label class="call-label">¿Alguna vez pautaste publicidad online? *</label>
+                    <select class="call-select" name="experiencia_pauta" required>
+                        <option value="" disabled selected>Seleccioná una opción...</option>
+                        <option value="si_actualmente">Sí, actualmente pauto</option>
+                        <option value="nunca">Nunca</option>
+                        <option value="pocas_veces">Pocas veces</option>
+                    </select>
                 </div>
-                <input type="text" class="call-input" name="empresa" placeholder="EMPRESA (OPCIONAL)">
-                <textarea class="call-input call-textarea" name="mensaje" placeholder="CONTÁNOS SOBRE TU PROYECTO" rows="4"></textarea>
-                <button type="submit" class="call-form-submit">ENVIAR</button>
+
+                <div class="call-select-group">
+                    <label class="call-label">¿Cuál es tu principal objetivo con la publicidad?</label>
+                    <select class="call-select" name="objetivo">
+                        <option value="" disabled selected>Seleccioná una opción...</option>
+                        <option value="ventas">Ventas (para productos)</option>
+                        <option value="clientes_turnos">Conseguir clientes, turnos, consultas (para servicios)</option>
+                        <option value="dar_a_conocer">Dar a conocer mi marca y llegar a más gente</option>
+                        <option value="otro">¡Otro!</option>
+                    </select>
+                </div>
+
+                <textarea class="call-input call-textarea" name="descripcion_negocio" placeholder="CONTAME UN POCO SOBRE TU NEGOCIO, ¿QUÉ VENDÉS? *" rows="3" required></textarea>
+
+                <div class="call-select-group">
+                    <label class="call-label">¿Tenés tienda online? *</label>
+                    <select class="call-select" name="tienda_online" required>
+                        <option value="" disabled selected>Seleccioná una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="todavia_no">Todavía no</option>
+                        <option value="solo_local">Solo vendo en local físico</option>
+                    </select>
+                </div>
+
+                <div class="call-select-group">
+                    <label class="call-label">Facturación promedio *</label>
+                    <select class="call-select" name="facturacion" required>
+                        <option value="" disabled selected>Seleccioná una opción...</option>
+                        <option value="menos_1000">Menos de USD 1.000</option>
+                        <option value="1000_5000">Entre USD 1.000 y USD 5.000</option>
+                        <option value="5000_15000">Entre USD 5.000 y USD 15.000</option>
+                        <option value="mas_15000">Más de USD 15.000</option>
+                    </select>
+                </div>
+
+                <div class="call-select-group">
+                    <label class="call-label">¿Cuánto estás dispuesto a invertir en Meta Ads? *</label>
+                    <select class="call-select" name="inversion" required>
+                        <option value="" disabled selected>Seleccioná una opción...</option>
+                        <option value="menos_300">Menos de 300 USD</option>
+                        <option value="300_500">Entre 300 y 500 USD</option>
+                        <option value="500_700">Entre 500 y 700 USD</option>
+                        <option value="mas_700">Más de 700 USD</option>
+                    </select>
+                </div>
+
+                <!-- Contact inputs -->
+                <p class="call-modal-sub" style="margin-top: 1rem;">DEJANOS TU CONTACTO PARA AGENDAR UNA CALL :)</p>
+                <div class="call-form-row">
+                    <input type="tel" class="call-input" name="telefono" placeholder="TELÉFONO *" required>
+                    <input type="email" class="call-input" name="email" placeholder="MAIL *" required>
+                </div>
+
+                <button type="submit" class="call-form-submit">LISTO!</button>
             </form>
         </div>
     </div>
