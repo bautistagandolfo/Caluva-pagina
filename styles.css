@@ -637,8 +637,9 @@ a { text-decoration: none; color: inherit; }
 /* Deshabilitar zoom en hover para imágenes específicas */
 .split-bg.no-img-zoom img,
 .split-half:hover .split-bg.no-img-zoom img {
-    transform: scale(1); /* Sin zoom: escala natural */
+    transform: scale(1);
     filter: none;
+    object-fit: contain;
     object-position: center center;
     transform-origin: center center;
 }
