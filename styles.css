@@ -627,13 +627,25 @@ a { text-decoration: none; color: inherit; }
 /* Enlaces "VER MAS" globales (para v2, v3, splits) */
 .v2-link a, .v3-link-top a, .split-link a {
     font-family: var(--font-main); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em;
-    color: var(--color-brown); display: inline-block;
+    color: var(--color-brown); display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     transition: transform 0.3s ease, opacity 0.3s ease;
     margin-top: 1rem;
+    position: relative;
 }
 .v2-link a:hover, .v3-link-top a:hover, .split-link a:hover {
-    opacity: 0.5;
+    opacity: 0.85;
     transform: translateX(6px);
+}
+/* Flecha animada en los links VER MAS */
+.split-link a::after, .v2-link a::after {
+    content: '→';
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.split-link a:hover::after, .v2-link a:hover::after {
+    transform: translateX(5px);
 }
 
 /* Layouts */
@@ -797,6 +809,33 @@ a { text-decoration: none; color: inherit; }
     transform: translateX(4px) rotate(-45deg);
 }
 
+/* Efecto shimmer automático en el botón CTA */
+.cta-btn {
+    position: relative;
+    overflow: hidden;
+}
+.cta-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 230, 0.25) 50%,
+        transparent 100%
+    );
+    animation: shimmer-cta 4s ease-in-out infinite;
+    pointer-events: none;
+}
+@keyframes shimmer-cta {
+    0%   { left: -100%; }
+    40%  { left: 150%; }
+    100% { left: 150%; }
+}
+
 /* ─── VISTA 6: FOOTER ─── */
 #contacto {
     background-color: #ffffff;
@@ -832,16 +871,31 @@ a { text-decoration: none; color: inherit; }
     text-transform: uppercase;
 }
 .social-link {
-    display: block; /* Sin flex porque ya no hay íconos */
-    font-family: var(--font-main); font-weight: 600; /* Medium-bold */
-    font-size: 1.15rem; /* Más grande para acompañar al título */
+    display: block;
+    font-family: var(--font-main); font-weight: 600;
+    font-size: 1.15rem;
     color: var(--color-brown);
     text-decoration: none;
     transition: opacity 0.3s ease;
-    margin-top: 0.2rem; /* Pegaditos entre sí */
+    margin-top: 0.2rem;
+    position: relative;
+}
+/* Subrayado que se dibuja de izquierda a derecha */
+.social-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background-color: var(--color-brown);
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .social-link:hover {
-    opacity: 0.7;
+    opacity: 1;
+}
+.social-link:hover::after {
+    width: 100%;
 }
 /* Logo CALUVA cortado al estilo Calvagni (Bulletproof para evitar bug de Chrome) */
 .v6-logo {
@@ -857,13 +911,17 @@ a { text-decoration: none; color: inherit; }
 }
 .v6-logo h2 {
     font-family: var(--font-main); font-weight: 800;
-    font-size: 1em; /* Hereda el tamaño del contenedor */
+    font-size: 1em;
     color: var(--color-brown);
     line-height: 0.85; 
     margin: 0;
     padding: 0;
     text-align: center;
     letter-spacing: -0.02em;
+    transition: letter-spacing 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v6-logo:hover h2 {
+    letter-spacing: 0.08em;
 }
 
 /* ─── TRANSICIONES SUAVES ENTRE SECCIONES ───

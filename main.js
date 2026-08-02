@@ -1,3 +1,9 @@
+// Fix Bug 2: Siempre empezar desde el top al cargar index.html
+// Esto evita que el browser restaure una posición de scroll intermedia
+// que rompería la secuencia de animación del hero.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle   = document.getElementById('menuToggle');
     const fullscreenMenu = document.getElementById('fullscreenMenu');
@@ -61,6 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     window.addEventListener('scroll', checkHeaderColor, { passive: true });
     checkHeaderColor();
+
+    // ── PARALLAX SUTIL DEL VIDEO DEL HERO ──
+    const heroBg = document.querySelector('#inicio .hero-background video');
+    window.addEventListener('scroll', () => {
+        if (!heroBg) return;
+        const scrollY = window.scrollY;
+        const heroH = window.innerHeight;
+        if (scrollY < heroH) {
+            // Mueve el video hacia arriba sutilmente mientras scrolleamos
+            heroBg.style.transform = `translateY(${scrollY * 0.15}px) scale(1.05)`;
+        }
+    }, { passive: true });
 
     // ── COREOGRAFÍA ZOOM CALUVA CON MASCARA DINÁMICA JS ──
     const zoomSpacer = document.getElementById('zoom-spacer');
@@ -327,8 +345,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-            } else if (scrollY <= 5 && maskCreated) {
+            } else if (scrollY <= 30 && maskCreated) {
                 // REVERTIR SI VOLVEMOS ARRIBA
+                // Umbral ampliado a 30px (antes era 5px) para capturar correctamente
+                // el movimiento hacia arriba en trackpads con inercia.
                 maskCreated = false;
                 autoScrollStarted = false;
                 v2Revealed = false;
@@ -342,6 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     vista2.style.marginTop = '';
                 }
                 heroCaluvaText.style.opacity = "1";
+                heroCaluvaText.style.animation = "";
                 heroSectionEl.style.mask = "none";
                 heroSectionEl.style.webkitMask = "none";
                 heroSectionEl.style.opacity = 1;
@@ -355,6 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (svgCont) svgCont.remove();
                 
                 if (heroPText) {
+                    heroPText.style.animation = "";
                     heroPText.style.transform = `translateY(0)`;
                     heroPText.style.opacity = 1;
                 }
@@ -363,6 +385,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     headerEl.style.transform = `translateY(0)`;
                     headerEl.style.opacity = 1;
                 }
+
+                // Fix Bug 1: Recalcular originalCenterY en tiempo real al volver arriba
+                // para que CALUVA no baje de más en el próximo scroll
+                delete heroSectionEl.dataset.originalCenterY;
+                delete heroSectionEl.dataset.targetCenterY;
+                delete heroSectionEl.dataset.centerX;
             }
         }, { passive: true });
     }
