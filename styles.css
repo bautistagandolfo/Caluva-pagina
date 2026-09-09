@@ -921,6 +921,89 @@ textarea:focus-visible,
     margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
 
+/* ─── PÁGINA "PRÓXIMAMENTE" (secciones en preparación) ─── */
+.soon {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 8%;
+    background-color: var(--color-cream);
+    position: relative;
+}
+.soon .spiral-icon {
+    width: 96px; height: 96px;
+    animation: spin-slow 16s linear infinite;
+}
+.soon-overline {
+    margin-top: 2.5rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-brown);
+    opacity: 0.55;
+}
+.soon-title {
+    margin-top: 0.9rem;
+    font-family: var(--font-main);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--color-brown);
+    line-height: 1;
+}
+.soon-text {
+    margin-top: 1.4rem;
+    max-width: 34rem;
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+    line-height: 1.7;
+    color: var(--color-brown);
+    text-align: center;
+    hyphens: none;
+}
+.soon-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    align-items: center;
+    justify-content: center;
+}
+.soon-link {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-brown);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+.soon-link:hover { opacity: 0.6; }
+.soon-link.is-back:hover { transform: translateX(-4px); }
+.soon-link.is-cta {
+    background: var(--color-brown);
+    color: var(--color-cream);
+    border-radius: 50px;
+    padding: 0.9rem 2rem;
+    letter-spacing: 0.14em;
+}
+.soon-link.is-cta:hover { opacity: 1; transform: translateY(-3px); }
+
+@media (prefers-reduced-motion: reduce) {
+    .soon .spiral-icon { animation: none !important; }
+}
+
 /* ─── RESPONSIVE DESIGN (MOBILE) ─── */
 
 @media (max-width: 768px) {

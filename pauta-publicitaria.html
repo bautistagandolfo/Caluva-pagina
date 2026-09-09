@@ -4,45 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pauta Publicitaria | CALUVA</title>
-    <meta name="description" content="Pauta Publicitaria — CALUVA. Sección en desarrollo.">
+    <meta name="description" content="Pauta Publicitaria &mdash; CALUVA. Sección en preparación.">
     <meta name="robots" content="noindex">
     <meta name="theme-color" content="#f4f3ea">
     <link rel="icon" type="image/png" href="assets/caluva-spiral.png">
     <link rel="apple-touch-icon" href="assets/caluva-spiral.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            background-color: var(--color-cream);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: var(--font-heading);
-            color: var(--color-brown);
-        }
-        h1 {
-            font-size: clamp(2rem, 5vw, 4rem);
-            letter-spacing: 2px;
-            text-align: center;
-        }
-        .back-link {
-            position: absolute;
-            top: 2.5rem;
-            left: 6%;
-            text-decoration: none;
-            color: var(--color-brown);
-            font-family: var(--font-main);
-            font-weight: 700;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            transition: opacity 0.3s ease;
-        }
-        .back-link:hover { opacity: 0.6; }
-    </style>
 </head>
 <body>
-    <a href="javascript:history.back()" class="back-link">← VOLVER</a>
-    <h1>EN PROCESO...</h1>
+    <main class="soon">
+        <div class="spiral-icon dark" aria-hidden="true"></div>
+        <p class="soon-overline">Pauta Publicitaria</p>
+        <h1 class="soon-title">Próximamente</h1>
+        <p class="soon-text">Campañas en Meta Ads y Google Ads pensadas para atraer, convertir y crecer. Estamos preparando esta sección.</p>
+        <div class="soon-actions">
+            <a href="index.html" class="soon-link is-back" data-back>&larr;&nbsp;Volver</a>
+            <a href="index.html#contacto" class="soon-link is-cta">Agendemos una call</a>
+        </div>
+    </main>
+    <script>
+        var b = document.querySelector('[data-back]');
+        if (b && document.referrer) {
+            try {
+                if (new URL(document.referrer).origin === location.origin) {
+                    b.addEventListener('click', function (e) { e.preventDefault(); history.back(); });
+                }
+            } catch (err) {}
+        }
+    </script>
 </body>
 </html>
