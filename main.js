@@ -116,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const vista2 = document.getElementById('vista-2');
     
     // Variables para el Autoscroll
-    let isAutoScrolling = false;
     let autoScrollStarted = false;
 
     // Función de easing cúbico para un scroll muy cinematográfico
@@ -124,29 +123,47 @@ document.addEventListener('DOMContentLoaded', () => {
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     }
 
+    // Autoscroll cinematográfico PERO interrumpible: si el usuario hace
+    // scroll/gesto/tecla durante la animación, se cancela al instante y le
+    // devuelve el control. Nunca "secuestra" el scroll más de lo necesario.
     function smoothScrollTo(targetY, duration) {
-        isAutoScrolling = true;
-        // Bloquear el scroll nativo momentáneamente para matar cualquier
-        // inercia residual del trackpad/rueda del mouse.
-        document.body.style.overflow = 'hidden'; 
-        
         const startY = window.scrollY;
         const distance = targetY - startY;
+        if (Math.abs(distance) < 2) return;
         const startTime = performance.now();
+        let cancelled = false;
+
+        const cancel = () => {
+            if (cancelled) return;
+            cancelled = true;
+            document.body.style.overflow = '';
+            window.removeEventListener('wheel', onWheel);
+            window.removeEventListener('touchmove', cancel);
+            window.removeEventListener('keydown', onKey);
+        };
+        const onWheel = (e) => {
+            // Cancelar si el usuario "pelea" la animación (scrollea hacia arriba)
+            if (e.deltaY < -1) cancel();
+        };
+        const onKey = (e) => {
+            if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' ', 'Spacebar'].includes(e.key)) cancel();
+        };
+
+        // Bloqueo breve del scroll nativo para matar la inercia del trackpad
+        document.body.style.overflow = 'hidden';
+        window.addEventListener('wheel', onWheel, { passive: true });
+        window.addEventListener('touchmove', cancel, { passive: true });
+        window.addEventListener('keydown', onKey);
 
         function step(currentTime) {
-            const timeElapsed = currentTime - startTime;
-            let progress = timeElapsed / duration;
+            if (cancelled) return;
+            let progress = (currentTime - startTime) / duration;
             if (progress > 1) progress = 1;
-
-            const easeProgress = easeInOutCubic(progress);
-            window.scrollTo(0, startY + (distance * easeProgress));
-
+            window.scrollTo(0, startY + distance * easeInOutCubic(progress));
             if (progress < 1) {
                 requestAnimationFrame(step);
             } else {
-                isAutoScrolling = false; // Liberamos el control al usuario
-                document.body.style.overflow = ''; // Restaurar scroll nativo
+                cancel();
             }
         }
         requestAnimationFrame(step);
@@ -330,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (zoomProgress > 0.32 && !autoScrollStarted) {
                         autoScrollStarted = true;
                         v2Revealed = true; // Marcar como revelada desde el inicio del autoscroll
-                        smoothScrollTo(zoomMaxScroll, 1200);
+                        smoothScrollTo(zoomMaxScroll, 900);
                     }
 
                     // Aplicar transform al grupo SVG
