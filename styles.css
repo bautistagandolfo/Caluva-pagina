@@ -1,5 +1,6 @@
 :root {
     --color-brown: #4a2410;
+    --color-brown-soft: #6b5b4e; /* Marrón atenuado para labels/overlines — ~5.7:1 sobre crema (AA) */
     --color-cream: #f4f3ea;  /* Fondo clarito para secciones (Conoce nuestros servicios, Universo de Marca) */
     --color-yellow: #ffffe6; /* Amarillo original para la tipografía sobre fondos oscuros */
     --color-navy: #041E2F;   /* Azul oscuro para la transición y fondo de Universo de Marca */
@@ -13,6 +14,21 @@
     --dur-fast: 0.25s;
     --dur-base: 0.4s;
     --dur-slow: 0.8s;
+
+    /* Escala de espaciado — ritmo vertical consistente entre secciones */
+    --space-2xs: 0.5rem;
+    --space-xs: 1rem;
+    --space-sm: 1.5rem;
+    --space-md: 2.5rem;
+    --space-lg: 4rem;
+    --space-xl: 6rem;
+    --space-2xl: 8rem;
+    --section-y: 7rem; /* padding vertical estándar de sección */
+
+    /* Tamaños canónicos del logo espiral */
+    --spiral-sm: 74px;
+    --spiral-md: 108px;
+    --spiral-lg: 150px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -183,8 +199,8 @@ a { text-decoration: none; color: inherit; }
 .spiral-icon {
     display: block;
     flex-shrink: 0;
-    width: 110px;
-    height: 110px;
+    width: var(--spiral-md);
+    height: var(--spiral-md);
     -webkit-mask-image: url('assets/caluva-spiral.png');
     mask-image: url('assets/caluva-spiral.png');
     -webkit-mask-size: contain;
@@ -196,7 +212,7 @@ a { text-decoration: none; color: inherit; }
     background-color: var(--color-cream);
 }
 .spiral-icon.dark        { background-color: var(--color-brown); }
-.spiral-icon.large       { width: 130px; height: 130px; }
+.spiral-icon.large       { width: var(--spiral-lg); height: var(--spiral-lg); }
 
 /* ─── FULLSCREEN MENU ─── */
 .fullscreen-menu {
@@ -704,8 +720,8 @@ a { text-decoration: none; color: inherit; }
     z-index: 2;
 }
 .cta-spiral {
-    width: 160px !important;
-    height: 160px !important;
+    width: var(--spiral-lg) !important;
+    height: var(--spiral-lg) !important;
     margin: 0;
     animation: spin-slow 12s linear infinite;
     opacity: 0.85;
@@ -731,7 +747,7 @@ a { text-decoration: none; color: inherit; }
     font-size: clamp(0.75rem, 2vw, 0.95rem);
     letter-spacing: 0.25em;
     font-weight: 700;
-    opacity: 0.65;
+    color: var(--color-brown-soft);
     text-transform: uppercase;
 }
 .cta-title-large {
@@ -752,8 +768,7 @@ a { text-decoration: none; color: inherit; }
     font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-brown);
-    opacity: 0.5;
+    color: var(--color-brown-soft);
 }
 .cta-btn {
     background: var(--color-brown);
@@ -1009,18 +1024,17 @@ textarea:focus-visible,
     position: relative;
 }
 .soon .spiral-icon {
-    width: 96px; height: 96px;
+    width: var(--spiral-md); height: var(--spiral-md);
     animation: spin-slow 16s linear infinite;
 }
 .soon-overline {
-    margin-top: 2.5rem;
+    margin-top: var(--space-md);
     font-family: var(--font-main);
     font-weight: 700;
     font-size: 0.8rem;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--color-brown);
-    opacity: 0.55;
+    color: var(--color-brown-soft);
 }
 .soon-title {
     margin-top: 0.9rem;
@@ -1132,8 +1146,8 @@ textarea:focus-visible,
         padding-top: 0;
     }
     .v2-logo .spiral-icon {
-        width: 70px !important;
-        height: 70px !important;
+        width: var(--spiral-sm) !important;
+        height: var(--spiral-sm) !important;
     }
     .v2-desc-part1 { font-size: clamp(1.1rem, 4vw, 1.3rem); }
     .v2-desc-part2 { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
@@ -1267,14 +1281,13 @@ textarea:focus-visible,
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;
-    color: var(--color-brown);
-    opacity: 0.55;
-    transition: opacity 0.2s;
+    font-size: 1.15rem;
+    color: var(--color-brown-soft);
+    transition: color 0.2s, transform 0.2s var(--ease-out);
     line-height: 1;
     padding: 0;
 }
-.call-modal-close:hover { opacity: 1; }
+.call-modal-close:hover { color: var(--color-brown); transform: rotate(90deg); }
 .call-modal-header {
     display: flex;
     align-items: center;
@@ -1282,8 +1295,8 @@ textarea:focus-visible,
     margin-bottom: 0.6rem;
 }
 .call-modal-header .spiral-icon {
-    width: 75px !important;
-    height: 75px !important;
+    width: var(--spiral-sm) !important;
+    height: var(--spiral-sm) !important;
 }
 .call-modal-title {
     font-family: var(--font-main);
@@ -1298,8 +1311,7 @@ textarea:focus-visible,
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    color: var(--color-brown);
-    opacity: 0.55;
+    color: var(--color-brown-soft);
     text-transform: uppercase;
     margin-bottom: 2rem;
 }
@@ -1329,8 +1341,8 @@ textarea:focus-visible,
     opacity: 0.9;
 }
 .call-input::placeholder {
-    color: var(--color-brown);
-    opacity: 0.4;
+    color: var(--color-brown-soft);
+    opacity: 1;
 }
 .call-input:focus {
     opacity: 1;
