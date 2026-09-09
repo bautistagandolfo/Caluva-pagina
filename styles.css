@@ -135,7 +135,6 @@ a { text-decoration: none; color: inherit; }
 }
 .spiral-icon.dark        { background-color: var(--color-brown); }
 .spiral-icon.large       { width: 130px; height: 130px; }
-.spiral-icon.small-spiral{ width: 70px; height: 70px; }
 
 /* ─── FULLSCREEN MENU ─── */
 .fullscreen-menu {
@@ -299,48 +298,6 @@ a { text-decoration: none; color: inherit; }
 .v2-logo { flex-shrink: 0; padding-top: 0.5rem; }
 .v2-text { flex: 1; }
 
-.v2-desc-part1 {
-    font-family: var(--font-main);
-    font-weight: 300;
-    font-size: clamp(1rem, 1.5vw, 1.4rem);
-    color: var(--color-brown);
-    line-height: 1.6;
-    letter-spacing: -0.01em;
-    margin-bottom: 1.5rem;
-}
-
-.v2-desc-part2 {
-    font-family: var(--font-main);
-    font-weight: 300;
-    font-size: clamp(0.95rem, 1.3vw, 1.2rem);
-    color: var(--color-brown);
-    line-height: 1.7;
-    letter-spacing: -0.01em;
-    margin-bottom: 1.5rem;
-}
-
-.v2-elegant-link-container {
-    width: 100%;
-    text-align: right;
-    margin-top: 0.5rem;
-}
-
-.v2-elegant-link {
-    font-family: var(--font-main);
-    font-weight: 300;
-    font-size: clamp(1rem, 1.4vw, 1.2rem);
-    color: var(--color-brown);
-    text-decoration: none;
-    letter-spacing: -0.01em;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    transition: opacity 0.3s;
-}
-.v2-elegant-link:hover { opacity: 0.65; }
-
-
-
 /* ─── SECCIÓN NAVY ─── */
 .v2-navy-preview {
     background-color: var(--color-navy);
@@ -441,14 +398,10 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-brown);
     line-height: 1.6;
     letter-spacing: -0.01em;
-}
-
-.v2-desc-part1 {
     margin-bottom: 1.5rem;
 }
 
 .v2-desc-part2 {
-    margin-bottom: 1.5rem;
     display: block;
 }
 
@@ -524,86 +477,6 @@ a { text-decoration: none; color: inherit; }
     width: 100%;
 }
 
-/* Imagen Duna Collection rotada 90 grados para Pauta Publicitaria */
-/* El truco: el wrapper rota, el img llena el wrapper */
-.duna-container {
-    overflow: hidden !important;
-}
-.duna-rotator {
-    position: absolute;
-    /* Agrandamos el rotador para cubrir el contenedor al girar */
-    top: 50%;
-    left: 50%;
-    width: 150%;
-    height: 150%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.duna-rotator img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    display: block;
-}
-.split-half:hover .duna-rotator {
-    transform: translate(-50%, -50%) rotate(90deg) scale(1.06);
-}
-
-
-
-/* ─── VISTA 3: ABOUT 2 ─── */
-#vista-3 {
-    background-color: #ffffff;  /* Blanco */
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 10rem 6%; /* Más respiro */
-}
-.slide-content-v3 {
-    width: 100%; max-width: 1300px; margin: 0 auto;
-    display: flex; gap: 6%;
-}
-.v3-image { flex: 1; display: flex; align-items: center; }
-.v3-image img { width: 100%; max-height: 80vh; object-fit: cover; filter: grayscale(100%); }
-.v3-text {
-    flex: 1; display: flex; flex-direction: column;
-    justify-content: center; padding-right: 2%;
-}
-.v3-link-top { align-self: flex-end; margin-bottom: 3rem; }
-.btn-ellipse-custom {
-    display: inline-flex; justify-content: center; align-items: center; text-align: center;
-    width: 420px; height: 160px; /* Más alto y proporcionado */
-    border: 4px solid var(--color-brown); /* Grosor similar al dibujado */
-    border-radius: 50%;
-    text-decoration: none;
-    padding: 10px;
-}
-.btn-ellipse-custom .btn-text {
-    font-family: var(--font-main); font-weight: 700;
-    font-size: 0.95rem; letter-spacing: 0.05em;
-    color: var(--color-brown);
-    transition: transform 0.3s ease;
-}
-.btn-ellipse-custom:hover .btn-text { transform: scale(1.1); }
-.v3-paragraphs {
-    display: flex; flex-direction: column; gap: 1.5rem;
-}
-.v3-link-top a {
-    font-family: var(--font-main); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em;
-    color: var(--color-brown); display: inline-block;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.v3-link-top a:hover {
-    opacity: 0.5;
-    transform: translateX(6px);
-}
-.v3-paragraphs p {
-    font-family: var(--font-heading); font-weight: 700; font-size: 1rem;
-    line-height: 1.7; color: var(--color-brown);
-}
-.v3-logo { align-self: flex-end; margin-top: 3rem; }
-
 /* ─── VISTAS 4 & 5: SERVICIOS SPLIT ─── */
 .split-section {
     width: 100%;
@@ -656,10 +529,8 @@ a { text-decoration: none; color: inherit; }
     text-transform: uppercase;
     letter-spacing: -0.5px;
 }
-.split-subtitle { font-size: 1rem; margin-bottom: 1.2rem; font-weight: 500; line-height: 1.6; opacity: 0.9; }
-
-/* Enlaces "VER MAS" globales (para v2, v3, splits) */
-.v2-link a, .v3-link-top a, .split-link a {
+/* Enlaces "VER MAS" de las secciones split */
+.split-link a {
     font-family: var(--font-main); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em;
     color: var(--color-brown); display: inline-flex;
     align-items: center;
@@ -668,17 +539,17 @@ a { text-decoration: none; color: inherit; }
     margin-top: 1rem;
     position: relative;
 }
-.v2-link a:hover, .v3-link-top a:hover, .split-link a:hover {
+.split-link a:hover {
     opacity: 0.85;
     transform: translateX(6px);
 }
 /* Flecha animada en los links VER MAS */
-.split-link a::after, .v2-link a::after {
+.split-link a::after {
     content: ' →';
     display: inline-block;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.split-link a:hover::after, .v2-link a:hover::after {
+.split-link a:hover::after {
     transform: translateX(5px);
 }
 
@@ -688,9 +559,6 @@ a { text-decoration: none; color: inherit; }
 .left-image-layout { justify-content: flex-start; gap: 5%; align-items: center; }
 .right-align { text-align: right; }
 .pl-5 { padding-left: 6%; }
-
-.split-text-area { display: flex; gap: 1.5rem; flex: 1; }
-.small-spiral { transform: scale(0.6); transform-origin: top left; flex-shrink: 0; margin-top: 4px; }
 
 /* Imágenes en secciones split: cuadradas y bien puestas */
 .split-image { 
@@ -724,18 +592,10 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-yellow) !important; 
 }
 
-/* Overlay oscuro sobre la imagen de arena para que se lea el texto */
-.arena-overlay {
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(30, 15, 5, 0.55); /* Overlay oscuro marrón */
-    z-index: 1;
-}
-
 /* Fondo gris para Social Media */
 .bg-grey { background: linear-gradient(160deg, #3a3f47 0%, #2a2e35 100%); }
 
 /* Fondo crema clarito para secciones */
-.bg-navy { background-color: var(--color-navy); }
 .bg-cream { background-color: var(--color-cream); }
 /* ─── VISTA CTA PRE-FOOTER ─── */
 #vista-cta {
@@ -743,16 +603,10 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12rem 6%;
+    padding: 5rem 6% 2rem;
     position: relative;
     overflow: hidden;
-    isolation: isolate; /* evita que el spinner cree conflicto de z-index con el menú */
-}
-/* ─── VISTA 5: CTA (Llamado a la acción) ─── */
-#vista-cta {
-    padding-top: 5rem;
-    padding-bottom: 2rem;
-    position: relative;
+    isolation: isolate; /* evita conflicto de z-index del spinner con el menú */
     z-index: 2; /* Sobre Vista 2 fixed */
 }
 .cta-container {
@@ -1041,23 +895,8 @@ textarea:focus-visible,
     position: absolute; width: 1px; height: 1px; padding: 0;
     margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
-.footer-bottom {
-    width: 100%;
-    text-align: center;
-    padding-bottom: 2rem;
-}
-.copyright {
-    font-family: var(--font-main); font-size: 0.8rem;
-    color: var(--color-brown); opacity: 0.6;
-    margin-bottom: 0; letter-spacing: 1px;
-}
 
 /* ─── RESPONSIVE DESIGN (MOBILE) ─── */
-
-/* Ocultar cursor custom en touch */
-@media (hover: none) and (pointer: coarse) {
-    #cursor, #cursor-follower { display: none !important; }
-}
 
 @media (max-width: 768px) {
 

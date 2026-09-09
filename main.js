@@ -474,7 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const callModal    = document.getElementById('call-modal');
     const btnAgendemosList = document.querySelectorAll('.btn-agendemos-trigger');
     const btnModalClose = document.getElementById('call-modal-close');
-    const btnServicios  = document.getElementById('btn-servicios');
 
     let modalTriggerEl = null;
     const isModalOpen = () => callModal && callModal.classList.contains('active');
@@ -576,57 +575,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // CONOCE NUESTROS SERVICIOS → scroll suave a #vista-4
-    if (btnServicios) {
-        btnServicios.addEventListener('click', () => {
-            const vista4 = document.getElementById('vista-4');
-            if (vista4) vista4.scrollIntoView({ behavior: scrollBehavior });
-        });
-    }
-
-    // ── CUSTOM CURSOR ──
-    const cursor = document.getElementById('cursor');
-    const cursorFollower = document.getElementById('cursor-follower');
-    if (cursor && cursorFollower) {
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let followerX = mouseX;
-        let followerY = mouseY;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-        });
-        
-        const renderCursor = () => {
-            followerX += (mouseX - followerX) * 0.2;
-            followerY += (mouseY - followerY) * 0.2;
-            cursorFollower.style.transform = `translate(${followerX}px, ${followerY}px) translate(-50%, -50%)`;
-            requestAnimationFrame(renderCursor);
-        };
-        requestAnimationFrame(renderCursor);
-        
-        const interactables = document.querySelectorAll('a, button, .magnetic-btn, .logo, input, textarea');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => cursorFollower.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => cursorFollower.classList.remove('cursor-hover'));
-        });
-    }
-
     // ── MAGNETIC BUTTONS ──
-    const magneticBtns = document.querySelectorAll('.magnetic-btn');
-    magneticBtns.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+    // Se desactiva con movimiento reducido o en pantallas táctiles (no hay hover real).
+    if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px)';
+            });
         });
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = `translate(0px, 0px)`;
-        });
-    });
+    }
 
     // ── STICKY MENU BUTTON ──
     const stickyMenuBtn = document.getElementById('sticky-menu-btn');
