@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroSection  = document.getElementById('inicio');
     let isMenuOpen = false;
 
+    // Respetar la preferencia de movimiento reducido del sistema operativo
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
+
     // ── MENU ──
     const toggleMenu = () => {
         isMenuOpen = !isMenuOpen;
@@ -49,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetId && targetId.startsWith('#')) {
                 e.preventDefault();
                 const targetEl = document.querySelector(targetId);
-                if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+                if (targetEl) targetEl.scrollIntoView({ behavior: scrollBehavior });
             }
         });
     });
@@ -114,10 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (zoomSpacer && heroSectionEl && heroCaluvaText && vista2) {
 
-        // En mobile deshabilitamos toda la animación de zoom:
-        // Vista 2 queda en flujo normal y el contenido aparece directamente.
+        // En mobile —o si el usuario pidió reducir el movimiento a nivel SO—
+        // deshabilitamos toda la animación de zoom: Vista 2 queda en flujo
+        // normal y el contenido aparece directamente.
         const isMobile = window.innerWidth <= 768;
-        if (isMobile) {
+        if (isMobile || reduceMotion) {
+            // El spacer de 350vh solo tiene sentido con la animación de zoom.
+            // Sin ella, se colapsa a una pantalla para no dejar un hueco vacío.
+            zoomSpacer.style.height = '100vh';
             vista2.style.position = 'relative';
             vista2.style.marginTop = '0';
             // Revelar todos los elementos de Vista 2 inmediatamente
@@ -519,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnServicios) {
         btnServicios.addEventListener('click', () => {
             const vista4 = document.getElementById('vista-4');
-            if (vista4) vista4.scrollIntoView({ behavior: 'smooth' });
+            if (vista4) vista4.scrollIntoView({ behavior: scrollBehavior });
         });
     }
 

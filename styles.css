@@ -1382,3 +1382,42 @@ a { text-decoration: none; color: inherit; }
     .call-form-row { grid-template-columns: 1fr; }
     .call-modal-box { padding: 2.5rem 1.75rem 2rem; }
 }
+
+
+/* ─── ACCESIBILIDAD: PREFERS-REDUCED-MOTION ───
+   El usuario pidió reducir el movimiento (a nivel SO). Desactivamos
+   animaciones decorativas y transiciones largas, pero dejamos los
+   elementos en su estado final visible (opacity/transform reseteados).
+   El zoom cinematográfico del hero se desactiva desde main.js. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    html { scroll-behavior: auto !important; }
+
+    /* Asegurar que todo lo que arranca oculto quede visible */
+    .fade-in-up,
+    .sr-item,
+    .sr-item.sr-active,
+    #v2-part1 .word-inner,
+    #v2-part2,
+    #v2-link-container,
+    #v2-bottom-bg,
+    #v2-logo,
+    #v2-logo .spiral-icon {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Detener animaciones infinitas decorativas */
+    .cta-spiral { animation: none !important; }
+    .cta-btn::after { animation: none !important; display: none !important; }
+}

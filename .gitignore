@@ -1,0 +1,7 @@
+
+# Basura de sistema / archivos que no van al deploy
+*.exe
+*.winmd
+metadata.txt
+.DS_Store
+Thumbs.db
