@@ -87,18 +87,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ── HEADER: OCULTAR al instante cuando termina el hero ──
+    // ── HEADER + BOTÓN STICKY: aparecen/desaparecen al terminar el hero ──
+    // Se cachea el alto del hero (se recalcula sólo al redimensionar) para
+    // no forzar un reflow en cada evento de scroll.
+    let heroHeightCache = heroSection.offsetHeight;
+    window.addEventListener('resize', () => { heroHeightCache = heroSection.offsetHeight; }, { passive: true });
+
     const checkHeaderColor = () => {
         if (isMenuOpen) return;
-        const heroHeight = heroSection.offsetHeight;
-        const scrolled = window.scrollY;
-        if (scrolled >= heroHeight - 10) {
-            header.classList.add('hidden');
-        } else {
-            header.classList.remove('hidden');
-        }
+        const pastHero = window.scrollY >= heroHeightCache - 10;
+        header.classList.toggle('hidden', pastHero);
+        const sticky = document.getElementById('sticky-menu-btn');
+        if (sticky) sticky.classList.toggle('active', pastHero);
     };
-    window.addEventListener('scroll', checkHeaderColor, { passive: true });
+    let headerTicking = false;
+    window.addEventListener('scroll', () => {
+        if (headerTicking) return;
+        headerTicking = true;
+        requestAnimationFrame(() => { headerTicking = false; checkHeaderColor(); });
+    }, { passive: true });
     checkHeaderColor();
 
     // ── COREOGRAFÍA ZOOM CALUVA CON MASCARA DINÁMICA JS ──
@@ -195,9 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        window.addEventListener('scroll', () => {
+        const runZoomChoreography = () => {
             const scrollY = window.scrollY;
-            
+
             // Distancia de scroll exacta basándose en el alto del spacer
             const totalMaxScroll = zoomSpacer.offsetHeight - window.innerHeight;
             // El zoom termina exactamente al final del spacer
@@ -446,7 +453,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 delete heroSectionEl.dataset.targetCenterY;
                 delete heroSectionEl.dataset.centerX;
             }
+        };
+
+        // Coalesce: como mucho un recálculo por frame, aunque lleguen
+        // decenas de eventos de scroll. Menos "layout thrashing" = scroll
+        // más fluido en la coreografía del hero.
+        let zoomTicking = false;
+        window.addEventListener('scroll', () => {
+            if (zoomTicking) return;
+            zoomTicking = true;
+            requestAnimationFrame(() => { zoomTicking = false; runZoomChoreography(); });
         }, { passive: true });
+        runZoomChoreography();
         } // cierre del else (desktop only)
     }
 
@@ -583,38 +601,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+                // Atracción más sutil + seguimiento suave (antes: 0.25 y snap instantáneo)
+                btn.style.transition = 'transform 0.2s var(--ease-out)';
+                btn.style.transform = `translate(${x * 0.16}px, ${y * 0.16}px)`;
             });
             btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0px, 0px)';
+                // Vuelve a su lugar con un pequeño rebote y cede el control al CSS
+                btn.style.transition = 'transform 0.5s var(--ease-spring)';
+                btn.style.transform = '';
             });
         });
     }
 
     // ── STICKY MENU BUTTON ──
+    // (su aparición/desaparición al scrollear la maneja checkHeaderColor)
     const stickyMenuBtn = document.getElementById('sticky-menu-btn');
     if (stickyMenuBtn) {
         stickyMenuBtn.addEventListener('click', () => { menuTriggerEl = stickyMenuBtn; toggleMenu(); });
-        
-        window.addEventListener('scroll', () => {
-            const heroHeight = document.getElementById('inicio')?.offsetHeight || window.innerHeight;
-            if (window.scrollY >= heroHeight - 10) {
-                stickyMenuBtn.classList.add('active');
-            } else {
-                stickyMenuBtn.classList.remove('active');
-            }
-        });
-    }
-
-    // ── FOOTER LOGO MOBILE INTERACTION ──
-    const footerLogo = document.querySelector('.v6-logo');
-    if (footerLogo) {
-        footerLogo.addEventListener('click', () => {
-            // Solo en móviles o pantallas táctiles tiene sentido el toggle manual
-            if (window.innerWidth <= 768 || window.matchMedia("(hover: none)").matches) {
-                footerLogo.classList.toggle('toggled');
-            }
-        });
     }
 
 });
