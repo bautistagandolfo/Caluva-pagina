@@ -17,12 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
 
     // ── MENU ──
+    let menuTriggerEl = null; // botón que abrió el menú, para devolverle el foco al cerrar
+
     const toggleMenu = () => {
         isMenuOpen = !isMenuOpen;
         fullscreenMenu.classList.toggle('active');
         const toggleText = menuToggle.querySelector('.menu-text');
         const hamburger = menuToggle.querySelector('.hamburger');
-        
+
         if (isMenuOpen) {
             hamburger.classList.add('open');
             toggleText.textContent = 'CERRAR';
@@ -33,7 +35,21 @@ document.addEventListener('DOMContentLoaded', () => {
             menuToggle.style.color = '';
             checkHeaderColor();
         }
-        
+
+        // Accesibilidad: estado, foco y bloqueo de scroll de fondo
+        fullscreenMenu.setAttribute('aria-hidden', isMenuOpen ? 'false' : 'true');
+        fullscreenMenu.inert = !isMenuOpen;
+        menuToggle.setAttribute('aria-expanded', isMenuOpen ? 'true' : 'false');
+        document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+
+        if (isMenuOpen) {
+            const firstLink = fullscreenMenu.querySelector('.menu-link');
+            if (firstLink) { try { firstLink.focus(); } catch (_) {} }
+        } else if (menuTriggerEl) {
+            menuTriggerEl.focus();
+            menuTriggerEl = null;
+        }
+
         // Sincronizar el menú sticky si existe
         const stickyMenuBtn = document.getElementById('sticky-menu-btn');
         if (stickyMenuBtn) {
@@ -45,7 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
             stickyMenuBtn.setAttribute('aria-expanded', isMenuOpen ? 'true' : 'false');
         }
     };
-    menuToggle.addEventListener('click', toggleMenu);
+    menuToggle.addEventListener('click', () => { menuTriggerEl = menuToggle; toggleMenu(); });
+
+    // Cerrar el menú con Escape y atrapar el foco (Tab cíclico) mientras está abierto
+    fullscreenMenu.addEventListener('keydown', (e) => {
+        if (!isMenuOpen) return;
+        if (e.key === 'Escape') { toggleMenu(); return; }
+        if (e.key !== 'Tab') return;
+        const focusables = fullscreenMenu.querySelectorAll('a[href], button:not([disabled])');
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
     menuLinks.forEach(link => {
         link.addEventListener('click', (e) => { 
             if (isMenuOpen) toggleMenu(); 
@@ -447,17 +476,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnModalClose = document.getElementById('call-modal-close');
     const btnServicios  = document.getElementById('btn-servicios');
 
+    let modalTriggerEl = null;
+    const isModalOpen = () => callModal && callModal.classList.contains('active');
+
     const openModal = () => {
         if (!callModal) return;
+        modalTriggerEl = document.activeElement;
         callModal.classList.add('active');
         callModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        const firstField = callModal.querySelector('.call-input, .call-modal-close');
+        if (firstField) { try { firstField.focus({ preventScroll: true }); } catch (_) {} }
     };
     const closeModal = () => {
-        if (!callModal) return;
+        if (!callModal || !isModalOpen()) return;
         callModal.classList.remove('active');
         callModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        if (modalTriggerEl && typeof modalTriggerEl.focus === 'function') modalTriggerEl.focus();
+        modalTriggerEl = null;
         
         // Resetear vista por si se envió el formulario
         setTimeout(() => {
@@ -480,7 +517,23 @@ document.addEventListener('DOMContentLoaded', () => {
     btnAgendemosList.forEach(btn => btn.addEventListener('click', openModal));
     if (btnModalClose) btnModalClose.addEventListener('click', closeModal);
     if (callModal) callModal.addEventListener('click', e => { if (e.target === callModal) closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && isModalOpen()) closeModal(); });
+
+    // Atrapar el foco dentro del modal mientras está abierto
+    if (callModal) {
+        callModal.addEventListener('keydown', e => {
+            if (e.key !== 'Tab' || !isModalOpen()) return;
+            const focusables = callModal.querySelectorAll(
+                'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+            );
+            const visible = [...focusables].filter(el => el.offsetParent !== null);
+            if (!visible.length) return;
+            const first = visible[0];
+            const last = visible[visible.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        });
+    }
 
     // Formulario: enviar datos a Google Apps Script
     const callForm = document.getElementById('call-form');
@@ -578,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── STICKY MENU BUTTON ──
     const stickyMenuBtn = document.getElementById('sticky-menu-btn');
     if (stickyMenuBtn) {
-        stickyMenuBtn.addEventListener('click', toggleMenu);
+        stickyMenuBtn.addEventListener('click', () => { menuTriggerEl = stickyMenuBtn; toggleMenu(); });
         
         window.addEventListener('scroll', () => {
             const heroHeight = document.getElementById('inicio')?.offsetHeight || window.innerHeight;

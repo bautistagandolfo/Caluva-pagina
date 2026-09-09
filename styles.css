@@ -1016,6 +1016,27 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ─── SEO Y ACCESIBILIDAD ─── */
+
+/* Indicador de foco visible solo para navegación por teclado.
+   No aparece al hacer click (con :focus-visible), así no molesta el diseño. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.menu-link:focus-visible {
+    outline: 2px solid var(--color-brown);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+/* Sobre fondos oscuros el contorno marrón no contrasta: usamos el crema */
+.on-dark a:focus-visible,
+.v2-navy-preview a:focus-visible,
+.sticky-menu-btn:focus-visible,
+.header .menu-toggle:focus-visible {
+    outline-color: var(--color-cream);
+}
+
 .sr-only {
     position: absolute; width: 1px; height: 1px; padding: 0;
     margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
