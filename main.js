@@ -60,6 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             stickyMenuBtn.setAttribute('aria-expanded', isMenuOpen ? 'true' : 'false');
         }
+
+        // El CTA flotante no debe quedar por encima del menú abierto
+        const fcta = document.querySelector('.floating-cta');
+        if (fcta && isMenuOpen) fcta.classList.remove('active');
+        else if (fcta) checkHeaderColor();
     };
     menuToggle.addEventListener('click', () => { menuTriggerEl = menuToggle; toggleMenu(); });
 
@@ -76,8 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
     menuLinks.forEach(link => {
-        link.addEventListener('click', (e) => { 
-            if (isMenuOpen) toggleMenu(); 
+        link.addEventListener('click', (e) => {
+            if (isMenuOpen) toggleMenu();
+            // "CONTACTO" abre el formulario directamente (antes scrolleaba al footer)
+            if (link.id === 'contactoLink' && typeof openModal === 'function') {
+                e.preventDefault();
+                openModal();
+                return;
+            }
             const targetId = link.getAttribute('href');
             if (targetId && targetId.startsWith('#')) {
                 e.preventDefault();
@@ -94,11 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => { heroHeightCache = heroSection.offsetHeight; }, { passive: true });
 
     const checkHeaderColor = () => {
-        if (isMenuOpen) return;
         const pastHero = window.scrollY >= heroHeightCache - 10;
-        header.classList.toggle('hidden', pastHero);
+        if (!isMenuOpen) header.classList.toggle('hidden', pastHero);
         const sticky = document.getElementById('sticky-menu-btn');
         if (sticky) sticky.classList.toggle('active', pastHero);
+        const fcta = document.querySelector('.floating-cta');
+        if (fcta) fcta.classList.toggle('active', pastHero && !isMenuOpen);
     };
     let headerTicking = false;
     window.addEventListener('scroll', () => {
