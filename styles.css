@@ -272,13 +272,18 @@ a { text-decoration: none; color: inherit; }
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
 }
 .hero-background img, .hero-background video { width: 100%; height: 100%; object-fit: cover; }
-.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
-/* Scrim superior: garantiza contraste del logo y "MENU" sobre cualquier frame del video */
+/* Tinte navy leve (no negro plano) — deja respirar el color del mar */
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 14, 24, 0.30); }
+/* Scrims: arriba para el logo/MENU, abajo para "CALUVA", y un halo suave
+   detrás de la frase — contraste garantizado sin apagar el video entero */
 .overlay::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 40%;
-    background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 100%);
+    inset: 0;
+    background:
+        radial-gradient(ellipse 90% 42% at 50% 40%, rgba(0,0,0,0.34) 0%, rgba(0,0,0,0) 72%),
+        linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0) 24%),
+        linear-gradient(0deg, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0) 26%);
     pointer-events: none;
 }
 
@@ -292,15 +297,15 @@ a { text-decoration: none; color: inherit; }
 }
 .hero-text {
     font-family: var(--font-main);
-    font-weight: 700;
-    font-size: clamp(1.2rem, 2.5vw, 1.6rem); /* Un poco más grande */
-    line-height: 1.5;
-    letter-spacing: 0.05em;
-    text-align: justify;
-    text-align-last: center;
+    font-weight: 500; /* la frase es el susurro; "CALUVA" es el ancla */
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    line-height: 1.55;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-wrap: balance;
     hyphens: none;
     -webkit-hyphens: none;
-    max-width: 800px;
+    max-width: 760px;
     margin-top: 22vh; /* Un poquito más arriba */
     margin-bottom: 15vh;
     color: var(--color-yellow);
@@ -409,7 +414,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     align-items: baseline;
     justify-content: flex-start;
-    gap: 8%; /* Acercar el DE a UNIVERSO según feedback */
+    gap: 0.4em; /* "UNIVERSO DE" se lee como una unidad (antes: hueco de 8%) */
 }
 
 .v2-prev-word {
@@ -460,9 +465,11 @@ a { text-decoration: none; color: inherit; }
     text-align: left;
 }
 
-/* VER MAS centrado al fondo */
+/* VER MAS alineado con el título (antes centrado al fondo, desconectado) */
 .v2-preview-link {
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
     font-family: var(--font-main);
     font-weight: 700;
     font-size: 0.8rem;
@@ -470,12 +477,11 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-yellow);
     text-decoration: none;
     text-transform: uppercase;
-    text-align: center;
     margin-top: auto;
-    padding-top: 2rem;
-    transition: opacity 0.3s ease;
+    padding-top: 2.5rem;
+    transition: opacity 0.3s ease, transform 0.3s var(--ease-out);
 }
-.v2-preview-link:hover { opacity: 0.8; }
+.v2-preview-link:hover { opacity: 0.8; transform: translateX(4px); }
 
 /* Título CONOCE NUESTROS SERVICIOS */
 .v2-services-title {
@@ -483,7 +489,7 @@ a { text-decoration: none; color: inherit; }
     font-size: clamp(1.6rem, 2.8vw, 2.4rem);
     margin-bottom: 0;
     line-height: 1.15;
-    color: #143b50; /* Celeste oscuro */
+    color: var(--color-navy); /* en paleta (antes: celeste suelto #143b50) */
     font-weight: 800;
     letter-spacing: -0.5px;
     text-align: center; /* Perfectamente centrado */
@@ -491,7 +497,7 @@ a { text-decoration: none; color: inherit; }
 
 .v2-desc-part1, .v2-desc-part2 {
     font-family: var(--font-main);
-    font-weight: 300;
+    font-weight: 400;
     font-size: clamp(1rem, 1.5vw, 1.4rem);
     color: var(--color-brown);
     line-height: 1.6;
@@ -586,7 +592,7 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
 }
 .split-section.single-half {
-    min-height: 50vh;
+    min-height: 68vh; /* antes 50vh — se sentía apretada entre secciones full-height */
 }
 .split-half {
     flex: 1; min-height: 50vh;
@@ -595,15 +601,19 @@ a { text-decoration: none; color: inherit; }
     overflow: hidden;
 }
 .split-bg { position: absolute; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
-/* Scrim sobre las imágenes de fondo cuando encima va texto claro —
-   garantiza contraste sobre cualquier zona de la foto */
+/* Scrim direccional: más denso del lado del texto, casi transparente del
+   otro — garantiza contraste y deja ver la foto en vez de apagarla entera */
 .split-half:has(.on-dark) .split-bg::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(20, 12, 6, 0.42);
+    background: linear-gradient(to left, rgba(20, 12, 6, 0.60) 15%, rgba(20, 12, 6, 0.12) 85%);
     z-index: 1;
     pointer-events: none;
+}
+/* Social: texto a la izquierda → invertir el degradado */
+.split-half:has(.left-layout.on-dark) .split-bg::after {
+    background: linear-gradient(to right, rgba(20, 12, 6, 0.60) 15%, rgba(20, 12, 6, 0.12) 85%);
 }
 .split-bg img {
     width: 100%; height: 100%; object-fit: cover;
@@ -678,7 +688,7 @@ a { text-decoration: none; color: inherit; }
     object-fit: contain; /* Para que la laptop no se corte al forzar el aspecto */
     object-position: center;
     border-radius: 0; /* Cuadradas, sin bordes redondeados */
-    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); /* Sombra para imágenes sin fondo */
+    filter: drop-shadow(0 22px 45px rgba(74, 36, 16, 0.16)); /* sombra cálida y difusa (antes negra dura) */
 }
 
 /* Texto amarillo sobre fondos oscuros — explícito y sin ambigüedad */
@@ -692,8 +702,8 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-yellow) !important; 
 }
 
-/* Fondo gris para Social Media */
-.bg-grey { background: linear-gradient(160deg, #3a3f47 0%, #2a2e35 100%); }
+/* Fondo cálido para Social Media (antes gris frío #3a3f47→#2a2e35) */
+.bg-grey { background: linear-gradient(160deg, #3d271a 0%, #241209 100%); }
 
 /* Fondo crema clarito para secciones */
 .bg-cream { background-color: var(--color-cream); }
@@ -718,59 +728,34 @@ a { text-decoration: none; color: inherit; }
     max-width: none;
     text-align: center;
 }
-.cta-left-col {
-    position: absolute;
-    left: 18%; /* Más cerca del bloque central */
-    top: 60%;  /* Un poquito más abajo */
-    transform: translateY(-50%);
-    z-index: 2;
-}
-/* Rango intermedio: el spiral se achica y se pega al borde para no
-   acercarse al texto centrado (abajo de 768 pasa a flujo normal) */
-@media (max-width: 1120px) and (min-width: 769px) {
-    .cta-left-col { left: 3%; }
-    .cta-spiral { width: var(--spiral-md) !important; height: var(--spiral-md) !important; }
-}
+/* Espiral como marca centrada arriba del titular (antes: absoluta, flotando
+   a un costado — composición frágil que necesitaba un caso especial a 1120px) */
 .cta-spiral {
-    width: var(--spiral-lg) !important;
-    height: var(--spiral-lg) !important;
-    margin: 0;
-    animation: spin-slow 12s linear infinite;
-    opacity: 0.85;
+    width: var(--spiral-md) !important;
+    height: var(--spiral-md) !important;
+    margin: 0 0 2rem;
+    animation: spin-slow 18s linear infinite;
 }
+/* Marca discreta, no protagonista (gana a .sr-item.sr-active por el ID) */
+#vista-cta .cta-spiral { opacity: 0; }
+#vista-cta .cta-spiral.sr-active { opacity: 0.5; }
 @keyframes spin-slow { 100% { transform: rotate(360deg); } }
 
-.cta-right-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Volver a centrar el texto con el boton */
-    text-align: center;
-}
 .cta-title {
     font-family: var(--font-main);
-    color: var(--color-brown);
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Volver a centrar */
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-}
-.cta-title-small {
-    font-size: clamp(0.75rem, 2vw, 0.95rem);
-    letter-spacing: 0.25em;
-    font-weight: 700;
-    color: var(--color-brown-soft);
-    text-transform: uppercase;
-}
-.cta-title-large {
-    font-size: clamp(4.5rem, 12vw, 9rem);
     font-weight: 800;
-    letter-spacing: -3px;
-    line-height: 0.9;
+    font-size: clamp(2rem, 5.5vw, 4rem);
+    line-height: 1.03;
+    letter-spacing: -0.02em;
+    color: var(--color-brown);
+    max-width: 15ch;
+    text-wrap: balance;
+    margin-bottom: 2.25rem;
+    text-align: center;
 }
 .cta-btn-wrapper {
     display: flex;
-    justify-content: center; /* Volver a centrar */
+    justify-content: center;
 }
 .cta-reassurance {
     margin: 1.2rem 0 0;
@@ -861,23 +846,23 @@ a { text-decoration: none; color: inherit; }
 }
 .v6-redes {
     display: flex; flex-direction: column; align-items: flex-start;
+    gap: 0.35rem;
 }
 .v6-redes h3 {
-    font-family: var(--font-main); font-weight: 800; /* Más negrita según la foto */
-    font-size: 1.25rem; /* Un poco más grande y robusto */
+    font-family: var(--font-main); font-weight: 800;
+    font-size: 1.15rem;
     color: var(--color-brown);
-    margin-bottom: 0.2rem; /* Pegadito a los links */
-    letter-spacing: 0;
+    margin-bottom: 0.7rem; /* aire entre "REDES" y los links */
+    letter-spacing: 0.02em;
     text-transform: uppercase;
 }
 .social-link {
     display: block;
-    font-family: var(--font-main); font-weight: 600;
-    font-size: 1.15rem;
+    font-family: var(--font-main); font-weight: 500;
+    font-size: 1.05rem;
     color: var(--color-brown);
     text-decoration: none;
     transition: opacity 0.3s ease;
-    margin-top: 0.2rem;
     position: relative;
 }
 /* Subrayado que se dibuja de izquierda a derecha */
@@ -1163,7 +1148,7 @@ textarea:focus-visible,
     .v2-elegant-link-container { text-align: left; }
     .v2-services-title { font-size: clamp(1.2rem, 5vw, 1.8rem); text-align: left; }
     .v2-navy-preview { padding: 2rem 6% 3rem; }
-    .v2-prev-header { gap: 4%; }
+    .v2-prev-header { gap: 0.4em; }
     .v2-prev-word { font-size: clamp(1.4rem, 5vw, 1.8rem); }
     .v2-prev-marca { font-size: clamp(1.4rem, 5vw, 1.8rem); }
     .v2-prev-desc { margin-left: 0; width: 100%; margin-top: 1.5rem; }
@@ -1184,6 +1169,11 @@ textarea:focus-visible,
     .split-section { flex-direction: column; }
     .split-section.single-half { min-height: auto; }
     .split-half { min-height: 60vw; width: 100%; box-shadow: none !important; }
+    /* En mobile el texto ocupa casi toda la mitad: scrim parejo y firme */
+    .split-half:has(.on-dark) .split-bg::after,
+    .split-half:has(.left-layout.on-dark) .split-bg::after {
+        background: rgba(20, 12, 6, 0.5);
+    }
     .split-content {
         padding: 2.5rem 6%;
         flex-direction: column;
@@ -1208,17 +1198,10 @@ textarea:focus-visible,
 
     /* ── CTA ── */
     #vista-cta { padding: 5rem 6% 4rem; }
-    .cta-container { flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
     .cta-reassurance span { display: block; }
     .cta-reassurance span + span::before { content: none; }
-    .cta-left-col {
-        position: relative; left: auto; top: auto; transform: none;
-        display: flex; justify-content: center;
-    }
-    .cta-spiral { width: 100px !important; height: 100px !important; }
-    .cta-right-col { align-items: center; text-align: center; width: 100%; }
-    .cta-title { align-items: center; margin-bottom: 1.5rem; }
-    .cta-btn-wrapper { justify-content: center; }
+    .cta-spiral { width: 84px !important; height: 84px !important; margin-bottom: 1.5rem; }
+    .cta-title { font-size: clamp(1.9rem, 8vw, 2.6rem); margin-bottom: 1.75rem; }
     .cta-btn { padding: 0.95rem 1.6rem; font-size: 0.72rem; letter-spacing: 0.1em; gap: 0.55rem; }
 
     /* ── FOOTER ── */
