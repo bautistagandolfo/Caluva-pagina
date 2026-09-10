@@ -350,8 +350,8 @@ a { text-decoration: none; color: inherit; }
     flex: 1; /* Toma exactamente el espacio necesario sin forzar overflow */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Empuja el título al fondo automáticamente */
-    padding: 5rem 6% 1.5rem; /* Reducido de 3rem a 1.5rem para que el título baje más */
+    justify-content: space-between; /* Empuja las fotos de las socias al fondo automáticamente */
+    padding: 5rem 6% 4rem;
 }
 
 .slide-content-v2 {
@@ -411,13 +411,75 @@ a { text-decoration: none; color: inherit; }
 
 
 
-/* ─── SECCIÓN NAVY ─── */
-.v2-navy-preview {
-    background-color: var(--color-navy);
-    flex: 1;
+/* ─── FOTOS CARNET DE LAS SOCIAS (centradas, al pie de Quienes Somos) ─── */
+.v2-founders {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+.v2-founder {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 10% 4rem; /* Aumentado a 4rem el bottom para subir el VER MAS */
+    align-items: center;
+}
+.v2-founder-photo {
+    width: 88px;
+    height: 88px;
+    background-color: var(--color-cream);
+    border: 1.5px dashed var(--color-brown-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.v2-founder-photo svg { opacity: 0.55; }
+.v2-founder-arrow { margin-top: 10px; }
+.v2-founder-name {
+    margin-top: 2px;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    color: var(--color-brown);
+}
+
+.v2-discover-services {
+    margin: 2rem auto 0;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brown);
+    transition: opacity 0.3s ease;
+}
+.v2-discover-services:hover { opacity: 0.7; }
+.v2-discover-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--color-brown);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s var(--ease-out);
+}
+.v2-discover-services:hover .v2-discover-btn { transform: translateY(3px); }
+
+/* ─── UNIVERSO DE MARCA (primer servicio, ahora pantalla propia) ─── */
+.universo-marca-section {
+    position: relative;
+    z-index: 2;
+    background-color: var(--color-navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 10%;
 }
 
 .v2-prev-header {
@@ -475,7 +537,6 @@ a { text-decoration: none; color: inherit; }
     text-align: left;
 }
 
-/* VER MAS centrado al fondo */
 .v2-preview-link {
     display: block;
     font-family: var(--font-main);
@@ -486,23 +547,10 @@ a { text-decoration: none; color: inherit; }
     text-decoration: none;
     text-transform: uppercase;
     text-align: center;
-    margin-top: auto;
-    padding-top: 2rem;
+    margin-top: 2.5rem;
     transition: opacity 0.3s;
 }
 .v2-preview-link:hover { opacity: 0.75; }
-
-/* Título CONOCE NUESTROS SERVICIOS */
-.v2-services-title {
-    font-family: var(--font-heading);
-    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
-    margin-bottom: 0;
-    line-height: 1.15;
-    color: #143b50; /* Celeste oscuro */
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    text-align: center; /* Perfectamente centrado */
-}
 
 .v2-desc-part1, .v2-desc-part2 {
     font-family: var(--font-main);
@@ -1001,7 +1049,7 @@ textarea:focus-visible,
 }
 /* Sobre fondos oscuros el contorno marrón no contrasta: usamos el crema */
 .on-dark a:focus-visible,
-.v2-navy-preview a:focus-visible,
+.universo-marca-section a:focus-visible,
 .sticky-menu-btn:focus-visible,
 .header .menu-toggle:focus-visible {
     outline-color: var(--color-cream);
@@ -1086,8 +1134,9 @@ textarea:focus-visible,
     .v2-desc-part1 { font-size: clamp(1.1rem, 4vw, 1.3rem); }
     .v2-desc-part2 { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
     .v2-elegant-link-container { text-align: left; }
-    .v2-services-title { font-size: clamp(1.2rem, 5vw, 1.8rem); text-align: left; }
-    .v2-navy-preview { padding: 2rem 6% 3rem; }
+    .v2-founders { gap: 1.75rem; }
+    .v2-founder-photo { width: 72px; height: 72px; }
+    .universo-marca-section { padding: 4rem 6%; }
     .v2-prev-header { gap: 4%; }
     .v2-prev-word { font-size: clamp(1.4rem, 5vw, 1.8rem); }
     .v2-prev-marca { font-size: clamp(1.4rem, 5vw, 1.8rem); }
