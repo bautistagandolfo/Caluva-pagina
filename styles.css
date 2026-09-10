@@ -1,28 +1,65 @@
 :root {
-    --color-brown: #4a2410;  
+    --color-brown: #4a2410;
+    --color-brown-soft: #6b5b4e; /* Marrón atenuado para labels/overlines — ~5.7:1 sobre crema (AA) */
     --color-cream: #f4f3ea;  /* Fondo clarito para secciones (Conoce nuestros servicios, Universo de Marca) */
     --color-yellow: #ffffe6; /* Amarillo original para la tipografía sobre fondos oscuros */
     --color-navy: #041E2F;   /* Azul oscuro para la transición y fondo de Universo de Marca */
     --color-white: #ffffff;
-    --font-heading: 'Montserrat', sans-serif;
-    --font-main: 'Montserrat', sans-serif;
+    --font-heading: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+    --font-main: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+
+    /* Curvas y duraciones unificadas para todas las transiciones */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);   /* salida suave y elegante */
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* rebote sutil */
+    --dur-fast: 0.25s;
+    --dur-base: 0.4s;
+    --dur-slow: 0.8s;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-padding-top: 6rem; } /* los anclajes (#contacto) no quedan tapados por el header */
 
 body {
     font-family: var(--font-main);
     background-color: var(--color-cream);  /* Fondo crema — evita el blanco expuesto debajo de #vista-2 fixed */
     color: var(--color-brown);
+    caret-color: var(--color-brown);  /* el cursor de texto también es de marca */
     overflow-x: hidden;
     -ms-overflow-style: none;  /* IE y Edge */
     scrollbar-width: none;  /* Firefox */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 /* Ocultar barra de scroll lateral en Chrome, Safari y Edge */
 ::-webkit-scrollbar {
     display: none;
 }
+
+/* Selección de texto con color de marca */
+::selection { background: var(--color-brown); color: var(--color-cream); }
+
+/* Saltar al contenido (accesibilidad) — visible solo con foco de teclado */
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -120%);
+    z-index: 3000;
+    background: var(--color-brown);
+    color: var(--color-cream);
+    padding: 0.7rem 1.4rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 0 0 8px 8px;
+    transition: transform 0.25s var(--ease-out);
+}
+.skip-link:focus-visible { transform: translate(-50%, 0); outline: 2px solid var(--color-cream); outline-offset: 2px; }
 
 h1, h2, h3, .hero-logo-large, .menu-logo-large, .v6-logo h2 {
     font-family: var(--font-main);
@@ -71,7 +108,7 @@ a { text-decoration: none; color: inherit; }
     display: block; width: 30px; height: 4px; /* Líneas más gorditas */
     background-color: currentColor; margin: 0 auto;
     border-radius: 4px;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, opacity 0.15s ease-in-out;
 }
 /* Al abrir (clase .open manejada por JS) */
 .hamburger.open .line:nth-child(1) {
@@ -155,7 +192,7 @@ a { text-decoration: none; color: inherit; }
 .menu-links li {
     margin: 1.2rem 0;
     transform: translateY(20px); opacity: 0;
-    transition: all 0.4s ease;
+    transition: transform 0.4s var(--ease-out), opacity 0.4s var(--ease-out);
 }
 .fullscreen-menu.active .menu-links li { transform: translateY(0); opacity: 1; }
 .fullscreen-menu.active .menu-links li:nth-child(1) { transition-delay: 0.1s; }
@@ -170,10 +207,11 @@ a { text-decoration: none; color: inherit; }
 }
 .menu-link::after {
     content: ''; position: absolute; bottom: -4px; right: 0;
-    width: 0; height: 4px; background-color: var(--color-brown);
-    transition: width 0.3s ease;
+    width: 100%; height: 4px; background-color: var(--color-brown);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.3s var(--ease-out);
 }
-.menu-link:hover::after { width: 100%; }
+.menu-link:hover::after { transform: scaleX(1); }
 
 .menu-logo-large-container {
     position: absolute;
@@ -189,7 +227,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-main); font-weight: 800;
     letter-spacing: -2px;
     transform: translateY(20px); opacity: 0;
-    transition: all 0.5s ease 0.5s;
+    transition: transform 0.5s var(--ease-out) 0.5s, opacity 0.5s ease 0.5s;
 }
 .fullscreen-menu.active .menu-logo-large { transform: translateY(0); opacity: 1; }
 
@@ -256,6 +294,38 @@ a { text-decoration: none; color: inherit; }
     z-index: 2;
 }
 /* Sin gradiente — el corte limpio es más elegante que un fundido que tapa el texto */
+
+/* ─── INDICADOR DE SCROLL (hero) ─── */
+.scroll-cue {
+    position: absolute;
+    bottom: 21vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 52px;
+    overflow: hidden;
+    z-index: 3;
+    opacity: 0.7;
+    transition: opacity 0.4s ease;
+}
+.scroll-cue span {
+    display: block;
+    width: 100%;
+    height: 40%;
+    background: var(--color-yellow);
+    animation: scroll-cue-drop 2s var(--ease-out) infinite;
+}
+@keyframes scroll-cue-drop {
+    0%   { transform: translateY(-100%); }
+    55%  { transform: translateY(250%); }
+    100% { transform: translateY(250%); }
+}
+/* Se desvanece apenas el usuario empieza a scrollear */
+.scroll-cue.is-hidden { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+    /* Sin movimiento no hay "pista": una línea estática sólo distrae */
+    .scroll-cue { display: none; }
+}
 
 /* ─── VISTA 2: QUIENES SOMOS ─── */
 /* DEBE ser position fixed para que el zoom del hero la revele por detrás */
@@ -474,10 +544,13 @@ a { text-decoration: none; color: inherit; }
     opacity: 0.7;
 }
 
-/* Animaciones Premium Adrenalina */
-#v2-part2, #v2-link-container, #v2-bottom-bg, #v2-logo, #v2-logo .spiral-icon {
-    will-change: transform, opacity;
-    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+/* Reveal de Vista 2: texto y enlace entran limpio (sin rebote);
+   el logo/spiral sí rebota, como acento. */
+#v2-part2, #v2-link-container, #v2-bottom-bg {
+    transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) ease;
+}
+#v2-logo, #v2-logo .spiral-icon {
+    transition: transform 0.7s var(--ease-spring), opacity 0.7s ease;
 }
 
 /* Estado inicial (oculto) */
@@ -501,7 +574,7 @@ a { text-decoration: none; color: inherit; }
     display: inline-block;
     transform: translateY(100%);
     opacity: 0;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+    transition: transform 0.6s var(--ease-out), opacity 0.6s ease;
 }
 #v2-part1.hook-active .word-inner {
     transform: translateY(0);
@@ -523,86 +596,6 @@ a { text-decoration: none; color: inherit; }
     background-color: var(--color-navy);
     width: 100%;
 }
-
-/* Imagen Duna Collection rotada 90 grados para Pauta Publicitaria */
-/* El truco: el wrapper rota, el img llena el wrapper */
-.duna-container {
-    overflow: hidden !important;
-}
-.duna-rotator {
-    position: absolute;
-    /* Agrandamos el rotador para cubrir el contenedor al girar */
-    top: 50%;
-    left: 50%;
-    width: 150%;
-    height: 150%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.duna-rotator img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    display: block;
-}
-.split-half:hover .duna-rotator {
-    transform: translate(-50%, -50%) rotate(90deg) scale(1.06);
-}
-
-
-
-/* ─── VISTA 3: ABOUT 2 ─── */
-#vista-3 {
-    background-color: #ffffff;  /* Blanco */
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 10rem 6%; /* Más respiro */
-}
-.slide-content-v3 {
-    width: 100%; max-width: 1300px; margin: 0 auto;
-    display: flex; gap: 6%;
-}
-.v3-image { flex: 1; display: flex; align-items: center; }
-.v3-image img { width: 100%; max-height: 80vh; object-fit: cover; filter: grayscale(100%); }
-.v3-text {
-    flex: 1; display: flex; flex-direction: column;
-    justify-content: center; padding-right: 2%;
-}
-.v3-link-top { align-self: flex-end; margin-bottom: 3rem; }
-.btn-ellipse-custom {
-    display: inline-flex; justify-content: center; align-items: center; text-align: center;
-    width: 420px; height: 160px; /* Más alto y proporcionado */
-    border: 4px solid var(--color-brown); /* Grosor similar al dibujado */
-    border-radius: 50%;
-    text-decoration: none;
-    padding: 10px;
-}
-.btn-ellipse-custom .btn-text {
-    font-family: var(--font-main); font-weight: 700;
-    font-size: 0.95rem; letter-spacing: 0.05em;
-    color: var(--color-brown);
-    transition: transform 0.3s ease;
-}
-.btn-ellipse-custom:hover .btn-text { transform: scale(1.1); }
-.v3-paragraphs {
-    display: flex; flex-direction: column; gap: 1.5rem;
-}
-.v3-link-top a {
-    font-family: var(--font-main); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em;
-    color: var(--color-brown); display: inline-block;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.v3-link-top a:hover {
-    opacity: 0.5;
-    transform: translateX(6px);
-}
-.v3-paragraphs p {
-    font-family: var(--font-heading); font-weight: 700; font-size: 1rem;
-    line-height: 1.7; color: var(--color-brown);
-}
-.v3-logo { align-self: flex-end; margin-top: 3rem; }
 
 /* ─── VISTAS 4 & 5: SERVICIOS SPLIT ─── */
 .split-section {
@@ -689,9 +682,6 @@ a { text-decoration: none; color: inherit; }
 .right-align { text-align: right; }
 .pl-5 { padding-left: 6%; }
 
-.split-text-area { display: flex; gap: 1.5rem; flex: 1; }
-.small-spiral { transform: scale(0.6); transform-origin: top left; flex-shrink: 0; margin-top: 4px; }
-
 /* Imágenes en secciones split: cuadradas y bien puestas */
 .split-image { 
     flex: 1; 
@@ -724,18 +714,10 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-yellow) !important; 
 }
 
-/* Overlay oscuro sobre la imagen de arena para que se lea el texto */
-.arena-overlay {
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(30, 15, 5, 0.55); /* Overlay oscuro marrón */
-    z-index: 1;
-}
-
 /* Fondo gris para Social Media */
 .bg-grey { background: linear-gradient(160deg, #3a3f47 0%, #2a2e35 100%); }
 
 /* Fondo crema clarito para secciones */
-.bg-navy { background-color: var(--color-navy); }
 .bg-cream { background-color: var(--color-cream); }
 /* ─── VISTA CTA PRE-FOOTER ─── */
 #vista-cta {
@@ -743,16 +725,10 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12rem 6%;
+    padding: 5rem 6% 2rem;
     position: relative;
     overflow: hidden;
-    isolation: isolate; /* evita que el spinner cree conflicto de z-index con el menú */
-}
-/* ─── VISTA 5: CTA (Llamado a la acción) ─── */
-#vista-cta {
-    padding-top: 5rem;
-    padding-bottom: 2rem;
-    position: relative;
+    isolation: isolate; /* evita conflicto de z-index del spinner con el menú */
     z-index: 2; /* Sobre Vista 2 fixed */
 }
 .cta-container {
@@ -987,8 +963,7 @@ a { text-decoration: none; color: inherit; }
 /* --- SCROLL REVEAL (Intersection Observer) --- */
 .sr-item {
     opacity: 0;
-    will-change: transform, opacity;
-    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) ease;
 }
 .sr-left { transform: translateX(-100px); }
 .sr-right { transform: translateX(100px); }
@@ -998,6 +973,10 @@ a { text-decoration: none; color: inherit; }
     opacity: 1;
     transform: translateX(0) translateY(0) scale(1);
 }
+/* Las imágenes de fondo a sangre revelan sólo con fade (el translate/scale
+   dejaría ver bordes vacíos del contenedor) */
+.split-bg.sr-item,
+.split-bg.sr-item.sr-active { transform: none; }
 .sr-delay-1 { transition-delay: 0.1s; }
 .sr-delay-2 { transition-delay: 0.2s; }
 .sr-delay-3 { transition-delay: 0.3s; }
@@ -1007,7 +986,7 @@ a { text-decoration: none; color: inherit; }
 /* Hero tiene animación propia */
 .fade-in-up {
     opacity: 0; transform: translateY(30px);
-    animation: fadeInUp 1.2s ease forwards;
+    animation: fadeInUp 1s var(--ease-out) forwards;
 }
 .delay-1 { animation-delay: 0.5s; }
 @keyframes fadeInUp {
@@ -1016,27 +995,47 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ─── SEO Y ACCESIBILIDAD ─── */
+
+/* Indicador de foco visible solo para navegación por teclado.
+   No aparece al hacer click (con :focus-visible), así no molesta el diseño. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.menu-link:focus-visible {
+    outline: 2px solid var(--color-brown);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+/* Sobre fondos oscuros el contorno marrón no contrasta: usamos el crema */
+.on-dark a:focus-visible,
+.v2-navy-preview a:focus-visible,
+.sticky-menu-btn:focus-visible,
+.header .menu-toggle:focus-visible {
+    outline-color: var(--color-cream);
+}
+
+/* Feedback táctil: el elemento "se hunde" al presionar (sobre todo en mobile) */
+.cta-btn:active,
+.call-form-submit:active,
+.menu-toggle:active,
+.sticky-menu-btn:active,
+.split-link a:active,
+.social-link:active,
+.menu-link:active,
+.v2-preview-link:active,
+.v2-elegant-link:active {
+    transform: scale(0.96);
+    transition-duration: var(--dur-fast);
+}
+
 .sr-only {
     position: absolute; width: 1px; height: 1px; padding: 0;
     margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
-.footer-bottom {
-    width: 100%;
-    text-align: center;
-    padding-bottom: 2rem;
-}
-.copyright {
-    font-family: var(--font-main); font-size: 0.8rem;
-    color: var(--color-brown); opacity: 0.6;
-    margin-bottom: 0; letter-spacing: 1px;
-}
 
 /* ─── RESPONSIVE DESIGN (MOBILE) ─── */
-
-/* Ocultar cursor custom en touch */
-@media (hover: none) and (pointer: coarse) {
-    #cursor, #cursor-follower { display: none !important; }
-}
 
 @media (max-width: 768px) {
 
@@ -1210,13 +1209,13 @@ a { text-decoration: none; color: inherit; }
     overflow-y: auto;
     padding: 3rem 3rem 2.5rem;
     position: relative;
-    transform: translateY(28px);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: translateY(28px) scale(0.98);
+    transition: transform 0.4s var(--ease-out);
     scrollbar-width: none;
 }
 .call-modal-box::-webkit-scrollbar { display: none; }
 .call-modal-overlay.active .call-modal-box {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 .call-modal-close {
     position: absolute;
@@ -1225,14 +1224,13 @@ a { text-decoration: none; color: inherit; }
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;
-    color: var(--color-brown);
-    opacity: 0.55;
-    transition: opacity 0.2s;
+    font-size: 1.15rem;
+    color: var(--color-brown-soft);
+    transition: color 0.2s, transform 0.2s var(--ease-out);
     line-height: 1;
     padding: 0;
 }
-.call-modal-close:hover { opacity: 1; }
+.call-modal-close:hover { color: var(--color-brown); transform: rotate(90deg); }
 .call-modal-header {
     display: flex;
     align-items: center;
@@ -1256,8 +1254,7 @@ a { text-decoration: none; color: inherit; }
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    color: var(--color-brown);
-    opacity: 0.55;
+    color: var(--color-brown-soft);
     text-transform: uppercase;
     margin-bottom: 2rem;
 }
@@ -1287,8 +1284,8 @@ a { text-decoration: none; color: inherit; }
     opacity: 0.9;
 }
 .call-input::placeholder {
-    color: var(--color-brown);
-    opacity: 0.4;
+    color: var(--color-brown-soft);
+    opacity: 1;
 }
 .call-input:focus {
     opacity: 1;
@@ -1301,7 +1298,7 @@ a { text-decoration: none; color: inherit; }
     border: 1.5px solid var(--color-brown);
     padding: 0.7rem;
     margin-top: 0.25rem;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s var(--ease-out);
 }
 .call-textarea:focus {
     background: rgba(255, 255, 255, 0.45);
@@ -1356,7 +1353,7 @@ a { text-decoration: none; color: inherit; }
     letter-spacing: 0.15em;
     padding: 0.95rem 2.5rem;
     border-radius: 50px;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.3s var(--ease-out), background 0.3s ease, color 0.3s ease, box-shadow 0.3s var(--ease-out);
 }
 .call-form-submit:hover {
     background: transparent;
@@ -1381,4 +1378,44 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 480px) {
     .call-form-row { grid-template-columns: 1fr; }
     .call-modal-box { padding: 2.5rem 1.75rem 2rem; }
+}
+
+/* ─── ACCESIBILIDAD: PREFERS-REDUCED-MOTION ───
+   El usuario pidió reducir el movimiento (a nivel SO). Desactivamos
+   animaciones decorativas y transiciones largas, pero dejamos los
+   elementos en su estado final visible (opacity/transform reseteados).
+   El zoom cinematográfico del hero se desactiva desde main.js. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    html { scroll-behavior: auto !important; }
+
+    /* Asegurar que todo lo que arranca oculto quede visible */
+    .fade-in-up,
+    .sr-item,
+    .sr-item.sr-active,
+    #v2-part1 .word-inner,
+    #v2-part2,
+    #v2-link-container,
+    #v2-bottom-bg,
+    #v2-logo,
+    #v2-logo .spiral-icon {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Detener animaciones infinitas decorativas */
+    .cta-spiral { animation: none !important; }
+
+    /* Sin cambios de escala/translación al pasar el mouse (evita saltos bruscos) */
+    .cta-btn:hover { transform: none !important; }
 }

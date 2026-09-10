@@ -1,0 +1,9 @@
+
+# Basura de sistema / archivos que no van al deploy
+*.exe
+*.winmd
+metadata.txt
+DUNA COLLECTION — JOEL ESCALONA.jpeg
+.DS_Store
+Thumbs.db
+hero_video_source_original.mp4
