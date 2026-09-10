@@ -83,7 +83,7 @@ h1, h2, h3, .hero-logo-large, .menu-logo-large, .v6-logo h2 {
     text-wrap: balance; /* reparte las líneas de los títulos de forma pareja */
 }
 
-p { line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+p { line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; text-align: left; text-wrap: pretty; }
 a { text-decoration: none; color: inherit; }
 
 /* ─── HEADER ─── */
@@ -465,17 +465,17 @@ a { text-decoration: none; color: inherit; }
     display: block;
     font-family: var(--font-main);
     font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
     color: var(--color-yellow);
     text-decoration: none;
     text-transform: uppercase;
     text-align: center;
     margin-top: auto;
     padding-top: 2rem;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
 }
-.v2-preview-link:hover { opacity: 0.75; }
+.v2-preview-link:hover { opacity: 0.8; }
 
 /* Título CONOCE NUESTROS SERVICIOS */
 .v2-services-title {
@@ -511,17 +511,17 @@ a { text-decoration: none; color: inherit; }
 
 .v2-elegant-link {
     font-family: var(--font-main);
-    font-weight: 400;
-    font-size: clamp(0.85rem, 1vw, 0.95rem);
-    letter-spacing: 0.06em;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-brown);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    transition: opacity 0.3s, transform 0.3s var(--ease-out);
+    transition: opacity 0.3s ease, transform 0.3s var(--ease-out);
 }
-.v2-elegant-link:hover { transform: translateX(4px); opacity: 0.7; }
+.v2-elegant-link:hover { transform: translateX(4px); opacity: 0.8; }
 
 /* Reveal de Vista 2: texto y enlace entran limpio (sin rebote);
    el logo/spiral sí rebota, como acento. */
@@ -608,20 +608,10 @@ a { text-decoration: none; color: inherit; }
 .split-bg img {
     width: 100%; height: 100%; object-fit: cover;
     object-position: 70% center;
-    transform: scale(1.15);
-    transform-origin: right center;
-    transition: transform 1.2s var(--ease-out), filter 1.2s ease;
+    transform: scale(1.12); /* encuadre fijo, sin zoom en hover (estás leyendo, no explorando la foto) */
 }
-.split-half:hover .split-bg img {
-    transform: scale(1.22);
-    filter: brightness(1.04);
-}
-/* Deshabilitar zoom en hover para imágenes específicas */
-.split-bg.no-img-zoom img,
-.split-half:hover .split-bg.no-img-zoom img {
-    transform: scale(1.15); /* Mismo scale base, sin zoom extra en hover */
-    filter: none;
-    object-fit: cover;
+/* Encuadre centrado para imágenes que lo necesitan */
+.split-bg.no-img-zoom img {
     object-position: center center;
 }
 
@@ -640,17 +630,17 @@ a { text-decoration: none; color: inherit; }
 }
 /* Enlaces "VER MAS" de las secciones split */
 .split-link a {
-    font-family: var(--font-main); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em;
+    font-family: var(--font-main); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-brown); display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.3s var(--ease-out), opacity 0.3s ease;
     margin-top: 1rem;
     position: relative;
 }
 .split-link a:hover {
-    opacity: 0.85;
-    transform: translateX(6px);
+    opacity: 0.8;
+    transform: translateX(4px);
 }
 /* Flecha animada — mismo tratamiento para TODOS los "ver más" del sitio */
 .split-link a::after,
@@ -664,7 +654,7 @@ a { text-decoration: none; color: inherit; }
 .split-link a:hover::after,
 .v2-preview-link:hover::after,
 .v2-elegant-link:hover::after {
-    transform: translateX(5px);
+    transform: translateX(4px);
 }
 
 /* Layouts */
@@ -689,10 +679,6 @@ a { text-decoration: none; color: inherit; }
     object-position: center;
     border-radius: 0; /* Cuadradas, sin bordes redondeados */
     filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); /* Sombra para imágenes sin fondo */
-    transition: transform 0.35s var(--ease-out);
-}
-.split-image:hover img {
-    transform: translateY(-8px) scale(1.02);
 }
 
 /* Texto amarillo sobre fondos oscuros — explícito y sin ambigüedad */
@@ -795,6 +781,12 @@ a { text-decoration: none; color: inherit; }
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-brown-soft);
+    text-wrap: balance;
+}
+/* Separador entre las dos mitades — sólo en una línea; en mobile apilan */
+.cta-reassurance span + span::before {
+    content: '·';
+    margin: 0 0.5em;
 }
 .cta-btn {
     background: var(--color-brown);
@@ -830,34 +822,6 @@ a { text-decoration: none; color: inherit; }
 }
 .cta-btn:hover .cta-btn-arrow {
     transform: translateX(3px) rotate(-45deg);
-}
-
-/* Brillo sutil que cruza el botón CTA: pasada rápida y una pausa larga
-   (antes cruzaba cada 4s, se leía como "template") */
-.cta-btn {
-    position: relative;
-    overflow: hidden;
-}
-.cta-btn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 55%;
-    height: 100%;
-    background: linear-gradient(
-        120deg,
-        transparent 0%,
-        rgba(255, 255, 230, 0.16) 50%,
-        transparent 100%
-    );
-    animation: shimmer-cta 9s ease-in-out infinite;
-    pointer-events: none;
-}
-@keyframes shimmer-cta {
-    0%   { left: -100%; }
-    14%  { left: 160%; }
-    100% { left: 160%; }
 }
 
 /* ─── VISTA 6: FOOTER ─── */
@@ -1245,6 +1209,8 @@ textarea:focus-visible,
     /* ── CTA ── */
     #vista-cta { padding: 5rem 6% 4rem; }
     .cta-container { flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
+    .cta-reassurance span { display: block; }
+    .cta-reassurance span + span::before { content: none; }
     .cta-left-col {
         position: relative; left: auto; top: auto; transform: none;
         display: flex; justify-content: center;
@@ -1253,7 +1219,7 @@ textarea:focus-visible,
     .cta-right-col { align-items: center; text-align: center; width: 100%; }
     .cta-title { align-items: center; margin-bottom: 1.5rem; }
     .cta-btn-wrapper { justify-content: center; }
-    .cta-btn { padding: 0.95rem 1.75rem; font-size: 0.68rem; letter-spacing: 0.12em; gap: 0.6rem; }
+    .cta-btn { padding: 0.95rem 1.6rem; font-size: 0.72rem; letter-spacing: 0.1em; gap: 0.55rem; }
 
     /* ── FOOTER ── */
     #contacto { padding: 3rem 0 0; min-height: auto; align-items: flex-start; gap: 3rem; overflow-x: hidden; }
@@ -1311,13 +1277,13 @@ textarea:focus-visible,
     overflow-y: auto;
     padding: 3rem 3rem 2.5rem;
     position: relative;
-    transform: translateY(28px);
-    transition: transform 0.4s var(--ease-spring);
+    transform: translateY(28px) scale(0.98);
+    transition: transform 0.4s var(--ease-out);
     scrollbar-width: none;
 }
 .call-modal-box::-webkit-scrollbar { display: none; }
 .call-modal-overlay.active .call-modal-box {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 .call-modal-close {
     position: absolute;
@@ -1518,11 +1484,7 @@ textarea:focus-visible,
 
     /* Detener animaciones infinitas decorativas */
     .cta-spiral { animation: none !important; }
-    .cta-btn::after { animation: none !important; display: none !important; }
 
     /* Sin cambios de escala/translación al pasar el mouse (evita saltos bruscos) */
-    .split-half:hover .split-bg img,
-    .split-half:hover .split-bg.no-img-zoom img { transform: scale(1.15) !important; filter: none !important; }
-    .split-image:hover img { transform: none !important; }
     .cta-btn:hover { transform: none !important; }
 }
