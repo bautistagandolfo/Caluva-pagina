@@ -39,6 +39,7 @@ body {
     font-family: var(--font-main);
     background-color: var(--color-cream);  /* Fondo crema — evita el blanco expuesto debajo de #vista-2 fixed */
     color: var(--color-brown);
+    caret-color: var(--color-brown);  /* el cursor de texto también es de marca */
     overflow-x: hidden;
     -ms-overflow-style: none;  /* IE y Edge */
     scrollbar-width: none;  /* Firefox */
@@ -81,13 +82,15 @@ body {
     position: fixed;
     top: 0; left: 0;
     height: 3px;
-    width: 0;
+    width: 100%;
     background: var(--color-brown);
+    transform: scaleX(0);
+    transform-origin: left;
     z-index: 2000;
     pointer-events: none;
 }
 @media (prefers-reduced-motion: no-preference) {
-    #scroll-progress { transition: width 0.12s linear; }
+    #scroll-progress { transition: transform 0.12s linear; }
 }
 
 h1, h2, h3, .hero-logo-large, .menu-logo-large, .v6-logo h2 {
@@ -138,7 +141,7 @@ a { text-decoration: none; color: inherit; }
     display: block; width: 30px; height: 4px; /* Líneas más gorditas */
     background-color: currentColor; margin: 0 auto;
     border-radius: 4px;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, opacity 0.15s ease-in-out;
 }
 /* Al abrir (clase .open manejada por JS) */
 .hamburger.open .line:nth-child(1) {
@@ -267,7 +270,7 @@ a { text-decoration: none; color: inherit; }
 .menu-links li {
     margin: 1.2rem 0;
     transform: translateY(20px); opacity: 0;
-    transition: all 0.4s ease;
+    transition: transform 0.4s var(--ease-out), opacity 0.4s var(--ease-out);
 }
 .fullscreen-menu.active .menu-links li { transform: translateY(0); opacity: 1; }
 .fullscreen-menu.active .menu-links li:nth-child(1) { transition-delay: 0.1s; }
@@ -282,10 +285,11 @@ a { text-decoration: none; color: inherit; }
 }
 .menu-link::after {
     content: ''; position: absolute; bottom: -4px; right: 0;
-    width: 0; height: 4px; background-color: var(--color-brown);
-    transition: width 0.3s ease;
+    width: 100%; height: 4px; background-color: var(--color-brown);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.3s var(--ease-out);
 }
-.menu-link:hover::after { width: 100%; }
+.menu-link:hover::after { transform: scaleX(1); }
 
 .menu-logo-large-container {
     position: absolute;
@@ -301,7 +305,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-main); font-weight: 800;
     letter-spacing: -2px;
     transform: translateY(20px); opacity: 0;
-    transition: all 0.5s ease 0.5s;
+    transition: transform 0.5s var(--ease-out) 0.5s, opacity 0.5s ease 0.5s;
 }
 .fullscreen-menu.active .menu-logo-large { transform: translateY(0); opacity: 1; }
 
@@ -407,7 +411,8 @@ a { text-decoration: none; color: inherit; }
 /* Se desvanece apenas el usuario empieza a scrollear */
 .scroll-cue.is-hidden { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
-    .scroll-cue span { animation: none; height: 100%; }
+    /* Sin movimiento no hay "pista": una línea estática sólo distrae */
+    .scroll-cue { display: none; }
 }
 
 /* ─── VISTA 2: QUIENES SOMOS ─── */
@@ -609,7 +614,7 @@ a { text-decoration: none; color: inherit; }
     display: inline-block;
     transform: translateY(100%);
     opacity: 0;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+    transition: transform 0.6s var(--ease-out), opacity 0.6s ease;
 }
 #v2-part1.hook-active .word-inner {
     transform: translateY(0);
@@ -666,7 +671,7 @@ a { text-decoration: none; color: inherit; }
     object-position: 70% center;
     transform: scale(1.15);
     transform-origin: right center;
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s ease;
+    transition: transform 1.2s var(--ease-out), filter 1.2s ease;
 }
 .split-half:hover .split-bg img {
     transform: scale(1.22);
@@ -745,10 +750,10 @@ a { text-decoration: none; color: inherit; }
     object-position: center;
     border-radius: 0; /* Cuadradas, sin bordes redondeados */
     filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); /* Sombra para imágenes sin fondo */
-    transition: transform 0.6s ease;
+    transition: transform 0.35s var(--ease-out);
 }
-.split-image:hover img { 
-    transform: translateY(-8px) scale(1.02); 
+.split-image:hover img {
+    transform: translateY(-8px) scale(1.02);
 }
 
 /* Texto amarillo sobre fondos oscuros — explícito y sin ambigüedad */
@@ -867,20 +872,23 @@ a { text-decoration: none; color: inherit; }
     align-items: center;
     gap: 0.8rem;
     border-radius: 50px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform var(--dur-fast) var(--ease-out),
+                background var(--dur-fast) ease,
+                color var(--dur-fast) ease,
+                box-shadow var(--dur-fast) var(--ease-out);
 }
 .cta-btn:hover {
     background: transparent;
     color: var(--color-brown);
-    transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 20px 40px rgba(74, 36, 16, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 18px 38px rgba(74, 36, 16, 0.15);
 }
 .cta-btn-arrow {
     font-size: 1.1rem;
-    transition: transform 0.4s ease;
+    transition: transform var(--dur-fast) var(--ease-out);
 }
 .cta-btn:hover .cta-btn-arrow {
-    transform: translateX(4px) rotate(-45deg);
+    transform: translateX(3px) rotate(-45deg);
 }
 
 /* Brillo sutil que cruza el botón CTA: pasada rápida y una pausa larga
@@ -972,16 +980,18 @@ a { text-decoration: none; color: inherit; }
     position: absolute;
     bottom: -2px;
     left: 0;
-    width: 0;
+    width: 100%;
     height: 1.5px;
     background-color: var(--color-brown);
-    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out);
 }
 .social-link:hover {
     opacity: 1;
 }
 .social-link:hover::after {
-    width: 100%;
+    transform: scaleX(1);
 }
 /* Logo CALUVA cortado al estilo Calvagni (Bulletproof para evitar bug de Chrome) */
 .v6-logo {
@@ -1053,7 +1063,7 @@ a { text-decoration: none; color: inherit; }
 /* Hero tiene animación propia */
 .fade-in-up {
     opacity: 0; transform: translateY(30px);
-    animation: fadeInUp 1.2s ease forwards;
+    animation: fadeInUp 1s var(--ease-out) forwards;
 }
 .delay-1 { animation-delay: 0.5s; }
 @keyframes fadeInUp {
@@ -1360,7 +1370,7 @@ textarea:focus-visible,
     padding: 3rem 3rem 2.5rem;
     position: relative;
     transform: translateY(28px);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.4s var(--ease-spring);
     scrollbar-width: none;
 }
 .call-modal-box::-webkit-scrollbar { display: none; }
@@ -1448,7 +1458,7 @@ textarea:focus-visible,
     border: 1.5px solid var(--color-brown);
     padding: 0.7rem;
     margin-top: 0.25rem;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s var(--ease-out);
 }
 .call-textarea:focus {
     background: rgba(255, 255, 255, 0.45);
@@ -1503,7 +1513,7 @@ textarea:focus-visible,
     letter-spacing: 0.15em;
     padding: 0.95rem 2.5rem;
     border-radius: 50px;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.3s var(--ease-out), background 0.3s ease, color 0.3s ease, box-shadow 0.3s var(--ease-out);
 }
 .call-form-submit:hover {
     background: transparent;

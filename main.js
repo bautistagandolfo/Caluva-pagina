@@ -99,28 +99,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ── HEADER + BOTÓN STICKY: aparecen/desaparecen al terminar el hero ──
-    // Se cachea el alto del hero (se recalcula sólo al redimensionar) para
-    // no forzar un reflow en cada evento de scroll.
-    let heroHeightCache = heroSection.offsetHeight;
-    window.addEventListener('resize', () => { heroHeightCache = heroSection.offsetHeight; }, { passive: true });
+    // Se cachea el alto del hero (se recalcula al redimensionar) para no
+    // forzar un reflow en cada evento de scroll. El hero mide exactamente
+    // un viewport (#inicio { height: 100vh }), así que si la medición
+    // temprana sale rara —layout aún sin asentar, 100dvh en 0— usamos
+    // window.innerHeight como piso: si no, el header/CTA/sticky arrancan
+    // en estado "post-hero" encima del hero.
+    let heroHeightCache = 0;
+    const refreshHeroHeight = () => {
+        const measured = heroSection.offsetHeight;
+        heroHeightCache = measured > 100 ? measured : window.innerHeight;
+        checkHeaderColor();
+    };
+    window.addEventListener('resize', refreshHeroHeight, { passive: true });
+    window.addEventListener('load', refreshHeroHeight, { passive: true });
 
     const scrollProgress = document.getElementById('scroll-progress');
     const scrollCue = document.getElementById('scrollCue');
 
     const checkHeaderColor = () => {
         const y = window.scrollY;
-        const pastHero = y >= heroHeightCache - 10;
+        // Sin una medida fiable del hero, asumimos que seguimos en él:
+        // así el header/CTA/sticky no aparecen encima del hero por una
+        // medición temprana en 0.
+        const pastHero = heroHeightCache > 100 && y >= heroHeightCache - 10;
         if (!isMenuOpen) header.classList.toggle('hidden', pastHero);
         const sticky = document.getElementById('sticky-menu-btn');
         if (sticky) sticky.classList.toggle('active', pastHero);
         const fcta = document.querySelector('.floating-cta');
         if (fcta) fcta.classList.toggle('active', pastHero && !isMenuOpen);
 
-        // Barra de progreso de scroll
+        // Barra de progreso de scroll (scaleX en vez de width: no toca layout)
         if (scrollProgress) {
             const max = document.documentElement.scrollHeight - window.innerHeight;
-            const pct = max > 0 ? Math.min(100, (y / max) * 100) : 0;
-            scrollProgress.style.width = pct.toFixed(2) + '%';
+            const ratio = max > 0 ? Math.min(1, y / max) : 0;
+            scrollProgress.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
         }
         // El indicador de scroll del hero se esconde apenas hay movimiento
         if (scrollCue) scrollCue.classList.toggle('is-hidden', y > 40);
@@ -131,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headerTicking = true;
         requestAnimationFrame(() => { headerTicking = false; checkHeaderColor(); });
     }, { passive: true });
-    checkHeaderColor();
+    refreshHeroHeight(); // mide el hero y pinta el estado inicial
 
     // ── COREOGRAFÍA ZOOM CALUVA CON MASCARA DINÁMICA JS ──
     const zoomSpacer = document.getElementById('zoom-spacer');
