@@ -55,6 +55,41 @@ body {
 /* Selección de texto con color de marca */
 ::selection { background: var(--color-brown); color: var(--color-cream); }
 
+/* Saltar al contenido (accesibilidad) — visible solo con foco de teclado */
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -120%);
+    z-index: 3000;
+    background: var(--color-brown);
+    color: var(--color-cream);
+    padding: 0.7rem 1.4rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 0 0 8px 8px;
+    transition: transform 0.25s var(--ease-out);
+}
+.skip-link:focus-visible { transform: translate(-50%, 0); outline: 2px solid var(--color-cream); outline-offset: 2px; }
+
+/* Barra de progreso de scroll — reemplaza la referencia visual que se
+   pierde al ocultar la scrollbar en una página tan larga */
+#scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0;
+    background: var(--color-brown);
+    z-index: 2000;
+    pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+    #scroll-progress { transition: width 0.12s linear; }
+}
+
 h1, h2, h3, .hero-logo-large, .menu-logo-large, .v6-logo h2 {
     font-family: var(--font-main);
     font-weight: 800;
@@ -344,6 +379,37 @@ a { text-decoration: none; color: inherit; }
 }
 /* Sin gradiente — el corte limpio es más elegante que un fundido que tapa el texto */
 
+/* ─── INDICADOR DE SCROLL (hero) ─── */
+.scroll-cue {
+    position: absolute;
+    bottom: 21vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 52px;
+    overflow: hidden;
+    z-index: 3;
+    opacity: 0.7;
+    transition: opacity 0.4s ease;
+}
+.scroll-cue span {
+    display: block;
+    width: 100%;
+    height: 40%;
+    background: var(--color-yellow);
+    animation: scroll-cue-drop 2s var(--ease-out) infinite;
+}
+@keyframes scroll-cue-drop {
+    0%   { transform: translateY(-100%); }
+    55%  { transform: translateY(250%); }
+    100% { transform: translateY(250%); }
+}
+/* Se desvanece apenas el usuario empieza a scrollear */
+.scroll-cue.is-hidden { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+    .scroll-cue span { animation: none; height: 100%; }
+}
+
 /* ─── VISTA 2: QUIENES SOMOS ─── */
 /* DEBE ser position fixed para que el zoom del hero la revele por detrás */
 .v2-section {
@@ -406,7 +472,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-heading);
     font-weight: 800;
     font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    color: #f8f8f0; /* Amarillo claro */
+    color: var(--color-yellow);
     text-transform: uppercase;
     line-height: 1;
     letter-spacing: -0.5px;
@@ -416,7 +482,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-heading);
     font-weight: 800;
     font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    color: #f8f8f0; /* Amarillo claro */
+    color: var(--color-yellow);
     text-transform: uppercase;
     letter-spacing: -0.5px;
     line-height: 1; /* Aumentado ligeramente para alejar MARCA */
@@ -434,7 +500,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-main);
     font-weight: 400;
     font-size: clamp(0.85rem, 1.1vw, 1rem);
-    color: #f8f8f0;
+    color: var(--color-yellow);
     line-height: 1.6;
     margin: 0 0 1rem 0;
     text-align: left;
@@ -444,7 +510,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-main);
     font-weight: 400;
     font-size: clamp(0.8rem, 1vw, 0.95rem);
-    color: #f8f8f0;
+    color: var(--color-yellow);
     line-height: 1.7;
     margin: 0;
     text-align: left;
@@ -457,7 +523,7 @@ a { text-decoration: none; color: inherit; }
     font-weight: 700;
     font-size: 0.85rem;
     letter-spacing: 0.1em;
-    color: #f8f8f0;
+    color: var(--color-yellow);
     text-decoration: none;
     text-transform: uppercase;
     text-align: center;
@@ -585,6 +651,16 @@ a { text-decoration: none; color: inherit; }
     overflow: hidden;
 }
 .split-bg { position: absolute; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
+/* Scrim sobre las imágenes de fondo cuando encima va texto claro —
+   garantiza contraste sobre cualquier zona de la foto */
+.split-half:has(.on-dark) .split-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 12, 6, 0.42);
+    z-index: 1;
+    pointer-events: none;
+}
 .split-bg img {
     width: 100%; height: 100%; object-fit: cover;
     object-position: 70% center;
@@ -719,6 +795,12 @@ a { text-decoration: none; color: inherit; }
     transform: translateY(-50%);
     z-index: 2;
 }
+/* Rango intermedio: el spiral se achica y se pega al borde para no
+   acercarse al texto centrado (abajo de 768 pasa a flujo normal) */
+@media (max-width: 1120px) and (min-width: 769px) {
+    .cta-left-col { left: 3%; }
+    .cta-spiral { width: var(--spiral-md) !important; height: var(--spiral-md) !important; }
+}
 .cta-spiral {
     width: var(--spiral-lg) !important;
     height: var(--spiral-lg) !important;
@@ -841,6 +923,17 @@ a { text-decoration: none; color: inherit; }
     padding: 2rem 8% 0;
     overflow: hidden; /* Corta el logo por abajo al estilo Calvagni */
     min-height: 50vh;
+}
+.v6-copyright {
+    align-self: flex-start;
+    margin: 0;
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-brown-soft);
+    text-align: left;
 }
 .v6-redes-container {
     width: 100%;

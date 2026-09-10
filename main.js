@@ -104,13 +104,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let heroHeightCache = heroSection.offsetHeight;
     window.addEventListener('resize', () => { heroHeightCache = heroSection.offsetHeight; }, { passive: true });
 
+    const scrollProgress = document.getElementById('scroll-progress');
+    const scrollCue = document.getElementById('scrollCue');
+
     const checkHeaderColor = () => {
-        const pastHero = window.scrollY >= heroHeightCache - 10;
+        const y = window.scrollY;
+        const pastHero = y >= heroHeightCache - 10;
         if (!isMenuOpen) header.classList.toggle('hidden', pastHero);
         const sticky = document.getElementById('sticky-menu-btn');
         if (sticky) sticky.classList.toggle('active', pastHero);
         const fcta = document.querySelector('.floating-cta');
         if (fcta) fcta.classList.toggle('active', pastHero && !isMenuOpen);
+
+        // Barra de progreso de scroll
+        if (scrollProgress) {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = max > 0 ? Math.min(100, (y / max) * 100) : 0;
+            scrollProgress.style.width = pct.toFixed(2) + '%';
+        }
+        // El indicador de scroll del hero se esconde apenas hay movimiento
+        if (scrollCue) scrollCue.classList.toggle('is-hidden', y > 40);
     };
     let headerTicking = false;
     window.addEventListener('scroll', () => {
@@ -648,5 +661,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (stickyMenuBtn) {
         stickyMenuBtn.addEventListener('click', () => { menuTriggerEl = stickyMenuBtn; toggleMenu(); });
     }
+
+    // Año del footer siempre al día
+    const footerYear = document.getElementById('footerYear');
+    if (footerYear) footerYear.textContent = new Date().getFullYear();
 
 });
