@@ -76,23 +76,6 @@ body {
 }
 .skip-link:focus-visible { transform: translate(-50%, 0); outline: 2px solid var(--color-cream); outline-offset: 2px; }
 
-/* Barra de progreso de scroll — reemplaza la referencia visual que se
-   pierde al ocultar la scrollbar en una página tan larga */
-#scroll-progress {
-    position: fixed;
-    top: 0; left: 0;
-    height: 3px;
-    width: 100%;
-    background: var(--color-brown);
-    transform: scaleX(0);
-    transform-origin: left;
-    z-index: 2000;
-    pointer-events: none;
-}
-@media (prefers-reduced-motion: no-preference) {
-    #scroll-progress { transition: transform 0.12s linear; }
-}
-
 h1, h2, h3, .hero-logo-large, .menu-logo-large, .v6-logo h2 {
     font-family: var(--font-main);
     font-weight: 800;
@@ -187,50 +170,6 @@ a { text-decoration: none; color: inherit; }
     opacity: 1;
     pointer-events: all;
     transform: translateY(0);
-}
-
-/* ─── CTA FLOTANTE (POST-HERO) ─── */
-.floating-cta {
-    position: fixed;
-    right: 6%;
-    bottom: 2rem;
-    z-index: 1000;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.85rem 1.6rem;
-    background: var(--color-brown);
-    color: var(--color-cream);
-    border: none;
-    border-radius: 50px;
-    font-family: var(--font-main);
-    font-weight: 700;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    box-shadow: 0 10px 30px rgba(74, 36, 16, 0.22);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(20px);
-    transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out), background 0.3s ease;
-}
-.floating-cta.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-}
-.floating-cta-arrow { transition: transform 0.3s var(--ease-out); }
-.floating-cta:hover { background: #38200e; }
-.floating-cta:hover .floating-cta-arrow { transform: translateX(3px); }
-.floating-cta:active { transform: translateY(0) scale(0.96); }
-
-@media (max-width: 768px) {
-    .floating-cta { right: 5%; left: 5%; bottom: 1rem; justify-content: center; padding: 0.95rem 1.6rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-    .floating-cta { transition: opacity 0.2s ease; transform: none; }
-    .floating-cta.active { transform: none; }
 }
 
 /* ─── SPIRAL ICON (Logo real — color controlado con background-color) ─── */
@@ -870,7 +809,9 @@ a { text-decoration: none; color: inherit; }
     text-transform: uppercase;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.8rem;
+    white-space: nowrap; /* la etiqueta nunca parte en dos líneas */
     border-radius: 50px;
     transition: transform var(--dur-fast) var(--ease-out),
                 background var(--dur-fast) ease,
@@ -928,30 +869,31 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding: 2rem 8% 0;
+    gap: clamp(2.5rem, 6vw, 5rem); /* aire entre la meta-fila y el logo cortado */
+    padding: 3.5rem 8% 0;
     overflow: hidden; /* Corta el logo por abajo al estilo Calvagni */
     min-height: 50vh;
 }
-.v6-copyright {
-    align-self: flex-start;
-    margin: 0;
-    font-family: var(--font-main);
-    font-weight: 500;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-brown-soft);
-    text-align: left;
-}
-.v6-redes-container {
+/* Meta-fila del footer: copyright a la izquierda, REDES a la derecha,
+   sobre la misma línea de base, justo encima del logo cortado. */
+.v6-meta {
     width: 100%;
     display: flex;
-    justify-content: flex-end; /* Alineado a la derecha como en la foto */
-    padding: 0 5%; /* Menos padding para pegarlo más al borde derecho */
-    margin-top: auto; /* Empuja el contenedor hacia abajo para pegarlo al logo */
-    margin-bottom: 0;
-    transform: translateY(30%); /* Lo acerca muchísimo al logo, flotando justo arriba como en la imagen */
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
     z-index: 10;
+}
+.v6-copyright {
+    margin: 0;
+    max-width: 30ch;
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 0.74rem;
+    line-height: 1.55;
+    letter-spacing: 0.02em;
+    color: var(--color-brown-soft);
+    text-align: left;
 }
 .v6-redes {
     display: flex; flex-direction: column; align-items: flex-start;
@@ -1311,17 +1253,17 @@ textarea:focus-visible,
     .cta-right-col { align-items: center; text-align: center; width: 100%; }
     .cta-title { align-items: center; margin-bottom: 1.5rem; }
     .cta-btn-wrapper { justify-content: center; }
-    .cta-btn { padding: 1rem 2.5rem; font-size: 0.75rem; }
+    .cta-btn { padding: 0.95rem 1.75rem; font-size: 0.68rem; letter-spacing: 0.12em; gap: 0.6rem; }
 
     /* ── FOOTER ── */
-    #contacto { padding: 3rem 0 0; min-height: auto; align-items: flex-start; overflow-x: hidden; }
-    .v6-redes-container {
-        transform: none;
-        justify-content: flex-start;
+    #contacto { padding: 3rem 0 0; min-height: auto; align-items: flex-start; gap: 3rem; overflow-x: hidden; }
+    .v6-meta {
+        flex-direction: column-reverse; /* REDES arriba, copyright abajo */
+        align-items: flex-start;
+        gap: 2.5rem;
         padding: 0 6%;
-        margin-top: 0;
-        margin-bottom: 2rem;
     }
+    .v6-copyright { max-width: none; }
     .v6-redes h3 { font-size: 1rem; }
     .social-link { font-size: 1rem; }
     .v6-logo {
