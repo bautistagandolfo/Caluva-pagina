@@ -685,10 +685,16 @@ a { text-decoration: none; color: inherit; }
     pointer-events: none;
 }
 .scrim-right .split-bg::after {
-    background: linear-gradient(90deg, rgba(58, 28, 13, 0) 28%, rgba(58, 28, 13, 0.78) 100%);
+    background: linear-gradient(100deg, rgba(35, 16, 6, 0.08) 0%, rgba(35, 16, 6, 0.55) 42%, rgba(35, 16, 6, 0.92) 100%);
 }
 .scrim-left .split-bg::after {
-    background: linear-gradient(270deg, rgba(58, 28, 13, 0) 28%, rgba(58, 28, 13, 0.82) 100%);
+    background: linear-gradient(260deg, rgba(35, 16, 6, 0.08) 0%, rgba(35, 16, 6, 0.6) 42%, rgba(35, 16, 6, 0.92) 100%);
+}
+
+/* Duna Collection es una foto muy clara: se oscurece un poco para que el texto de Pauta Publicitaria se lea bien */
+.bg-cocoa .split-bg.no-img-zoom img,
+.split-half.bg-cocoa:hover .split-bg.no-img-zoom img {
+    filter: brightness(0.78) saturate(0.9);
 }
 /* La foto de Social Media es fría: se templa para que acompañe al resto */
 .warm-img .split-bg img,
@@ -712,6 +718,7 @@ a { text-decoration: none; color: inherit; }
     position: relative; z-index: 1;
 }
 .split-texts { max-width: 650px; } /* Más ancho para que el texto no ocupe tanto espacio vertical */
+.split-texts p { font-family: var(--font-body); } /* Misma tipografía de lectura que Universo de Marca */
 .split-title {
     font-family: var(--font-main); font-weight: 800;
     font-size: clamp(1.8rem, 3.5vw, 2.8rem);
