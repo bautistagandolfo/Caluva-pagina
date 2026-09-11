@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -66,38 +66,87 @@
         </div>
 
         <!-- VISTA 2: QUIENES SOMOS -->
-        <!-- Fija en el fondo: el hero zoom la revela. Vista 4 la cubre al hacer scroll -->
+        <!-- Fija en el fondo: el hero zoom la revela. Ocupa la pantalla completa. -->
         <section id="vista-2" class="v2-section">
-            <!-- Parte superior: blanca con logo y textos -->
-            <div class="v2-white-area">
-                <div class="slide-content-v2">
-                    <div class="v2-top-inner">
-                        <div class="v2-logo" id="v2-logo"><div class="spiral-icon dark"></div></div>
-                        <div class="v2-text">
-                            <p class="v2-desc-part1" id="v2-part1">Caluva es una agencia creativa y estratégica.</p>
-                            <p class="v2-desc-part2" id="v2-part2">Ayudamos a las marcas a crecer a través de creatividad, estrategia y ejecución, desarrollando ideas y acciones pensadas para comunicar mejor, conectar con su audiencia y potenciar sus resultados.</p>
+            <div class="v2-inner">
+
+                <!-- Fila superior: etiqueta + logo -->
+                <div class="v2-topbar" id="v2-topbar">
+                    <span class="v2-eyebrow">Quiénes somos</span>
+                    <div class="v2-logo" id="v2-logo"><div class="spiral-icon dark"></div></div>
+                </div>
+
+                <!-- Bloque central: título + dos columnas -->
+                <div class="v2-main">
+                    <h2 class="v2-title" id="v2-part1">Caluva es una agencia creativa y estratégica.</h2>
+                    <div class="v2-rule"></div>
+                    <div class="v2-cols">
+                        <div class="v2-col">
+                            <p class="v2-col-text" id="v2-part2">Ayudamos a las marcas a crecer a través de creatividad, estrategia y ejecución, desarrollando ideas y acciones pensadas para comunicar mejor.</p>
+                        </div>
+                        <div class="v2-col">
+                            <p class="v2-col-text">Conectamos cada marca con su audiencia y potenciamos sus resultados, de la estrategia a la ejecución.</p>
                             <div class="v2-elegant-link-container" id="v2-link-container">
                                 <a href="quienes-somos.html" class="v2-elegant-link">Ver más <span class="v2-arrow">→</span></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Título grande al pie de la zona blanca -->
-                <h2 class="v2-services-title" id="v2-services-heading">CONOCE NUESTROS SERVICIOS</h2>
-            </div>
 
-            <!-- Preview navy: primer servicio visible en la misma pantalla -->
-            <div class="v2-navy-preview">
-                <div class="v2-prev-header">
-                    <span class="v2-prev-word">UNIVERSO</span>
-                    <span class="v2-prev-word v2-prev-de">DE</span>
+                <!-- Bloque inferior: fotos del equipo + acceso a servicios -->
+                <div class="v2-bottom" id="v2-bottom">
+                    <div class="v2-team">
+                        <span class="v2-hand is-left">
+                            <span class="v2-hand-word">ari</span>
+                            <svg class="v2-hand-arrow" viewBox="0 0 120 62" fill="none" aria-hidden="true">
+                                <path d="M6 54C30 57 66 50 104 12" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+                                <path d="M104 12L86 15M104 12L102 30" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+
+                        <div class="v2-photos">
+                            <figure class="v2-photo">
+                                <img src="assets/foto-ari.jpg" alt="Ari">
+                                <figcaption>Foto carnet Ari</figcaption>
+                            </figure>
+                            <figure class="v2-photo">
+                                <img src="assets/foto-guada.jpg" alt="Guada">
+                                <figcaption>Foto carnet Guada</figcaption>
+                            </figure>
+                        </div>
+
+                        <span class="v2-hand is-right">
+                            <span class="v2-hand-word">guada</span>
+                            <svg class="v2-hand-arrow" viewBox="0 0 120 62" fill="none" aria-hidden="true">
+                                <path d="M6 54C30 57 66 50 104 12" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+                                <path d="M104 12L86 15M104 12L102 30" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </div>
+
+                    <button type="button" class="v2-services-cta" id="btn-servicios">
+                        <span class="v2-services-label">Nuestros servicios</span>
+                        <span class="v2-services-circle">↓</span>
+                    </button>
                 </div>
-                <div class="v2-prev-marca">MARCA</div>
-                <div class="v2-prev-desc">
-                    <p class="v2-preview-sub">Punto de partida para ordenar, entender y potenciar una marca.</p>
-                    <p class="v2-preview-body">Analizamos qué vende, a quién le habla, qué quiere lograr y qué valor puede comunicar mejor. A partir de eso, detectamos oportunidades y construimos una dirección clara para que la marca conecte con su audiencia y crezca con estrategia.</p>
+
+            </div>
+        </section>
+
+        <!-- VISTA 3: UNIVERSO DE MARCA (primer servicio, pantalla completa) -->
+        <section id="vista-3" class="v3-section reveal-section">
+            <div class="v3-inner">
+                <span class="v3-eyebrow sr-item sr-up">Nuestros servicios</span>
+                <div class="v3-header">
+                    <span class="v3-word sr-item sr-up sr-delay-1">UNIVERSO</span>
+                    <span class="v3-word v3-word-de sr-item sr-up sr-delay-1">DE</span>
                 </div>
-                <a href="universo-de-marca.html" class="v2-preview-link">VER MAS -</a>
+                <div class="v3-marca sr-item sr-up sr-delay-2">MARCA</div>
+                <div class="v3-desc">
+                    <p class="v3-sub sr-item sr-up sr-delay-2">Punto de partida para ordenar, entender y potenciar una marca.</p>
+                    <p class="v3-body sr-item sr-up sr-delay-3">Analizamos qué vende, a quién le habla, qué quiere lograr y qué valor puede comunicar mejor. A partir de eso, detectamos oportunidades y construimos una dirección clara para que la marca conecte con su audiencia y crezca con estrategia.</p>
+                </div>
+                <a href="universo-de-marca.html" class="v3-link sr-item sr-up sr-delay-4">VER MAS <span class="v3-link-arrow">→</span></a>
             </div>
         </section>
 

@@ -125,10 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const v2Part2 = document.getElementById('v2-part2');
             const v2Link  = document.getElementById('v2-link-container');
             const v2Logo  = document.getElementById('v2-logo');
+            const v2Top    = document.getElementById('v2-topbar');
+            const v2Bottom = document.getElementById('v2-bottom');
             if (v2Part1) v2Part1.classList.add('hook-active');
             if (v2Part2) v2Part2.classList.add('reveal-active');
             if (v2Link)  v2Link.classList.add('reveal-active');
             if (v2Logo)  v2Logo.classList.add('reveal-active');
+            if (v2Top)    v2Top.classList.add('reveal-active');
+            if (v2Bottom) v2Bottom.classList.add('reveal-active');
             heroCaluvaText.style.opacity = '1';
             heroCaluvaText.style.animation = '';
             // No continuar con la lógica del zoom
@@ -347,6 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const v2Part2 = document.getElementById('v2-part2');
                     const v2Link = document.getElementById('v2-link-container');
                     const v2Logo = document.getElementById('v2-logo');
+                    const v2Top = document.getElementById('v2-topbar');
+                    const v2Bottom = document.getElementById('v2-bottom');
 
                     if (isPastZoom || v2Revealed) {
                         v2Revealed = true;
@@ -354,11 +360,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (v2Part2) v2Part2.classList.add('reveal-active');
                         if (v2Link) v2Link.classList.add('reveal-active');
                         if (v2Logo) v2Logo.classList.add('reveal-active');
+                        if (v2Top) v2Top.classList.add('reveal-active');
+                        if (v2Bottom) v2Bottom.classList.add('reveal-active');
                     } else {
                         if (v2Part1) v2Part1.classList.remove('hook-active');
                         if (v2Part2) v2Part2.classList.remove('reveal-active');
                         if (v2Link) v2Link.classList.remove('reveal-active');
                         if (v2Logo) v2Logo.classList.remove('reveal-active');
+                        if (v2Top) v2Top.classList.remove('reveal-active');
+                        if (v2Bottom) v2Bottom.classList.remove('reveal-active');
                     }
                 }
 
@@ -515,13 +525,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // CONOCE NUESTROS SERVICIOS → scroll suave a #vista-4
+    // NUESTROS SERVICIOS → scroll suave al primer servicio
     if (btnServicios) {
         btnServicios.addEventListener('click', () => {
-            const vista4 = document.getElementById('vista-4');
-            if (vista4) vista4.scrollIntoView({ behavior: 'smooth' });
+            const target = document.getElementById('vista-3') || document.getElementById('vista-4');
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
         });
     }
+
+    // Fotos del equipo: si el archivo todavía no existe, se muestra el placeholder
+    document.querySelectorAll('.v2-photo img').forEach(img => {
+        const markMissing = () => img.classList.add('is-missing');
+        img.addEventListener('error', markMissing);
+        if (img.complete && img.naturalWidth === 0) markMissing();
+    });
 
     // ── CUSTOM CURSOR ──
     const cursor = document.getElementById('cursor');

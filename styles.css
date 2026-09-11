@@ -6,6 +6,9 @@
     --color-white: #ffffff;
     --font-heading: 'Montserrat', sans-serif;
     --font-main: 'Montserrat', sans-serif;
+    --font-display: 'Poppins', 'Montserrat', sans-serif;   /* Títulos con más cuerpo */
+    --font-body: 'Lora', Georgia, serif;                    /* Textos de lectura */
+    --font-hand: 'Caveat', 'Segoe Script', cursive;         /* Notas manuscritas */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -258,7 +261,8 @@ a { text-decoration: none; color: inherit; }
 /* Sin gradiente — el corte limpio es más elegante que un fundido que tapa el texto */
 
 /* ─── VISTA 2: QUIENES SOMOS ─── */
-/* DEBE ser position fixed para que el zoom del hero la revele por detrás */
+/* DEBE ser position fixed para que el zoom del hero la revele por detrás.
+   Ocupa la pantalla COMPLETA: ningún servicio asoma en esta vista. */
 .v2-section {
     position: fixed;
     top: 0;
@@ -266,216 +270,229 @@ a { text-decoration: none; color: inherit; }
     width: 100%;
     height: 100vh;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
-    /* Fondo transparente, los colores sólidos los dan los contenedores internos */
-    background: transparent;
-}
-
-/* Área blanca superior */
-.v2-white-area {
     background-color: var(--color-white);
+}
+
+.v2-inner {
     width: 100%;
-    flex: 1; /* Toma exactamente el espacio necesario sin forzar overflow */
+    height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: clamp(4.5rem, 8vh, 6.5rem) 6% clamp(1.8rem, 4vh, 3rem);
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Empuja el título al fondo automáticamente */
-    padding: 5rem 6% 1.5rem; /* Reducido de 3rem a 1.5rem para que el título baje más */
+    justify-content: space-between;
+    gap: clamp(1.5rem, 4vh, 3.5rem);
 }
 
-.slide-content-v2 {
-    width: 100%; max-width: 1300px; margin: 0 auto;
-    /* No flex: 1, así solo ocupa lo necesario y space-between se encarga del resto */
-}
-
-.v2-top-inner {
+/* ── Fila superior: etiqueta + logo ── */
+.v2-topbar {
     display: flex;
-    gap: 6%;
     align-items: flex-start;
-    padding-bottom: 4rem;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-shrink: 0;
 }
 
-.v2-logo { flex-shrink: 0; padding-top: 0.5rem; }
-.v2-text { flex: 1; }
-
-.v2-desc-part1 {
-    font-family: var(--font-main);
-    font-weight: 300;
-    font-size: clamp(1rem, 1.5vw, 1.4rem);
+.v2-eyebrow {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(0.68rem, 0.85vw, 0.82rem);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
     color: var(--color-brown);
-    line-height: 1.6;
-    letter-spacing: -0.01em;
-    margin-bottom: 1.5rem;
+    line-height: 1;
+    padding-top: 0.6rem;
 }
 
-.v2-desc-part2 {
-    font-family: var(--font-main);
-    font-weight: 300;
-    font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+.v2-logo { flex-shrink: 0; }
+.v2-logo .spiral-icon { width: clamp(48px, 5vw, 68px); height: clamp(48px, 5vw, 68px); }
+
+/* ── Bloque central: título + columnas ── */
+.v2-main { width: 100%; }
+
+.v2-title {
+    font-family: var(--font-display);
+    font-weight: 600;              /* tipografía más rellena que la Montserrat light */
+    font-size: clamp(2rem, 3.9vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
     color: var(--color-brown);
-    line-height: 1.7;
-    letter-spacing: -0.01em;
-    margin-bottom: 1.5rem;
+    text-transform: none;
+    max-width: 23ch;
+    margin: 0;
+}
+
+.v2-rule {
+    height: 1px;
+    width: 100%;
+    background-color: rgba(74, 36, 16, 0.2);
+    margin: clamp(1.2rem, 3.2vh, 2.6rem) 0 clamp(1.1rem, 2.8vh, 2.2rem);
+}
+
+.v2-cols {
+    display: flex;
+    align-items: flex-start;
+    gap: 8%;
+}
+.v2-col { flex: 1; min-width: 0; }
+
+.v2-col-text {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    line-height: 1.75;
+    color: var(--color-brown);
+    text-align: left;
+    margin: 0;
+    max-width: 46ch;
 }
 
 .v2-elegant-link-container {
-    width: 100%;
-    text-align: right;
-    margin-top: 0.5rem;
+    margin-top: clamp(1rem, 2.2vh, 1.8rem);
+    text-align: left;
 }
 
 .v2-elegant-link {
-    font-family: var(--font-main);
-    font-weight: 300;
-    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
     color: var(--color-brown);
     text-decoration: none;
-    letter-spacing: -0.01em;
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    transition: opacity 0.3s;
+    gap: 1.4rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(74, 36, 16, 0.45);
+    transition: gap 0.3s ease, opacity 0.3s ease;
 }
-.v2-elegant-link:hover { opacity: 0.65; }
+.v2-elegant-link:hover { gap: 2rem; opacity: 0.7; }
+.v2-elegant-link .v2-arrow { transition: transform 0.3s ease; }
+.v2-elegant-link:hover .v2-arrow { transform: translateX(4px); }
 
+/* ── Bloque inferior: fotos del equipo + acceso a servicios ── */
+.v2-bottom {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-shrink: 0;
+}
 
+.v2-team {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(0.8rem, 3vw, 3rem);
+}
 
-/* ─── SECCIÓN NAVY ─── */
-.v2-navy-preview {
-    background-color: var(--color-navy);
-    flex: 1;
+/* Las dos fotos: separadas apenitas, nunca pegadas */
+.v2-photos {
+    display: flex;
+    gap: clamp(0.6rem, 1.1vw, 1.1rem);
+}
+
+.v2-photo {
+    position: relative;
+    height: clamp(120px, 21vh, 195px);
+    aspect-ratio: 3 / 4;
+    margin: 0;
+    overflow: hidden;
+    background-color: var(--color-cream);
+    border: 1px solid rgba(74, 36, 16, 0.16);
+}
+.v2-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+/* Si la foto todavía no existe en /assets, queda el placeholder punteado */
+.v2-photo img.is-missing { display: none; }
+.v2-photo:has(img.is-missing) { border-style: dashed; }
+.v2-photo figcaption {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    color: rgba(74, 36, 16, 0.5);
+}
+
+/* Nombres manuscritos + flechas (apuntan hacia arriba, hacia cada foto) */
+.v2-hand {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 10% 4rem; /* Aumentado a 4rem el bottom para subir el VER MAS */
+    color: var(--color-brown);
+    padding-bottom: clamp(0.5rem, 2vh, 1.6rem);
 }
+.v2-hand.is-left  { align-items: flex-start; }
+.v2-hand.is-right { align-items: flex-end; }
 
-.v2-prev-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
-    gap: 8%; /* Acercar el DE a UNIVERSO según feedback */
-}
-
-.v2-prev-word {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    color: #f8f8f0; /* Amarillo claro */
-    text-transform: uppercase;
-    line-height: 1;
-    letter-spacing: -0.5px;
-}
-
-.v2-prev-marca {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    color: #f8f8f0; /* Amarillo claro */
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-    line-height: 1; /* Aumentado ligeramente para alejar MARCA */
-    margin-top: 0.3rem; /* Separación sutil añadida */
-}
-
-/* Texto descriptivo: debajo y con sangría (indented) */
-.v2-prev-desc {
-    margin-top: 2rem;
-    margin-left: 12%; /* Sangría respecto al título */
-    width: 75%;
-}
-
-.v2-preview-sub {
-    font-family: var(--font-main);
-    font-weight: 400;
-    font-size: clamp(0.85rem, 1.1vw, 1rem);
-    color: #f8f8f0;
-    line-height: 1.6;
-    margin: 0 0 1rem 0;
-    text-align: left;
-}
-
-.v2-preview-body {
-    font-family: var(--font-main);
-    font-weight: 400;
-    font-size: clamp(0.8rem, 1vw, 0.95rem);
-    color: #f8f8f0;
-    line-height: 1.7;
-    margin: 0;
-    text-align: left;
-}
-
-/* VER MAS centrado al fondo */
-.v2-preview-link {
-    display: block;
-    font-family: var(--font-main);
+.v2-hand-word {
+    font-family: var(--font-hand);
     font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    color: #f8f8f0;
-    text-decoration: none;
-    text-transform: uppercase;
-    text-align: center;
-    margin-top: auto;
-    padding-top: 2rem;
-    transition: opacity 0.3s;
-}
-.v2-preview-link:hover { opacity: 0.75; }
-
-/* Título CONOCE NUESTROS SERVICIOS */
-.v2-services-title {
-    font-family: var(--font-heading);
-    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
-    margin-bottom: 0;
-    line-height: 1.15;
-    color: #143b50; /* Celeste oscuro */
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    text-align: center; /* Perfectamente centrado */
+    font-size: clamp(1.5rem, 2.4vw, 2.3rem);
+    line-height: 1;
 }
 
-.v2-desc-part1, .v2-desc-part2 {
-    font-family: var(--font-main);
-    font-weight: 300;
-    font-size: clamp(1rem, 1.5vw, 1.4rem);
+.v2-hand-arrow {
+    width: clamp(58px, 6.5vw, 100px);
+    height: auto;
+    margin-top: 0.3rem;
+}
+.v2-hand.is-left  .v2-hand-arrow { margin-left: 0.9rem; }
+.v2-hand.is-right .v2-hand-arrow { margin-right: 0.9rem; transform: scaleX(-1); }
+
+/* NUESTROS SERVICIOS ↓ */
+.v2-services-cta {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     color: var(--color-brown);
-    line-height: 1.6;
-    letter-spacing: -0.01em;
-}
-
-.v2-desc-part1 {
-    margin-bottom: 1.5rem;
-}
-
-.v2-desc-part2 {
-    margin-bottom: 1.5rem;
-    display: block;
-}
-
-.v2-elegant-link-container {
-    width: 100%;
-    text-align: right;
-    margin-top: 1rem;
-}
-
-.v2-elegant-link {
-    font-family: var(--font-main);
-    font-weight: 300;
-    font-size: clamp(1rem, 1.4vw, 1.2rem);
-    color: var(--color-brown);
-    text-decoration: none;
-    letter-spacing: -0.02em;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
-    transition: opacity 0.3s;
+    gap: 1rem;
 }
-.v2-elegant-link:hover {
-    opacity: 0.7;
+.v2-services-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(0.68rem, 0.85vw, 0.82rem);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+}
+.v2-services-circle {
+    width: clamp(38px, 3.4vw, 48px);
+    height: clamp(38px, 3.4vw, 48px);
+    border-radius: 50%;
+    border: 1px solid rgba(74, 36, 16, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.v2-services-cta:hover .v2-services-circle {
+    background-color: var(--color-brown);
+    color: var(--color-cream);
+    transform: translateY(4px);
 }
 
 /* Animaciones Premium Adrenalina */
-#v2-part2, #v2-link-container, #v2-bottom-bg, #v2-logo, #v2-logo .spiral-icon {
+#v2-part2, #v2-link-container, #v2-logo, #v2-topbar, #v2-bottom, #v2-logo .spiral-icon {
     will-change: transform, opacity;
     transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -483,14 +500,14 @@ a { text-decoration: none; color: inherit; }
 /* Estado inicial (oculto) */
 #v2-part2 { opacity: 0; transform: translateX(100px); }
 #v2-link-container { opacity: 0; transform: translateX(50px); }
-#v2-bottom-bg { opacity: 0; transform: translateY(50px); }
+#v2-topbar { opacity: 0; transform: translateY(-30px); }
+#v2-bottom { opacity: 0; transform: translateY(50px); }
 #v2-logo { opacity: 0; transform: scale(0.5); }
-#v2-logo .spiral-icon { transform: rotate(-180deg); } 
+#v2-logo .spiral-icon { transform: rotate(-180deg); }
 
 /* --- EL GANCHO (Text Reveal) --- */
 #v2-part1 {
     overflow: hidden;
-    line-height: 1.2;
 }
 #v2-part1 .word-wrap {
     display: inline-block;
@@ -511,9 +528,104 @@ a { text-decoration: none; color: inherit; }
 /* Estados activos (gatillados por JS) */
 #v2-part2.reveal-active { opacity: 1; transform: translateX(0); }
 #v2-link-container.reveal-active { opacity: 1; transform: translateX(0); }
-#v2-bottom-bg.reveal-active { opacity: 1; transform: translateY(0); }
+#v2-topbar.reveal-active { opacity: 1; transform: translateY(0); }
+#v2-bottom.reveal-active { opacity: 1; transform: translateY(0); }
 #v2-logo.reveal-active { opacity: 1; transform: scale(1); }
 #v2-logo.reveal-active .spiral-icon { transform: rotate(0deg); }
+
+
+/* ─── VISTA 3: UNIVERSO DE MARCA (primer servicio, pantalla completa) ─── */
+.v3-section {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--color-navy);
+    display: flex;
+    align-items: center;
+}
+
+.v3-inner {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: clamp(4rem, 10vh, 7rem) 10%;
+}
+
+.v3-eyebrow {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(0.68rem, 0.85vw, 0.82rem);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(248, 248, 240, 0.65);
+    margin-bottom: clamp(2rem, 6vh, 4rem);
+}
+
+.v3-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 8%;
+}
+
+.v3-word,
+.v3-marca {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.2vw, 3rem);
+    color: #f8f8f0;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+.v3-marca { margin-top: 0.4rem; }
+
+.v3-desc {
+    margin-top: clamp(2rem, 5vh, 3.5rem);
+    margin-left: 12%;
+    width: 75%;
+}
+
+.v3-sub {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(0.95rem, 1.25vw, 1.2rem);
+    color: #f8f8f0;
+    line-height: 1.7;
+    margin: 0 0 1.2rem 0;
+    text-align: left;
+}
+
+.v3-body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(0.85rem, 1.05vw, 1.02rem);
+    color: rgba(248, 248, 240, 0.85);
+    line-height: 1.8;
+    margin: 0;
+    text-align: left;
+}
+
+.v3-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 6vh, 4rem);
+    margin-left: 12%;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+    color: #f8f8f0;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(248, 248, 240, 0.4);
+    transition: gap 0.3s ease, opacity 0.3s ease;
+}
+.v3-link:hover { gap: 1.6rem; opacity: 0.8; }
 
 
 /* ─── VISTA 4 (empalme continuo del navy) ─── */
@@ -551,58 +663,6 @@ a { text-decoration: none; color: inherit; }
 }
 
 
-
-/* ─── VISTA 3: ABOUT 2 ─── */
-#vista-3 {
-    background-color: #ffffff;  /* Blanco */
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 10rem 6%; /* Más respiro */
-}
-.slide-content-v3 {
-    width: 100%; max-width: 1300px; margin: 0 auto;
-    display: flex; gap: 6%;
-}
-.v3-image { flex: 1; display: flex; align-items: center; }
-.v3-image img { width: 100%; max-height: 80vh; object-fit: cover; filter: grayscale(100%); }
-.v3-text {
-    flex: 1; display: flex; flex-direction: column;
-    justify-content: center; padding-right: 2%;
-}
-.v3-link-top { align-self: flex-end; margin-bottom: 3rem; }
-.btn-ellipse-custom {
-    display: inline-flex; justify-content: center; align-items: center; text-align: center;
-    width: 420px; height: 160px; /* Más alto y proporcionado */
-    border: 4px solid var(--color-brown); /* Grosor similar al dibujado */
-    border-radius: 50%;
-    text-decoration: none;
-    padding: 10px;
-}
-.btn-ellipse-custom .btn-text {
-    font-family: var(--font-main); font-weight: 700;
-    font-size: 0.95rem; letter-spacing: 0.05em;
-    color: var(--color-brown);
-    transition: transform 0.3s ease;
-}
-.btn-ellipse-custom:hover .btn-text { transform: scale(1.1); }
-.v3-paragraphs {
-    display: flex; flex-direction: column; gap: 1.5rem;
-}
-.v3-link-top a {
-    font-family: var(--font-main); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em;
-    color: var(--color-brown); display: inline-block;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.v3-link-top a:hover {
-    opacity: 0.5;
-    transform: translateX(6px);
-}
-.v3-paragraphs p {
-    font-family: var(--font-heading); font-weight: 700; font-size: 1rem;
-    line-height: 1.7; color: var(--color-brown);
-}
-.v3-logo { align-self: flex-end; margin-top: 3rem; }
 
 /* ─── VISTAS 4 & 5: SERVICIOS SPLIT ─── */
 .split-section {
@@ -1076,35 +1136,48 @@ a { text-decoration: none; color: inherit; }
         height: auto !important;
         min-height: 100vh;
     }
-    .v2-white-area {
-        padding: 5rem 6% 2rem;
-        flex: none;
-        min-height: 60vh;
+    .v2-inner {
+        padding: 4.5rem 6% 2.2rem;
+        gap: 1.6rem;
     }
-    .v2-top-inner {
-        flex-direction: column;
-        gap: 2rem;
-        padding-bottom: 2rem;
-    }
-    .v2-logo {
-        padding-top: 0;
-    }
+    .v2-eyebrow { padding-top: 0.2rem; }
     .v2-logo .spiral-icon {
-        width: 70px !important;
-        height: 70px !important;
+        width: 56px !important;
+        height: 56px !important;
     }
-    .v2-desc-part1 { font-size: clamp(1.1rem, 4vw, 1.3rem); }
-    .v2-desc-part2 { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+    .v2-title {
+        font-size: clamp(1.8rem, 7.4vw, 2.6rem);
+        max-width: 100%;
+    }
+    .v2-cols { flex-direction: column; gap: 1.5rem; }
+    .v2-col-text { font-size: clamp(0.9rem, 3.8vw, 1.05rem); max-width: 100%; }
     .v2-elegant-link-container { text-align: left; }
-    .v2-services-title { font-size: clamp(1.2rem, 5vw, 1.8rem); text-align: left; }
-    .v2-navy-preview { padding: 2rem 6% 3rem; }
-    .v2-prev-header { gap: 4%; }
-    .v2-prev-word { font-size: clamp(1.4rem, 5vw, 1.8rem); }
-    .v2-prev-marca { font-size: clamp(1.4rem, 5vw, 1.8rem); }
-    .v2-prev-desc { margin-left: 0; width: 100%; margin-top: 1.5rem; }
+
+    /* Fotos centradas y nombres debajo, con las flechas apuntando hacia arriba */
+    .v2-bottom { flex-direction: column; align-items: center; gap: 1.2rem; }
+    .v2-team { flex-wrap: wrap; justify-content: center; gap: 0.8rem 3rem; width: 100%; }
+    .v2-photos { order: 1; flex: 0 0 100%; justify-content: center; }
+    .v2-photo { height: clamp(120px, 30vw, 170px); }
+    .v2-hand { padding-bottom: 0; }
+    .v2-hand.is-left  { order: 2; align-items: flex-end; }
+    .v2-hand.is-right { order: 3; align-items: flex-start; }
+    .v2-hand-arrow { width: clamp(52px, 16vw, 80px); }
+    .v2-hand.is-left  .v2-hand-arrow { margin-left: 0; }
+    .v2-hand.is-right .v2-hand-arrow { margin-right: 0; }
+    .v2-services-cta { position: static; justify-content: center; }
+
+    /* ── VISTA 3 (Universo de Marca) ── */
+    .v3-section { min-height: auto; }
+    .v3-inner { padding: 4rem 6%; }
+    .v3-eyebrow { margin-bottom: 2rem; }
+    .v3-header { gap: 4%; }
+    .v3-word, .v3-marca { font-size: clamp(1.6rem, 6.5vw, 2.2rem); }
+    .v3-desc { margin-left: 0; width: 100%; }
+    .v3-link { margin-left: 0; }
+
     /* En mobile los contenidos de v2 aparecen directamente sin animación */
     #v2-part1 .word-inner { transform: translateY(0) !important; opacity: 1 !important; }
-    #v2-part2, #v2-link-container, #v2-logo { opacity: 1 !important; transform: none !important; }
+    #v2-part2, #v2-link-container, #v2-logo, #v2-topbar, #v2-bottom { opacity: 1 !important; transform: none !important; }
     
     /* Forzar visibilidad de animaciones en servicios (VER MAS, títulos) en mobile */
     .split-content .sr-item, .v2-section .sr-item, .split-half .sr-item {
