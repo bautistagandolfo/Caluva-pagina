@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const inner = document.createElement('span');
                 inner.className = 'word-inner';
                 // Agregamos un delay progresivo para cada palabra
-                inner.style.transitionDelay = `${index * 0.05}s`;
+                inner.style.transitionDelay = `${index * 0.09}s`;
                 inner.innerText = word + '\u00A0';
                 
                 wrap.appendChild(inner);
