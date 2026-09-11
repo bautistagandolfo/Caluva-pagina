@@ -286,12 +286,10 @@ a { text-decoration: none; color: inherit; }
     gap: clamp(1.5rem, 4vh, 3.5rem);
 }
 
-/* ── Fila superior: etiqueta + logo ── */
+/* ── Fila superior: etiqueta ── */
 .v2-topbar {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
-    gap: 2rem;
     flex-shrink: 0;
 }
 
@@ -305,9 +303,6 @@ a { text-decoration: none; color: inherit; }
     line-height: 1;
     padding-top: 0.6rem;
 }
-
-.v2-logo { flex-shrink: 0; }
-.v2-logo .spiral-icon { width: clamp(52px, 5.6vw, 78px); height: clamp(52px, 5.6vw, 78px); }
 
 /* ── Bloque central: título + columnas ── */
 .v2-main { width: 100%; }
@@ -493,7 +488,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* Animaciones Premium Adrenalina */
-#v2-part2, #v2-link-container, #v2-logo, #v2-topbar, #v2-bottom, #v2-logo .spiral-icon {
+#v2-part2, #v2-link-container, #v2-topbar, #v2-bottom {
     will-change: transform, opacity;
     transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -503,8 +498,6 @@ a { text-decoration: none; color: inherit; }
 #v2-link-container { opacity: 0; transform: translateX(50px); }
 #v2-topbar { opacity: 0; transform: translateY(-30px); }
 #v2-bottom { opacity: 0; transform: translateY(50px); }
-#v2-logo { opacity: 0; transform: scale(0.5); }
-#v2-logo .spiral-icon { transform: rotate(-180deg); }
 
 /* --- EL GANCHO (Text Reveal) --- */
 #v2-part1 {
@@ -531,8 +524,6 @@ a { text-decoration: none; color: inherit; }
 #v2-link-container.reveal-active { opacity: 1; transform: translateX(0); }
 #v2-topbar.reveal-active { opacity: 1; transform: translateY(0); }
 #v2-bottom.reveal-active { opacity: 1; transform: translateY(0); }
-#v2-logo.reveal-active { opacity: 1; transform: scale(1); }
-#v2-logo.reveal-active .spiral-icon { transform: rotate(0deg); }
 
 
 /* ─── UNIVERSO DE MARCA (media pantalla dentro de VISTA 3) ─── */
@@ -1158,10 +1149,6 @@ a { text-decoration: none; color: inherit; }
         gap: 1.6rem;
     }
     .v2-eyebrow { padding-top: 0.2rem; }
-    .v2-logo .spiral-icon {
-        width: 56px !important;
-        height: 56px !important;
-    }
     .v2-title {
         font-size: clamp(1.8rem, 7.4vw, 2.6rem);
         max-width: 100%;
@@ -1199,7 +1186,7 @@ a { text-decoration: none; color: inherit; }
 
     /* En mobile los contenidos de v2 aparecen directamente sin animación */
     #v2-part1 .word-inner { transform: translateY(0) !important; opacity: 1 !important; }
-    #v2-part2, #v2-link-container, #v2-logo, #v2-topbar, #v2-bottom { opacity: 1 !important; transform: none !important; }
+    #v2-part2, #v2-link-container, #v2-topbar, #v2-bottom { opacity: 1 !important; transform: none !important; }
     
     /* Forzar visibilidad de animaciones en servicios (VER MAS, títulos) en mobile */
     .split-content .sr-item, .v2-section .sr-item, .split-half .sr-item {

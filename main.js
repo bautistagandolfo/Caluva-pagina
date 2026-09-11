@@ -124,13 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const v2Part1 = document.getElementById('v2-part1');
             const v2Part2 = document.getElementById('v2-part2');
             const v2Link  = document.getElementById('v2-link-container');
-            const v2Logo  = document.getElementById('v2-logo');
             const v2Top    = document.getElementById('v2-topbar');
             const v2Bottom = document.getElementById('v2-bottom');
             if (v2Part1) v2Part1.classList.add('hook-active');
             if (v2Part2) v2Part2.classList.add('reveal-active');
             if (v2Link)  v2Link.classList.add('reveal-active');
-            if (v2Logo)  v2Logo.classList.add('reveal-active');
             if (v2Top)    v2Top.classList.add('reveal-active');
             if (v2Bottom) v2Bottom.classList.add('reveal-active');
             heroCaluvaText.style.opacity = '1';
@@ -350,7 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     // --- ANIMACIÓN EN VISTA 2: Reveal de logo, párrafo y enlace ---
                     const v2Part2 = document.getElementById('v2-part2');
                     const v2Link = document.getElementById('v2-link-container');
-                    const v2Logo = document.getElementById('v2-logo');
                     const v2Top = document.getElementById('v2-topbar');
                     const v2Bottom = document.getElementById('v2-bottom');
 
@@ -359,14 +356,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (v2Part1) v2Part1.classList.add('hook-active');
                         if (v2Part2) v2Part2.classList.add('reveal-active');
                         if (v2Link) v2Link.classList.add('reveal-active');
-                        if (v2Logo) v2Logo.classList.add('reveal-active');
                         if (v2Top) v2Top.classList.add('reveal-active');
                         if (v2Bottom) v2Bottom.classList.add('reveal-active');
                     } else {
                         if (v2Part1) v2Part1.classList.remove('hook-active');
                         if (v2Part2) v2Part2.classList.remove('reveal-active');
                         if (v2Link) v2Link.classList.remove('reveal-active');
-                        if (v2Logo) v2Logo.classList.remove('reveal-active');
                         if (v2Top) v2Top.classList.remove('reveal-active');
                         if (v2Bottom) v2Bottom.classList.remove('reveal-active');
                     }
