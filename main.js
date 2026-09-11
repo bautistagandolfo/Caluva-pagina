@@ -123,11 +123,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Revelar todos los elementos de Vista 2 inmediatamente
             const v2Part1 = document.getElementById('v2-part1');
             const v2Part2 = document.getElementById('v2-part2');
+            const v2Part3 = document.getElementById('v2-part3');
             const v2Link  = document.getElementById('v2-link-container');
             const v2Top    = document.getElementById('v2-topbar');
             const v2Bottom = document.getElementById('v2-bottom');
             if (v2Part1) v2Part1.classList.add('hook-active');
             if (v2Part2) v2Part2.classList.add('reveal-active');
+            if (v2Part3) v2Part3.classList.add('reveal-active');
             if (v2Link)  v2Link.classList.add('reveal-active');
             if (v2Top)    v2Top.classList.add('reveal-active');
             if (v2Bottom) v2Bottom.classList.add('reveal-active');
@@ -345,8 +347,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
 
-                    // --- ANIMACIÓN EN VISTA 2: Reveal de logo, párrafo y enlace ---
+                    // --- ANIMACIÓN EN VISTA 2: Reveal de título, párrafos y enlace ---
                     const v2Part2 = document.getElementById('v2-part2');
+                    const v2Part3 = document.getElementById('v2-part3');
                     const v2Link = document.getElementById('v2-link-container');
                     const v2Top = document.getElementById('v2-topbar');
                     const v2Bottom = document.getElementById('v2-bottom');
@@ -355,12 +358,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         v2Revealed = true;
                         if (v2Part1) v2Part1.classList.add('hook-active');
                         if (v2Part2) v2Part2.classList.add('reveal-active');
+                        if (v2Part3) v2Part3.classList.add('reveal-active');
                         if (v2Link) v2Link.classList.add('reveal-active');
                         if (v2Top) v2Top.classList.add('reveal-active');
                         if (v2Bottom) v2Bottom.classList.add('reveal-active');
                     } else {
                         if (v2Part1) v2Part1.classList.remove('hook-active');
                         if (v2Part2) v2Part2.classList.remove('reveal-active');
+                        if (v2Part3) v2Part3.classList.remove('reveal-active');
                         if (v2Link) v2Link.classList.remove('reveal-active');
                         if (v2Top) v2Top.classList.remove('reveal-active');
                         if (v2Bottom) v2Bottom.classList.remove('reveal-active');

@@ -488,16 +488,17 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* Animaciones Premium Adrenalina */
-#v2-part2, #v2-link-container, #v2-topbar, #v2-bottom {
+#v2-part2, #v2-part3, #v2-link-container, #v2-topbar, #v2-bottom {
     will-change: transform, opacity;
     transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Estado inicial (oculto) */
 #v2-part2 { opacity: 0; transform: translateX(100px); }
-#v2-link-container { opacity: 0; transform: translateX(50px); }
+#v2-part3 { opacity: 0; transform: translateX(80px); transition-delay: 0.1s; }
+#v2-link-container { opacity: 0; transform: translateX(50px); transition-delay: 0.25s; }
 #v2-topbar { opacity: 0; transform: translateY(-30px); }
-#v2-bottom { opacity: 0; transform: translateY(50px); }
+#v2-bottom { opacity: 0; transform: translateY(50px); transition-delay: 0.3s; }
 
 /* --- EL GANCHO (Text Reveal) --- */
 #v2-part1 {
@@ -521,9 +522,41 @@ a { text-decoration: none; color: inherit; }
 
 /* Estados activos (gatillados por JS) */
 #v2-part2.reveal-active { opacity: 1; transform: translateX(0); }
+#v2-part3.reveal-active { opacity: 1; transform: translateX(0); }
 #v2-link-container.reveal-active { opacity: 1; transform: translateX(0); }
 #v2-topbar.reveal-active { opacity: 1; transform: translateY(0); }
 #v2-bottom.reveal-active { opacity: 1; transform: translateY(0); }
+
+/* Cascada de los elementos del bloque inferior (fotos, nombres y CTA) una vez que #v2-bottom se revela */
+#v2-bottom .v2-hand,
+#v2-bottom .v2-photo,
+#v2-bottom .v2-services-cta {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#v2-bottom .v2-hand.is-left  { transform: translateX(-16px); }
+#v2-bottom .v2-hand.is-right { transform: translateX(16px); }
+#v2-bottom .v2-photo { transform: translateY(22px) scale(0.94); }
+#v2-bottom .v2-services-cta { transform: translateY(14px); }
+
+#v2-bottom.reveal-active .v2-hand.is-left  { opacity: 1; transform: translateX(0); transition-delay: 0.05s; }
+#v2-bottom.reveal-active .v2-hand.is-right { opacity: 1; transform: translateX(0); transition-delay: 0.05s; }
+#v2-bottom.reveal-active .v2-photo:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.18s; }
+#v2-bottom.reveal-active .v2-photo:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.28s; }
+#v2-bottom.reveal-active .v2-services-cta { opacity: 1; transform: none; transition-delay: 0.42s; }
+
+/* Las flechas se dibujan solas: primero el trazo, después aparece la puntita */
+.v2-arrow-shaft {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.v2-arrow-head {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+#v2-bottom.reveal-active .v2-arrow-shaft { stroke-dashoffset: 0; transition-delay: 0.32s; }
+#v2-bottom.reveal-active .v2-arrow-head { opacity: 1; transition-delay: 0.92s; }
 
 
 /* ─── UNIVERSO DE MARCA (media pantalla dentro de VISTA 3) ─── */
@@ -1186,7 +1219,13 @@ a { text-decoration: none; color: inherit; }
 
     /* En mobile los contenidos de v2 aparecen directamente sin animación */
     #v2-part1 .word-inner { transform: translateY(0) !important; opacity: 1 !important; }
-    #v2-part2, #v2-link-container, #v2-topbar, #v2-bottom { opacity: 1 !important; transform: none !important; }
+    #v2-part2, #v2-part3, #v2-link-container, #v2-topbar, #v2-bottom,
+    #v2-bottom .v2-hand, #v2-bottom .v2-photo, #v2-bottom .v2-services-cta {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    .v2-arrow-shaft { stroke-dashoffset: 0 !important; }
+    .v2-arrow-head { opacity: 1 !important; }
     
     /* Forzar visibilidad de animaciones en servicios (VER MAS, títulos) en mobile */
     .split-content .sr-item, .v2-section .sr-item, .split-half .sr-item {
