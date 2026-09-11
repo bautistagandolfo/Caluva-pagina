@@ -1,5 +1,12 @@
+html {
+    /* Snap suave: solo "imanta" al borde de un servicio cuando el scroll
+       ya iba a frenar cerca. No mueve nada mientras se scrollea activamente
+       (a diferencia del snap forzado por JS que se saco antes). */
+    scroll-snap-type: y proximity;
+}
+
 :root {
-    --color-brown: #4a2410;  
+    --color-brown: #4a2410;
     --color-cream: #f4f3ea;  /* Fondo clarito para secciones (Conoce nuestros servicios, Universo de Marca) */
     --color-yellow: #ffffe6; /* Amarillo original para la tipografía sobre fondos oscuros */
     --color-cocoa: #3a1c0d;  /* Marrón profundo: fondo oscuro de los servicios (reemplaza el viejo navy) */
@@ -689,6 +696,7 @@ a { text-decoration: none; color: inherit; }
     position: relative;
     display: flex; align-items: center;
     overflow: hidden;
+    scroll-snap-align: start; /* Punto de imantado suave: cada servicio, no solo cada par */
 }
 .split-bg { position: absolute; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
 .split-bg img {
@@ -1241,7 +1249,7 @@ a { text-decoration: none; color: inherit; }
 
     /* ── SPLIT SECTIONS (Servicios) ── */
     .split-section { flex-direction: column; height: auto; overflow: visible; } /* En mobile se scrollea normal, sin el limite de una pantalla */
-    .split-half { flex: none; min-height: 60vw; width: 100%; box-shadow: none !important; }
+    .split-half { flex: none; min-height: 60vw; width: 100%; box-shadow: none !important; scroll-snap-align: none; }
     .split-content {
         padding: 2.5rem 6%;
         flex-direction: column;
