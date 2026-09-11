@@ -420,33 +420,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 delete heroSectionEl.dataset.centerX;
             }
         }, { passive: true });
-
-        // ── SNAP A PANTALLA COMPLETA ENTRE SERVICIOS ──
-        // Cada par de servicios (Universo de Marca+Pauta, Email+Social) mide
-        // exactamente una pantalla. Sin esto, si el usuario frena el scroll a
-        // mitad de camino entre dos, queda viendo un pedacito del anterior o
-        // siguiente. Cuando el scroll se detiene, lo llevamos suavemente al
-        // borde de pantalla más cercano para que siempre encajen los dos
-        // servicios completos.
-        let snapTimer = null;
-        window.addEventListener('scroll', () => {
-            if (isAutoScrolling) return;
-            if (snapTimer) clearTimeout(snapTimer);
-            snapTimer = setTimeout(() => {
-                if (isAutoScrolling) return;
-                const vh = window.innerHeight;
-                const servicesStart = zoomSpacer.offsetHeight; // donde arranca Vista 3
-                const scrollY = window.scrollY;
-                if (scrollY <= servicesStart - vh) return; // todavía en la zona del hero/zoom
-                const maxScreens = 2; // Vista 3, Vista 5, CTA/footer
-                const screensAfterStart = Math.round((scrollY - servicesStart) / vh);
-                const clamped = Math.max(0, Math.min(maxScreens, screensAfterStart));
-                const target = servicesStart + clamped * vh;
-                if (Math.abs(target - scrollY) > 2) {
-                    smoothScrollTo(target, 420);
-                }
-            }, 160);
-        }, { passive: true });
         } // cierre del else (desktop only)
     }
 
