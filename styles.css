@@ -677,13 +677,15 @@ a { text-decoration: none; color: inherit; }
 .split-section {
     width: 100%;
     height: 100vh; /* Fija: exactamente dos servicios por pantalla, nunca un tercero asomando */
+    overflow: hidden; /* Resguardo extra: nada se puede salir de la pantalla */
     display: flex;
     position: relative;
     z-index: 2; /* Se posiciona sobre Vista 2 (z-index:1, fixed) al hacer scroll */
     flex-direction: column;
 }
 .split-half {
-    flex: 1; /* Las dos mitades se reparten el 100vh exacto de la seccion, 50% cada una */
+    flex: 1;
+    min-height: 0; /* Sin esto flexbox no deja que la mitad baje de su contenido y se sale del 50vh */
     position: relative;
     display: flex; align-items: center;
     overflow: hidden;
@@ -1238,7 +1240,7 @@ a { text-decoration: none; color: inherit; }
     .section { padding: 4rem 6%; }
 
     /* ── SPLIT SECTIONS (Servicios) ── */
-    .split-section { flex-direction: column; height: auto; } /* En mobile se scrollea normal, sin el limite de una pantalla */
+    .split-section { flex-direction: column; height: auto; overflow: visible; } /* En mobile se scrollea normal, sin el limite de una pantalla */
     .split-half { flex: none; min-height: 60vw; width: 100%; box-shadow: none !important; }
     .split-content {
         padding: 2.5rem 6%;
