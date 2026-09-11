@@ -582,7 +582,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .v3-sub {
-    font-family: var(--font-body);
+    font-family: var(--font-main);
     font-weight: 400;
     font-size: clamp(0.92rem, 1.15vw, 1.1rem);
     color: var(--color-yellow);
@@ -592,7 +592,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .v3-body {
-    font-family: var(--font-body);
+    font-family: var(--font-main);
     font-weight: 400;
     font-size: clamp(0.85rem, 1vw, 0.98rem);
     color: rgba(255, 255, 230, 0.85);
@@ -718,7 +718,6 @@ a { text-decoration: none; color: inherit; }
     position: relative; z-index: 1;
 }
 .split-texts { max-width: 650px; } /* Más ancho para que el texto no ocupe tanto espacio vertical */
-.split-texts p { font-family: var(--font-body); } /* Misma tipografía de lectura que Universo de Marca */
 .split-title {
     font-family: var(--font-main); font-weight: 800;
     font-size: clamp(1.8rem, 3.5vw, 2.8rem);
