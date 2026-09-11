@@ -164,12 +164,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
-            
+
             // Distancia de scroll exacta basándose en el alto del spacer
             const totalMaxScroll = zoomSpacer.offsetHeight - window.innerHeight;
             // El zoom termina exactamente al final del spacer
             const zoomMaxScroll = totalMaxScroll;
-            
+
+            // Snap nativo (CSS) solo activo una vez que Vista 2 termino de
+            // salir de pantalla, para que nunca interfiera con la coreografia
+            // del hero/zoom.
+            document.documentElement.classList.toggle('snap-services', scrollY >= zoomSpacer.offsetHeight);
+
             if (scrollY > 5) {
                 
                 // FASE 1: (0 a 30% del zoomMaxScroll) -> Desaparece lo extra y se crea la máscara
