@@ -13,9 +13,10 @@
             margin: 0; padding: 0;
             background-color: #ffffff;
             height: 100vh;
-            overflow: hidden; 
+            overflow: hidden;
         }
         .page-content {
+            position: relative;
             width: 100%;
             height: 100%;
             max-width: 1400px;
@@ -77,28 +78,31 @@
             flex: 1.1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             padding-right: 5%;
-            /* ESTE PADDING ES LA CLAVE: hace que la columna sea más alta que el texto. 
-               Se aumenta mucho el top para compensar el line-height y asegurar que la foto nace antes */
-            padding-top: 35px; 
-            padding-bottom: 25px;
         }
-        
+
         .text-paragraphs {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 0.85rem;
         }
         .text-paragraphs p {
             font-family: var(--font-main);
             font-weight: 700;
-            font-size: clamp(0.95rem, 1.35vw, 1.15rem); /* Texto más grande */
-            line-height: 1.7;
+            font-size: clamp(0.72rem, 0.85vw, 0.85rem);
+            line-height: 1.5;
             color: var(--color-brown);
             text-align: justify;
             text-transform: uppercase;
             margin: 0;
+        }
+        .text-paragraphs .text-closing {
+            font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+            text-align: left;
+            padding-top: 1rem;
+            margin-top: 0.3rem;
+            border-top: 1px solid rgba(74, 36, 16, 0.2);
         }
         
         .logo-bottom-right {
@@ -142,8 +146,12 @@
                 </div>
                 <div class="text-col fade-in-up delay-3">
                     <div class="text-paragraphs">
-                        <p>TRABAJAMOS JUNTO A CADA MARCA PARA ENTENDER SU IDENTIDAD, SUS OBJETIVOS Y SUS OPORTUNIDADES DE CRECIMIENTO, DESARROLLANDO ACCIONES QUE NO SOLO SE VEAN BIEN, SINO QUE TAMBIÉN TENGAN UN PROPÓSITO CLARO Y GENEREN RESULTADOS CONCRETOS.</p>
-                        <p>DESDE LA CONSTRUCCIÓN DEL UNIVERSO DE MARCA HASTA LA PLANIFICACIÓN DE CONTENIDOS, CAMPAÑAS DIGITALES Y ESTRATEGIAS DE POSICIONAMIENTO, ACOMPAÑAMOS A NUESTROS CLIENTES EN CADA ETAPA PARA POTENCIAR SU PRESENCIA, CONECTAR MEJOR CON SU AUDIENCIA Y CRECER DE MANERA CONSISTENTE.</p>
+                        <p>Caluva nació de una forma bastante simple de ver las cosas: las marcas no crecen solamente por hacer más, sino por entender mejor qué decir, cómo decirlo y a quién.</p>
+                        <p>Somos una agencia creativa y estratégica porque nos gusta mirar todo un poco más de cerca. Nos preguntamos por qué algo funciona, qué hace que una persona frene, qué genera deseo y qué hace que una marca sea elegida entre tantas otras.</p>
+                        <p>Estamos en nuestros 20s, viajamos mucho, conocemos lugares, marcas y formas distintas de consumir. Y creemos que eso también juega a favor: estamos muy cerca de cómo cambia la gente, el contenido y la cultura todo el tiempo.</p>
+                        <p>Caluva mezcla esa curiosidad con estrategia. Observamos, probamos, medimos y volvemos a pensar. No creemos en fórmulas iguales para todos, porque cada marca tiene algo distinto para encontrar y potenciar.</p>
+                        <p>Detrás de Caluva estamos Ari y Guada. Dos personas bastante curiosas, intensas con las ideas y con una obsesión en común: entender las marcas de verdad antes de hacer cualquier cosa con ellas.</p>
+                        <p class="text-closing">Miramos mucho. Nos preguntamos todo. Y después hacemos.</p>
                     </div>
                 </div>
             </div>

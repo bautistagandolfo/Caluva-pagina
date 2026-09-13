@@ -82,10 +82,10 @@
                     <div class="v2-rule"></div>
                     <div class="v2-cols">
                         <div class="v2-col">
-                            <p class="v2-col-text" id="v2-part2">Ayudamos a las marcas a crecer a través de creatividad, estrategia y ejecución, desarrollando ideas y acciones pensadas para comunicar mejor.</p>
+                            <p class="v2-col-text" id="v2-part2">Caluva nace de mirar mucho: marcas, personas, lugares, tendencias y formas distintas de hacer las cosas.</p>
                         </div>
                         <div class="v2-col">
-                            <p class="v2-col-text" id="v2-part3">Conectamos cada marca con su audiencia y potenciamos sus resultados, de la estrategia a la ejecución.</p>
+                            <p class="v2-col-text" id="v2-part3">Viajamos, consumimos y nos preguntamos todo. Después lo convertimos en estrategia.</p>
                             <div class="v2-elegant-link-container" id="v2-link-container">
                                 <a href="quienes-somos.html" class="v2-elegant-link">Ver más <span class="v2-arrow">→</span></a>
                             </div>
@@ -99,8 +99,8 @@
                         <span class="v2-hand is-left">
                             <span class="v2-hand-word">ari</span>
                             <svg class="v2-hand-arrow" viewBox="0 0 106 62" fill="none" aria-hidden="true">
-                                <path class="v2-arrow-shaft" pathLength="1" d="M6 54C30 57 66 50 104 12" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
-                                <path class="v2-arrow-head" d="M104 12L86 15M104 12L102 30" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path class="v2-arrow-shaft" pathLength="1" d="M100 54C76 57 40 50 2 12" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+                                <path class="v2-arrow-head" d="M2 12L20 15M2 12L4 30" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
 
@@ -118,8 +118,8 @@
                         <span class="v2-hand is-right">
                             <span class="v2-hand-word">guada</span>
                             <svg class="v2-hand-arrow" viewBox="0 0 106 62" fill="none" aria-hidden="true">
-                                <path class="v2-arrow-shaft" pathLength="1" d="M6 54C30 57 66 50 104 12" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
-                                <path class="v2-arrow-head" d="M104 12L86 15M104 12L102 30" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path class="v2-arrow-shaft" pathLength="1" d="M100 54C76 57 40 50 2 12" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+                                <path class="v2-arrow-head" d="M2 12L20 15M2 12L4 30" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
                     </div>
@@ -241,86 +241,236 @@
     <!-- MODAL: AGENDEMOS UNA CALL -->
     <div id="call-modal" class="call-modal-overlay" aria-hidden="true">
         <div class="call-modal-box" role="dialog" aria-modal="true" aria-labelledby="call-modal-title">
+            <!-- Franja fija: no scrollea con el resto, siempre visible arriba del todo -->
+            <div class="call-progress" aria-hidden="true"><div class="call-progress-fill" id="call-progress-fill"></div></div>
+
+            <div class="call-modal-scroll">
             <button class="call-modal-close" id="call-modal-close" aria-label="Cerrar">✕</button>
             <div class="call-modal-header">
                 <div class="spiral-icon dark"></div>
-                <h2 class="call-modal-title" id="call-modal-title">PAUTA PUBLICITARIA<br>CON CALUVA :)</h2>
+                <h2 class="call-modal-title" id="call-modal-title">AGENDEMOS UNA CALL :)</h2>
             </div>
-            <form class="call-form" id="call-form">
-                <!-- Text inputs -->
-                <input type="text" class="call-input" name="negocio" placeholder="¿CÓMO SE LLAMA TU NEGOCIO? *" required>
-                <input type="text" class="call-input" name="instagram" placeholder="USUARIO DE INSTAGRAM *" required>
-                <input type="text" class="call-input" name="nombre" placeholder="TU NOMBRE :) *" required>
-                
-                <!-- Selects -->
-                <div class="call-select-group">
-                    <label class="call-label">¿Alguna vez pautaste publicidad online? *</label>
-                    <select class="call-select" name="experiencia_pauta" required>
-                        <option value="" disabled selected>Seleccioná una opción...</option>
-                        <option value="si_actualmente">Sí, actualmente pauto</option>
-                        <option value="nunca">Nunca</option>
-                        <option value="pocas_veces">Pocas veces</option>
-                    </select>
+            <form class="call-form" id="call-form" novalidate>
+                <!-- Honeypot anti-bots: invisible para personas, los bots suelen completarlo igual -->
+                <div class="hp-field" aria-hidden="true">
+                    <label for="website-hp">No completar</label>
+                    <input type="text" id="website-hp" name="website" tabindex="-1" autocomplete="off">
                 </div>
 
-                <div class="call-select-group">
-                    <label class="call-label">¿Cuál es tu principal objetivo con la publicidad?</label>
-                    <select class="call-select" name="objetivo">
-                        <option value="" disabled selected>Seleccioná una opción...</option>
-                        <option value="ventas">Ventas (para productos)</option>
-                        <option value="clientes_turnos">Conseguir clientes, turnos, consultas (para servicios)</option>
-                        <option value="dar_a_conocer">Dar a conocer mi marca y llegar a más gente</option>
-                        <option value="otro">¡Otro!</option>
-                    </select>
+                <!-- Datos base: identidad primero, es lo más fácil de responder -->
+                <fieldset class="call-group">
+                    <legend class="call-group-legend">Sobre vos</legend>
+                    <input type="text" class="call-input" name="nombre" placeholder="TU NOMBRE :) *" required>
+                    <input type="text" class="call-input" name="instagram" placeholder="INSTAGRAM DE TU NEGOCIO *" required>
+                </fieldset>
+
+                <!-- Servicio: se pregunta temprano porque dispara las preguntas
+                     específicas de abajo — así el resto del form se siente
+                     "hecho a medida" para lo que la persona vino a buscar. -->
+                <fieldset class="call-group">
+                    <legend class="call-group-legend">Tu servicio</legend>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Qué servicio te interesa? *</label>
+                        <select class="call-select" name="servicio" id="servicio-select" required>
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="pauta">Pauta Publicitaria</option>
+                            <option value="universo_marca">Universo de Marca</option>
+                            <option value="email_marketing">Email Marketing</option>
+                            <option value="social_media">Social Media</option>
+                        </select>
+                    </div>
+
+                <!-- ── Preguntas específicas: PAUTA PUBLICITARIA ── -->
+                <div class="service-fields" data-service="pauta">
+                    <div class="service-fields-inner">
+                    <div class="call-select-group">
+                        <label class="call-label">¿Pautás actualmente? *</label>
+                        <select class="call-select" name="experiencia_pauta">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="si_actualmente">Sí, actualmente pauto</option>
+                            <option value="nunca">Nunca</option>
+                            <option value="pocas_veces">Pocas veces</option>
+                        </select>
+                    </div>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Cuál es tu objetivo con la pauta? *</label>
+                        <select class="call-select" name="objetivo_pauta">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="atraer_clientes">Atraer clientes potenciales</option>
+                            <option value="ventas">Ventas</option>
+                        </select>
+                    </div>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Cuánto estás dispuesto a invertir en Meta Ads? *</label>
+                        <select class="call-select" name="inversion">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="menos_300">Menos de 300 USD</option>
+                            <option value="300_500">Entre 300 y 500 USD</option>
+                            <option value="500_700">Entre 500 y 700 USD</option>
+                            <option value="mas_700">Más de 700 USD</option>
+                        </select>
+                    </div>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Tenés tienda online? *</label>
+                        <select class="call-select" name="tienda_online">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="todavia_no">Todavía no</option>
+                            <option value="solo_local">Solo vendo en local físico</option>
+                        </select>
+                    </div>
+                    </div>
                 </div>
 
-                <textarea class="call-input call-textarea" name="descripcion_negocio" placeholder="CONTAME UN POCO SOBRE TU NEGOCIO, ¿QUÉ VENDÉS? *" rows="3" required></textarea>
-
-                <div class="call-select-group">
-                    <label class="call-label">¿Tenés tienda online? *</label>
-                    <select class="call-select" name="tienda_online" required>
-                        <option value="" disabled selected>Seleccioná una opción...</option>
-                        <option value="si">Sí</option>
-                        <option value="todavia_no">Todavía no</option>
-                        <option value="solo_local">Solo vendo en local físico</option>
-                    </select>
+                <!-- ── Preguntas específicas: UNIVERSO DE MARCA ── -->
+                <div class="service-fields" data-service="universo_marca">
+                    <div class="service-fields-inner">
+                    <div class="call-select-group">
+                        <label class="call-label">¿En qué etapa está tu marca hoy? *</label>
+                        <select class="call-select" name="etapa_marca">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="idea">Idea</option>
+                            <option value="lanzamiento">Lanzamiento</option>
+                            <option value="en_crecimiento">En crecimiento</option>
+                            <option value="consolidada">Consolidada</option>
+                        </select>
+                    </div>
+                    <textarea class="call-input call-textarea" name="problema_marca" placeholder="¿CUÁL SENTÍS QUE ES HOY EL PRINCIPAL PROBLEMA DE LA MARCA? *" rows="2"></textarea>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Sabés cuál es tu diferencial? *</label>
+                        <select class="call-select" name="diferencial">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="mas_o_menos">Más o menos</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <textarea class="call-input call-textarea" name="objetivo_universo_marca" placeholder="¿QUÉ TE GUSTARÍA LOGRAR CON ESTE SERVICIO? *" rows="2"></textarea>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Tenés claro qué le falta hoy a tu marca? *</label>
+                        <select class="call-select" name="falta_marca">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="mas_o_menos">Más o menos</option>
+                            <option value="no_necesito_ayuda">No, necesito ayuda para identificarlo</option>
+                        </select>
+                    </div>
+                    </div>
                 </div>
 
-                <div class="call-select-group">
-                    <label class="call-label">Facturación promedio *</label>
-                    <select class="call-select" name="facturacion" required>
-                        <option value="" disabled selected>Seleccioná una opción...</option>
-                        <option value="menos_1000">Menos de USD 1.000</option>
-                        <option value="1000_5000">Entre USD 1.000 y USD 5.000</option>
-                        <option value="5000_15000">Entre USD 5.000 y USD 15.000</option>
-                        <option value="mas_15000">Más de USD 15.000</option>
-                    </select>
+                <!-- ── Preguntas específicas: EMAIL MARKETING ── -->
+                <div class="service-fields" data-service="email_marketing">
+                    <div class="service-fields-inner">
+                    <div class="call-select-group">
+                        <label class="call-label">¿Hacés actualmente email marketing? *</label>
+                        <select class="call-select" name="hace_email_marketing">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                            <option value="a_veces">A veces</option>
+                        </select>
+                    </div>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Tenés una base de contactos? *</label>
+                        <select class="call-select" name="base_contactos">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                            <option value="no_se">No sé</option>
+                        </select>
+                    </div>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Qué te gustaría lograr con este servicio? (podés elegir más de una)</label>
+                        <div class="call-checkbox-group" data-otro-target="objetivos_email_otro">
+                            <label><input type="checkbox" name="objetivos_email" value="vender_mas"> Vender más</label>
+                            <label><input type="checkbox" name="objetivos_email" value="fidelizar"> Fidelizar</label>
+                            <label><input type="checkbox" name="objetivos_email" value="lanzamientos"> Lanzamientos</label>
+                            <label><input type="checkbox" name="objetivos_email" value="recuperar_clientes"> Recuperar clientes</label>
+                            <label><input type="checkbox" name="objetivos_email" value="otro" class="call-checkbox-otro"> ¡Otro!</label>
+                        </div>
+                        <input type="text" class="call-input" name="objetivos_email_otro" id="objetivos_email_otro" data-otro-detail="true" placeholder="CONTANOS CUÁL" hidden>
+                    </div>
+                    </div>
                 </div>
 
-                <div class="call-select-group">
-                    <label class="call-label">¿Cuánto estás dispuesto a invertir en Meta Ads? *</label>
-                    <select class="call-select" name="inversion" required>
-                        <option value="" disabled selected>Seleccioná una opción...</option>
-                        <option value="menos_300">Menos de 300 USD</option>
-                        <option value="300_500">Entre 300 y 500 USD</option>
-                        <option value="500_700">Entre 500 y 700 USD</option>
-                        <option value="mas_700">Más de 700 USD</option>
-                    </select>
+                <!-- ── Preguntas específicas: SOCIAL MEDIA ── -->
+                <div class="service-fields" data-service="social_media">
+                    <div class="service-fields-inner">
+                    <div class="call-select-group">
+                        <label class="call-label">¿Qué redes querés trabajar? (podés elegir más de una)</label>
+                        <div class="call-checkbox-group" data-otro-target="redes_otras_detalle">
+                            <label><input type="checkbox" name="redes_trabajar" value="instagram"> Instagram</label>
+                            <label><input type="checkbox" name="redes_trabajar" value="tiktok"> TikTok</label>
+                            <label><input type="checkbox" name="redes_trabajar" value="otras" class="call-checkbox-otro"> Otras</label>
+                        </div>
+                        <input type="text" class="call-input" name="redes_otras_detalle" id="redes_otras_detalle" data-otro-detail="true" placeholder="CONTANOS CUÁLES" hidden>
+                    </div>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Tenés material para trabajar? *</label>
+                        <select class="call-select" name="material_disponible">
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <textarea class="call-input call-textarea" name="objetivo_redes" placeholder="¿QUÉ QUERÉS LOGRAR CON TUS REDES? *" rows="2"></textarea>
+                    </div>
                 </div>
+                </fieldset>
 
-                <!-- Contact inputs -->
-                <p class="call-modal-sub" style="margin-top: 1rem;">DEJANOS TU CONTACTO PARA AGENDAR UNA CALL :)</p>
-                <div class="call-form-row">
-                    <input type="tel" class="call-input" name="telefono" placeholder="TELÉFONO *" required>
-                    <input type="email" class="call-input" name="email" placeholder="MAIL *" required>
+                <!-- Contexto de negocio: después de elegir servicio, ya están
+                     "enganchados" respondiendo algo específico suyo. -->
+                <fieldset class="call-group">
+                    <legend class="call-group-legend">Sobre tu negocio</legend>
+                    <div class="call-select-group">
+                        <label class="call-label">¿Cuál es tu principal objetivo con la publicidad?</label>
+                        <select class="call-select" name="objetivo" required>
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="ventas">Ventas (para productos)</option>
+                            <option value="clientes_turnos">Conseguir clientes, turnos, consultas (para servicios)</option>
+                            <option value="dar_a_conocer">Dar a conocer mi marca y llegar a más gente</option>
+                            <option value="otro">¡Otro!</option>
+                        </select>
+                    </div>
+
+                    <div class="call-select-group">
+                        <label class="call-label">Facturación promedio *</label>
+                        <select class="call-select" name="facturacion" required>
+                            <option value="" disabled selected>Seleccioná una opción...</option>
+                            <option value="menos_1000">Menos de USD 1.000</option>
+                            <option value="1000_5000">Entre USD 1.000 y USD 5.000</option>
+                            <option value="5000_15000">Entre USD 5.000 y USD 15.000</option>
+                            <option value="mas_15000">Más de USD 15.000</option>
+                        </select>
+                    </div>
+
+                    <textarea class="call-input call-textarea" name="descripcion_negocio" placeholder="CONTANOS ACERCA DE TU NEGOCIO *" rows="3" required></textarea>
+                </fieldset>
+
+                <!-- Contacto al final: en formularios de leads, pedirlo último
+                     mejora la tasa de gente que termina de completarlo. -->
+                <fieldset class="call-group">
+                    <legend class="call-group-legend">Dejanos tu contacto para agendar la call :)</legend>
+                    <div class="call-form-row">
+                        <input type="tel" class="call-input" name="telefono" placeholder="TELÉFONO *" required>
+                        <input type="email" class="call-input" name="email" placeholder="MAIL *" required>
+                    </div>
+                </fieldset>
+
+                <p class="call-form-error" id="call-form-error" hidden></p>
+
+                <div class="call-form-actions">
+                    <button type="button" class="call-form-clear" id="call-form-clear">Vaciar formulario</button>
+                    <button type="submit" class="call-form-submit">LISTO!</button>
                 </div>
-
-                <button type="submit" class="call-form-submit">LISTO!</button>
             </form>
-            
+
             <!-- Mensaje de éxito (Oculto por defecto) -->
             <div id="call-success-message" class="call-success-message" style="display: none;">
-                <h3>¡Listo! Pronto estaremos trabajando juntos :)</h3>
+                <div class="call-success-check">✓</div>
+                <h3>¡Fue enviado con éxito!</h3>
+                <p>Revisá tu mail para confirmar que lo recibimos — en breve te contactamos para coordinar la call :)</p>
+            </div>
             </div>
         </div>
     </div>
