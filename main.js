@@ -970,7 +970,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const successMessage = document.getElementById('call-success-message');
     const formErrorMessage = document.getElementById('call-form-error');
     // IMPORTANTE: pegar acá la URL que genera Apps Script al desplegar (ver formulario-backend/SETUP.md)
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyeYxxAIU6bbcus46qM2I_8bHQsy_j5jgYCyj3p4WmgR_cn2mf0txycW8QYZnHCBHjQ/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbydTCTQ9dZtyM8bkDLwTszCitNxihobwDY7OA8-mFozK1nPk9cVH_40Ybs1Lx4dtTLQ/exec';
     // Mismo valor que la Script Property FORM_SECRET del lado de Apps Script (ver SETUP.md)
     const formSecret = 'be0adc5cfca65e0b49e1eec21b04ada819fb25be65c01296';
 
@@ -1119,9 +1119,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (stickyMenuBtn) {
         stickyMenuBtn.addEventListener('click', () => { menuTriggerEl = stickyMenuBtn; toggleMenu(); });
     }
-
-    // Año del footer siempre al día
-    const footerYear = document.getElementById('footerYear');
-    if (footerYear) footerYear.textContent = new Date().getFullYear();
 
 });
