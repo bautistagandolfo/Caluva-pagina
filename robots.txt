@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /servicios.html
+Disallow: /universo-de-marca.html
+Disallow: /pauta-publicitaria.html
+Disallow: /email-marketing.html
+Disallow: /social-media.html
+
+Sitemap: https://caluvaagency.com/sitemap.xml

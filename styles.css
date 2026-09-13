@@ -10,26 +10,55 @@ html.snap-services {
 
 :root {
     --color-brown: #4a2410;
+    --color-brown-soft: #6b5b4e; /* Marrón atenuado para labels/overlines — ~5.7:1 sobre crema (AA) */
     --color-cream: #f4f3ea;  /* Fondo clarito para secciones (Conoce nuestros servicios, Universo de Marca) */
     --color-yellow: #ffffe6; /* Amarillo original para la tipografía sobre fondos oscuros */
     --color-cocoa: #3a1c0d;  /* Marrón profundo: fondo oscuro de los servicios (reemplaza el viejo navy) */
     --color-white: #ffffff;
-    --font-heading: 'Montserrat', sans-serif;
-    --font-main: 'Montserrat', sans-serif;
+    --font-heading: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+    --font-main: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
     --font-display: 'Poppins', 'Montserrat', sans-serif;   /* Títulos con más cuerpo */
     --font-body: 'Lora', Georgia, serif;                    /* Textos de lectura */
     --font-hand: 'Caveat', 'Segoe Script', cursive;         /* Notas manuscritas */
+
+    /* Curvas y duraciones unificadas para todas las transiciones */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);   /* salida suave y elegante */
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* rebote sutil */
+    --dur-fast: 0.25s;
+    --dur-base: 0.4s;
+    --dur-slow: 0.8s;
+
+    /* Escala de espaciado — ritmo vertical consistente entre secciones */
+    --space-2xs: 0.5rem;
+    --space-xs: 1rem;
+    --space-sm: 1.5rem;
+    --space-md: 2.5rem;
+    --space-lg: 4rem;
+    --space-xl: 6rem;
+    --space-2xl: 8rem;
+    --section-y: 7rem; /* padding vertical estándar de sección */
+
+    /* Tamaños canónicos del logo espiral */
+    --spiral-sm: 74px;
+    --spiral-md: 108px;
+    --spiral-lg: 150px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-padding-top: 6rem; } /* los anclajes (#contacto) no quedan tapados por el header */
 
 body {
     font-family: var(--font-main);
     background-color: var(--color-cream);  /* Fondo crema — evita el blanco expuesto debajo de #vista-2 fixed */
     color: var(--color-brown);
+    caret-color: var(--color-brown);  /* el cursor de texto también es de marca */
     overflow-x: hidden;
     -ms-overflow-style: none;  /* IE y Edge */
     scrollbar-width: none;  /* Firefox */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 /* Ocultar barra de scroll lateral en Chrome, Safari y Edge */
@@ -37,13 +66,37 @@ body {
     display: none;
 }
 
+/* Selección de texto con color de marca */
+::selection { background: var(--color-brown); color: var(--color-cream); }
+
+/* Saltar al contenido (accesibilidad) — visible solo con foco de teclado */
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -120%);
+    z-index: 3000;
+    background: var(--color-brown);
+    color: var(--color-cream);
+    padding: 0.7rem 1.4rem;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 0 0 8px 8px;
+    transition: transform 0.25s var(--ease-out);
+}
+.skip-link:focus-visible { transform: translate(-50%, 0); outline: 2px solid var(--color-cream); outline-offset: 2px; }
+
 h1, h2, h3, .hero-logo-large, .menu-logo-large, .v6-logo h2 {
     font-family: var(--font-main);
     font-weight: 800;
     text-transform: uppercase;
+    text-wrap: balance; /* reparte las líneas de los títulos de forma pareja */
 }
 
-p { line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; text-align: justify; }
+p { line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; text-align: left; text-wrap: pretty; }
 a { text-decoration: none; color: inherit; }
 
 /* ─── HEADER ─── */
@@ -84,7 +137,7 @@ a { text-decoration: none; color: inherit; }
     display: block; width: 30px; height: 4px; /* Líneas más gorditas */
     background-color: currentColor; margin: 0 auto;
     border-radius: 4px;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, opacity 0.15s ease-in-out;
 }
 /* Al abrir (clase .open manejada por JS) */
 .hamburger.open .line:nth-child(1) {
@@ -115,13 +168,15 @@ a { text-decoration: none; color: inherit; }
     z-index: 1000;
     background: none;
     border: none;
-    color: #ffffff;
+    /* Marrón con halo crema: legible sobre fondos claros y oscuros por igual,
+       sin caja y sin el "vibrado" de color de mix-blend-mode: difference */
+    color: var(--color-brown);
+    filter: drop-shadow(0 0 3px rgba(244, 243, 234, 0.9)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.18));
     cursor: pointer;
     opacity: 0;
     pointer-events: none;
     transform: translateY(-20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-    mix-blend-mode: difference;
     padding: 0;
 }
 .sticky-menu-btn.active {
@@ -134,8 +189,8 @@ a { text-decoration: none; color: inherit; }
 .spiral-icon {
     display: block;
     flex-shrink: 0;
-    width: 110px;
-    height: 110px;
+    width: var(--spiral-md);
+    height: var(--spiral-md);
     -webkit-mask-image: url('assets/caluva-spiral.png');
     mask-image: url('assets/caluva-spiral.png');
     -webkit-mask-size: contain;
@@ -147,8 +202,7 @@ a { text-decoration: none; color: inherit; }
     background-color: var(--color-cream);
 }
 .spiral-icon.dark        { background-color: var(--color-brown); }
-.spiral-icon.large       { width: 130px; height: 130px; }
-.spiral-icon.small-spiral{ width: 70px; height: 70px; }
+.spiral-icon.large       { width: var(--spiral-lg); height: var(--spiral-lg); }
 
 /* ─── FULLSCREEN MENU ─── */
 .fullscreen-menu {
@@ -168,7 +222,7 @@ a { text-decoration: none; color: inherit; }
 .menu-links li {
     margin: 1.2rem 0;
     transform: translateY(20px); opacity: 0;
-    transition: all 0.4s ease;
+    transition: transform 0.4s var(--ease-out), opacity 0.4s var(--ease-out);
 }
 .fullscreen-menu.active .menu-links li { transform: translateY(0); opacity: 1; }
 .fullscreen-menu.active .menu-links li:nth-child(1) { transition-delay: 0.1s; }
@@ -183,10 +237,11 @@ a { text-decoration: none; color: inherit; }
 }
 .menu-link::after {
     content: ''; position: absolute; bottom: -4px; right: 0;
-    width: 0; height: 4px; background-color: var(--color-brown);
-    transition: width 0.3s ease;
+    width: 100%; height: 4px; background-color: var(--color-brown);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.3s var(--ease-out);
 }
-.menu-link:hover::after { width: 100%; }
+.menu-link:hover::after { transform: scaleX(1); }
 
 .menu-logo-large-container {
     position: absolute;
@@ -202,7 +257,7 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-main); font-weight: 800;
     letter-spacing: -2px;
     transform: translateY(20px); opacity: 0;
-    transition: all 0.5s ease 0.5s;
+    transition: transform 0.5s var(--ease-out) 0.5s, opacity 0.5s ease 0.5s;
 }
 .fullscreen-menu.active .menu-logo-large { transform: translateY(0); opacity: 1; }
 
@@ -230,7 +285,20 @@ a { text-decoration: none; color: inherit; }
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
 }
 .hero-background img, .hero-background video { width: 100%; height: 100%; object-fit: cover; }
-.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
+/* Tinte navy leve (no negro plano) — deja respirar el color del mar */
+.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 14, 24, 0.30); }
+/* Scrims: arriba para el logo/MENU, abajo para "CALUVA", y un halo suave
+   detrás de la frase — contraste garantizado sin apagar el video entero */
+.overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 90% 42% at 50% 40%, rgba(0,0,0,0.34) 0%, rgba(0,0,0,0) 72%),
+        linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0) 24%),
+        linear-gradient(0deg, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0) 26%);
+    pointer-events: none;
+}
 
 .hero-content {
     position: relative; z-index: 2;
@@ -242,13 +310,15 @@ a { text-decoration: none; color: inherit; }
 }
 .hero-text {
     font-family: var(--font-main);
-    font-weight: 700;
-    font-size: clamp(1.2rem, 2.5vw, 1.6rem); /* Un poco más grande */
-    line-height: 1.5;
-    letter-spacing: 0.05em;
-    text-align: justify;
-    text-align-last: center;
-    max-width: 800px;
+    font-weight: 500; /* la frase es el susurro; "CALUVA" es el ancla */
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    line-height: 1.55;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-wrap: balance;
+    hyphens: none;
+    -webkit-hyphens: none;
+    max-width: 760px;
     margin-top: 22vh; /* Un poquito más arriba */
     margin-bottom: 15vh;
     color: var(--color-yellow);
@@ -269,6 +339,38 @@ a { text-decoration: none; color: inherit; }
     z-index: 2;
 }
 /* Sin gradiente — el corte limpio es más elegante que un fundido que tapa el texto */
+
+/* ─── INDICADOR DE SCROLL (hero) ─── */
+.scroll-cue {
+    position: absolute;
+    bottom: 21vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 52px;
+    overflow: hidden;
+    z-index: 3;
+    opacity: 0.7;
+    transition: opacity 0.4s ease;
+}
+.scroll-cue span {
+    display: block;
+    width: 100%;
+    height: 40%;
+    background: var(--color-yellow);
+    animation: scroll-cue-drop 2s var(--ease-out) infinite;
+}
+@keyframes scroll-cue-drop {
+    0%   { transform: translateY(-100%); }
+    55%  { transform: translateY(250%); }
+    100% { transform: translateY(250%); }
+}
+/* Se desvanece apenas el usuario empieza a scrollear */
+.scroll-cue.is-hidden { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+    /* Sin movimiento no hay "pista": una línea estática sólo distrae */
+    .scroll-cue { display: none; }
+}
 
 /* ─── VISTA 2: QUIENES SOMOS ─── */
 /* DEBE ser position fixed para que el zoom del hero la revele por detrás.
@@ -497,10 +599,83 @@ a { text-decoration: none; color: inherit; }
     transform: translateY(4px);
 }
 
+.v2-prev-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 0.4em; /* "UNIVERSO DE" se lee como una unidad (antes: hueco de 8%) */
+}
+
+.v2-prev-word {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    color: var(--color-yellow);
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.v2-prev-marca {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    color: var(--color-yellow);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    line-height: 1; /* Aumentado ligeramente para alejar MARCA */
+    margin-top: 0.3rem; /* Separación sutil añadida */
+}
+
+/* Texto descriptivo: debajo y con sangría (indented) */
+.v2-prev-desc {
+    margin-top: 2rem;
+    margin-left: 12%; /* Sangría respecto al título */
+    width: 75%;
+}
+
+.v2-preview-sub {
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: clamp(0.85rem, 1.1vw, 1rem);
+    color: var(--color-yellow);
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+    text-align: left;
+}
+
+.v2-preview-body {
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: clamp(0.8rem, 1vw, 0.95rem);
+    color: var(--color-yellow);
+    line-height: 1.7;
+    margin: 0;
+    text-align: left;
+}
+
+/* VER MAS alineado con el título (antes centrado al fondo, desconectado) */
+.v2-preview-link {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--color-yellow);
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-top: auto;
+    padding-top: 2.5rem;
+    transition: opacity 0.3s ease, transform 0.3s var(--ease-out);
+}
+.v2-preview-link:hover { opacity: 0.8; transform: translateX(4px); }
+
 /* Animaciones Premium Adrenalina */
 #v2-part2, #v2-part3, #v2-link-container, #v2-topbar, #v2-bottom {
     will-change: transform, opacity;
-    transition: all 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform var(--dur-slow) var(--ease-spring), opacity var(--dur-slow) ease;
 }
 
 /* Estado inicial (oculto) */
@@ -523,7 +698,7 @@ a { text-decoration: none; color: inherit; }
     display: inline-block;
     transform: translateY(100%);
     opacity: 0;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
+    transition: transform 0.6s var(--ease-out), opacity 0.6s ease;
 }
 #v2-part1.hook-active .word-inner {
     transform: translateY(0);
@@ -655,34 +830,6 @@ a { text-decoration: none; color: inherit; }
 .v3-link:hover { gap: 1.6rem; opacity: 0.8; }
 
 
-/* Imagen Duna Collection rotada 90 grados para Pauta Publicitaria */
-/* El truco: el wrapper rota, el img llena el wrapper */
-.duna-container {
-    overflow: hidden !important;
-}
-.duna-rotator {
-    position: absolute;
-    /* Agrandamos el rotador para cubrir el contenedor al girar */
-    top: 50%;
-    left: 50%;
-    width: 150%;
-    height: 150%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.duna-rotator img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    display: block;
-}
-.split-half:hover .duna-rotator {
-    transform: translate(-50%, -50%) rotate(90deg) scale(1.06);
-}
-
-
-
 /* ─── VISTAS 4 & 5: SERVICIOS SPLIT ─── */
 .split-section {
     width: 100%;
@@ -693,6 +840,9 @@ a { text-decoration: none; color: inherit; }
     z-index: 2; /* Se posiciona sobre Vista 2 (z-index:1, fixed) al hacer scroll */
     flex-direction: column;
 }
+.split-section.single-half {
+    min-height: 68vh; /* antes 50vh — se sentía apretada entre secciones full-height */
+}
 .split-half {
     flex: 1;
     min-height: 0; /* Sin esto flexbox no deja que la mitad baje de su contenido y se sale del 50vh */
@@ -702,12 +852,24 @@ a { text-decoration: none; color: inherit; }
     scroll-snap-align: start; /* Punto de ajuste: cada servicio, no solo cada par */
 }
 .split-bg { position: absolute; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
+/* Scrim direccional: más denso del lado del texto, casi transparente del
+   otro — garantiza contraste y deja ver la foto en vez de apagarla entera */
+.split-half:has(.on-dark) .split-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to left, rgba(20, 12, 6, 0.60) 15%, rgba(20, 12, 6, 0.12) 85%);
+    z-index: 1;
+    pointer-events: none;
+}
+/* Social: texto a la izquierda → invertir el degradado */
+.split-half:has(.left-layout.on-dark) .split-bg::after {
+    background: linear-gradient(to right, rgba(20, 12, 6, 0.60) 15%, rgba(20, 12, 6, 0.12) 85%);
+}
 .split-bg img {
     width: 100%; height: 100%; object-fit: cover;
     object-position: 70% center;
-    transform: scale(1.15);
-    transform-origin: right center;
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s ease;
+    transform: scale(1.12); /* encuadre fijo, sin zoom en hover (estás leyendo, no explorando la foto) */
 }
 .split-half:hover .split-bg img {
     transform: scale(1.22);
@@ -765,36 +927,33 @@ a { text-decoration: none; color: inherit; }
 }
 .split-subtitle { font-size: 1rem; margin-bottom: 1.2rem; font-weight: 500; line-height: 1.6; opacity: 0.9; }
 
-/* Enlaces "VER MAS" de los servicios — mismo tratamiento que el de Universo de Marca */
-.v2-link a, .split-link a {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.78rem;
-    letter-spacing: 0.22em;
+/* Enlaces "VER MAS" de las secciones split */
+.split-link a {
+    font-family: var(--font-main); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-brown);
-    display: inline-flex;
+    color: var(--color-brown); display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    margin-top: 1.2rem;
-    padding-bottom: 0.4rem;
+    transition: transform 0.3s var(--ease-out), opacity 0.3s ease;
+    margin-top: 1rem;
     position: relative;
-    border-bottom: 1px solid currentColor;
-    border-bottom-color: color-mix(in srgb, currentColor 45%, transparent);
-    transition: gap 0.3s ease, opacity 0.3s ease;
 }
-.v2-link a:hover, .split-link a:hover {
+.split-link a:hover {
     opacity: 0.8;
-    gap: 1.2rem;
+    transform: translateX(4px);
 }
-/* Flecha de los links VER MAS */
-.split-link a::after, .v2-link a::after {
+/* Flecha animada — mismo tratamiento para TODOS los "ver más" del sitio */
+.split-link a::after,
+.v2-preview-link::after,
+.v2-elegant-link::after {
     content: '→';
     display: inline-block;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-left: 0.5rem;
+    transition: transform 0.3s var(--ease-out);
 }
-.split-link a:hover::after, .v2-link a:hover::after {
-    transform: translateX(3px);
+.split-link a:hover::after,
+.v2-preview-link:hover::after,
+.v2-elegant-link:hover::after {
+    transform: translateX(4px);
 }
 
 /* Dentro de las medias pantallas el desplazamiento del reveal es menor: si el
@@ -808,9 +967,6 @@ a { text-decoration: none; color: inherit; }
 .left-image-layout { justify-content: flex-start; gap: 5%; align-items: center; }
 .right-align { text-align: right; }
 .pl-5 { padding-left: 6%; }
-
-.split-text-area { display: flex; gap: 1.5rem; flex: 1; }
-.small-spiral { transform: scale(0.6); transform-origin: top left; flex-shrink: 0; margin-top: 4px; }
 
 /* Imágenes en secciones split: cuadradas y bien puestas */
 .split-image { 
@@ -826,11 +982,7 @@ a { text-decoration: none; color: inherit; }
     object-fit: contain; /* Para que la laptop no se corte al forzar el aspecto */
     object-position: center;
     border-radius: 0; /* Cuadradas, sin bordes redondeados */
-    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); /* Sombra para imágenes sin fondo */
-    transition: transform 0.6s ease;
-}
-.split-image:hover img { 
-    transform: translateY(-8px) scale(1.02); 
+    filter: drop-shadow(0 22px 45px rgba(74, 36, 16, 0.16)); /* sombra cálida y difusa (antes negra dura) */
 }
 
 /* Texto amarillo sobre fondos oscuros — explícito y sin ambigüedad */
@@ -844,18 +996,12 @@ a { text-decoration: none; color: inherit; }
     color: var(--color-yellow) !important; 
 }
 
-/* Overlay oscuro sobre la imagen de arena para que se lea el texto */
-.arena-overlay {
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: rgba(30, 15, 5, 0.55); /* Overlay oscuro marrón */
-    z-index: 1;
-}
-
 /* Fondo profundo (se ve detrás de la foto de Social Media) */
 .bg-deep { background: linear-gradient(160deg, #4a2410 0%, #2a1408 100%); }
 
-/* Fondo crema clarito para secciones */
 .bg-cocoa { background-color: var(--color-cocoa); }
+
+/* Fondo crema clarito para secciones */
 .bg-cream { background-color: var(--color-cream); }
 /* ─── VISTA CTA PRE-FOOTER ─── */
 #vista-cta {
@@ -863,16 +1009,10 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12rem 6%;
+    padding: 5rem 6% 2rem;
     position: relative;
     overflow: hidden;
-    isolation: isolate; /* evita que el spinner cree conflicto de z-index con el menú */
-}
-/* ─── VISTA 5: CTA (Llamado a la acción) ─── */
-#vista-cta {
-    padding-top: 5rem;
-    padding-bottom: 2rem;
-    position: relative;
+    isolation: isolate; /* evita conflicto de z-index del spinner con el menú */
     z-index: 2; /* Sobre Vista 2 fixed */
 }
 .cta-container {
@@ -884,53 +1024,50 @@ a { text-decoration: none; color: inherit; }
     max-width: none;
     text-align: center;
 }
-.cta-left-col {
-    position: absolute;
-    left: 18%; /* Más cerca del bloque central */
-    top: 60%;  /* Un poquito más abajo */
-    transform: translateY(-50%);
-    z-index: 2;
-}
+/* Espiral como marca centrada arriba del titular (antes: absoluta, flotando
+   a un costado — composición frágil que necesitaba un caso especial a 1120px) */
 .cta-spiral {
-    width: 160px !important;
-    height: 160px !important;
-    margin: 0;
-    animation: spin-slow 12s linear infinite;
-    opacity: 0.85;
+    width: var(--spiral-md) !important;
+    height: var(--spiral-md) !important;
+    margin: 0 0 2rem;
+    animation: spin-slow 18s linear infinite;
 }
+/* Marca discreta, no protagonista (gana a .sr-item.sr-active por el ID) */
+#vista-cta .cta-spiral { opacity: 0; }
+#vista-cta .cta-spiral.sr-active { opacity: 0.5; }
 @keyframes spin-slow { 100% { transform: rotate(360deg); } }
 
-.cta-right-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Volver a centrar el texto con el boton */
-    text-align: center;
-}
 .cta-title {
     font-family: var(--font-main);
-    color: var(--color-brown);
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Volver a centrar */
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-}
-.cta-title-small {
-    font-size: clamp(0.75rem, 2vw, 0.95rem);
-    letter-spacing: 0.25em;
-    font-weight: 700;
-    opacity: 0.65;
-    text-transform: uppercase;
-}
-.cta-title-large {
-    font-size: clamp(4.5rem, 12vw, 9rem);
     font-weight: 800;
-    letter-spacing: -3px;
-    line-height: 0.9;
+    font-size: clamp(2rem, 5.5vw, 4rem);
+    line-height: 1.03;
+    letter-spacing: -0.02em;
+    color: var(--color-brown);
+    max-width: 15ch;
+    text-wrap: balance;
+    margin-bottom: 2.25rem;
+    text-align: center;
 }
 .cta-btn-wrapper {
     display: flex;
-    justify-content: center; /* Volver a centrar */
+    justify-content: center;
+}
+.cta-reassurance {
+    margin: 1.2rem 0 0;
+    text-align: center;
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brown-soft);
+    text-wrap: balance;
+}
+/* Separador entre las dos mitades — sólo en una línea; en mobile apilan */
+.cta-reassurance span + span::before {
+    content: '·';
+    margin: 0 0.5em;
 }
 .cta-btn {
     background: var(--color-brown);
@@ -945,49 +1082,27 @@ a { text-decoration: none; color: inherit; }
     text-transform: uppercase;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.8rem;
+    white-space: nowrap; /* la etiqueta nunca parte en dos líneas */
     border-radius: 50px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform var(--dur-fast) var(--ease-out),
+                background var(--dur-fast) ease,
+                color var(--dur-fast) ease,
+                box-shadow var(--dur-fast) var(--ease-out);
 }
 .cta-btn:hover {
     background: transparent;
     color: var(--color-brown);
-    transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 20px 40px rgba(74, 36, 16, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 18px 38px rgba(74, 36, 16, 0.15);
 }
 .cta-btn-arrow {
     font-size: 1.1rem;
-    transition: transform 0.4s ease;
+    transition: transform var(--dur-fast) var(--ease-out);
 }
 .cta-btn:hover .cta-btn-arrow {
-    transform: translateX(4px) rotate(-45deg);
-}
-
-/* Efecto shimmer automático en el botón CTA */
-.cta-btn {
-    position: relative;
-    overflow: hidden;
-}
-.cta-btn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(
-        120deg,
-        transparent 0%,
-        rgba(255, 255, 230, 0.25) 50%,
-        transparent 100%
-    );
-    animation: shimmer-cta 4s ease-in-out infinite;
-    pointer-events: none;
-}
-@keyframes shimmer-cta {
-    0%   { left: -100%; }
-    40%  { left: 150%; }
-    100% { left: 150%; }
+    transform: translateX(3px) rotate(-45deg);
 }
 
 /* ─── VISTA 6: FOOTER ─── */
@@ -999,39 +1114,51 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding: 2rem 8% 0;
+    gap: clamp(2.5rem, 6vw, 5rem); /* aire entre la meta-fila y el logo cortado */
+    padding: 3.5rem 8% 0;
     overflow: hidden; /* Corta el logo por abajo al estilo Calvagni */
     min-height: 50vh;
 }
-.v6-redes-container {
+/* Meta-fila del footer: copyright a la izquierda, REDES a la derecha,
+   sobre la misma línea de base, justo encima del logo cortado. */
+.v6-meta {
     width: 100%;
     display: flex;
-    justify-content: flex-end; /* Alineado a la derecha como en la foto */
-    padding: 0 5%; /* Menos padding para pegarlo más al borde derecho */
-    margin-top: auto; /* Empuja el contenedor hacia abajo para pegarlo al logo */
-    margin-bottom: 0;
-    transform: translateY(30%); /* Lo acerca muchísimo al logo, flotando justo arriba como en la imagen */
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
     z-index: 10;
+}
+.v6-copyright {
+    margin: 0;
+    max-width: 30ch;
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 0.74rem;
+    line-height: 1.55;
+    letter-spacing: 0.02em;
+    color: var(--color-brown-soft);
+    text-align: left;
 }
 .v6-redes {
     display: flex; flex-direction: column; align-items: flex-start;
+    gap: 0.35rem;
 }
 .v6-redes h3 {
-    font-family: var(--font-main); font-weight: 800; /* Más negrita según la foto */
-    font-size: 1.25rem; /* Un poco más grande y robusto */
+    font-family: var(--font-main); font-weight: 800;
+    font-size: 1.15rem;
     color: var(--color-brown);
-    margin-bottom: 0.2rem; /* Pegadito a los links */
-    letter-spacing: 0;
+    margin-bottom: 0.7rem; /* aire entre "REDES" y los links */
+    letter-spacing: 0.02em;
     text-transform: uppercase;
 }
 .social-link {
     display: block;
-    font-family: var(--font-main); font-weight: 600;
-    font-size: 1.15rem;
+    font-family: var(--font-main); font-weight: 500;
+    font-size: 1.05rem;
     color: var(--color-brown);
     text-decoration: none;
     transition: opacity 0.3s ease;
-    margin-top: 0.2rem;
     position: relative;
 }
 /* Subrayado que se dibuja de izquierda a derecha */
@@ -1040,16 +1167,18 @@ a { text-decoration: none; color: inherit; }
     position: absolute;
     bottom: -2px;
     left: 0;
-    width: 0;
+    width: 100%;
     height: 1.5px;
     background-color: var(--color-brown);
-    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out);
 }
 .social-link:hover {
     opacity: 1;
 }
 .social-link:hover::after {
-    width: 100%;
+    transform: scaleX(1);
 }
 /* Logo CALUVA cortado al estilo Calvagni (Bulletproof para evitar bug de Chrome) */
 .v6-logo {
@@ -1067,15 +1196,11 @@ a { text-decoration: none; color: inherit; }
     font-family: var(--font-main); font-weight: 800;
     font-size: 1em;
     color: var(--color-brown);
-    line-height: 0.85; 
+    line-height: 0.85;
     margin: 0;
     padding: 0;
     text-align: center;
     letter-spacing: -0.02em;
-    transition: letter-spacing 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.v6-logo.toggled h2 {
-    letter-spacing: 0.08em;
 }
 
 /* ─── TRANSICIONES SUAVES ENTRE SECCIONES ───
@@ -1102,8 +1227,7 @@ a { text-decoration: none; color: inherit; }
 /* --- SCROLL REVEAL (Intersection Observer) --- */
 .sr-item {
     opacity: 0;
-    will-change: transform, opacity;
-    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) ease;
 }
 .sr-left { transform: translateX(-100px); }
 .sr-right { transform: translateX(100px); }
@@ -1113,6 +1237,10 @@ a { text-decoration: none; color: inherit; }
     opacity: 1;
     transform: translateX(0) translateY(0) scale(1);
 }
+/* Las imágenes de fondo a sangre revelan sólo con fade (el translate/scale
+   dejaría ver bordes vacíos del contenedor) */
+.split-bg.sr-item,
+.split-bg.sr-item.sr-active { transform: none; }
 .sr-delay-1 { transition-delay: 0.1s; }
 .sr-delay-2 { transition-delay: 0.2s; }
 .sr-delay-3 { transition-delay: 0.3s; }
@@ -1122,7 +1250,7 @@ a { text-decoration: none; color: inherit; }
 /* Hero tiene animación propia */
 .fade-in-up {
     opacity: 0; transform: translateY(30px);
-    animation: fadeInUp 1.2s ease forwards;
+    animation: fadeInUp 1s var(--ease-out) forwards;
 }
 .delay-1 { animation-delay: 0.5s; }
 @keyframes fadeInUp {
@@ -1131,27 +1259,130 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ─── SEO Y ACCESIBILIDAD ─── */
+
+/* Indicador de foco visible solo para navegación por teclado.
+   No aparece al hacer click (con :focus-visible), así no molesta el diseño. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.menu-link:focus-visible {
+    outline: 2px solid var(--color-brown);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+/* Sobre fondos oscuros el contorno marrón no contrasta: usamos el crema */
+.on-dark a:focus-visible,
+.v2-navy-preview a:focus-visible,
+.sticky-menu-btn:focus-visible,
+.header .menu-toggle:focus-visible {
+    outline-color: var(--color-cream);
+}
+
+/* Feedback táctil: el elemento "se hunde" al presionar (sobre todo en mobile) */
+.cta-btn:active,
+.call-form-submit:active,
+.soon-link:active,
+.menu-toggle:active,
+.sticky-menu-btn:active,
+.split-link a:active,
+.social-link:active,
+.menu-link:active,
+.v2-preview-link:active,
+.v2-elegant-link:active {
+    transform: scale(0.96);
+    transition-duration: var(--dur-fast);
+}
+
 .sr-only {
     position: absolute; width: 1px; height: 1px; padding: 0;
     margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
-.footer-bottom {
-    width: 100%;
+
+/* ─── PÁGINA "PRÓXIMAMENTE" (secciones en preparación) ─── */
+.soon {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding-bottom: 2rem;
+    padding: 6rem 8%;
+    background-color: var(--color-cream);
+    position: relative;
 }
-.copyright {
-    font-family: var(--font-main); font-size: 0.8rem;
-    color: var(--color-brown); opacity: 0.6;
-    margin-bottom: 0; letter-spacing: 1px;
+.soon .spiral-icon {
+    width: var(--spiral-md); height: var(--spiral-md);
+    animation: spin-slow 16s linear infinite;
+}
+.soon-overline {
+    margin-top: var(--space-md);
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-brown-soft);
+}
+.soon-title {
+    margin-top: 0.9rem;
+    font-family: var(--font-main);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--color-brown);
+    line-height: 1;
+}
+.soon-text {
+    margin-top: 1.4rem;
+    max-width: 34rem;
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+    line-height: 1.7;
+    color: var(--color-brown);
+    text-align: center;
+    hyphens: none;
+}
+.soon-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    align-items: center;
+    justify-content: center;
+}
+.soon-link {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-brown);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+.soon-link:hover { opacity: 0.6; }
+.soon-link.is-back:hover { transform: translateX(-4px); }
+.soon-link.is-cta {
+    background: var(--color-brown);
+    color: var(--color-cream);
+    border-radius: 50px;
+    padding: 0.9rem 2rem;
+    letter-spacing: 0.14em;
+}
+.soon-link.is-cta:hover { opacity: 1; transform: translateY(-3px); }
+
+@media (prefers-reduced-motion: reduce) {
+    .soon .spiral-icon { animation: none !important; }
 }
 
 /* ─── RESPONSIVE DESIGN (MOBILE) ─── */
-
-/* Ocultar cursor custom en touch */
-@media (hover: none) and (pointer: coarse) {
-    #cursor, #cursor-follower { display: none !important; }
-}
 
 @media (max-width: 768px) {
 
@@ -1235,6 +1466,11 @@ a { text-decoration: none; color: inherit; }
     .v3-desc { margin-left: 0; width: 100%; }
     .v3-link { margin-left: 0; }
 
+    .v2-prev-header { gap: 0.4em; }
+    .v2-prev-word { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+    .v2-prev-marca { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+    .v2-prev-desc { margin-left: 0; width: 100%; margin-top: 1.5rem; }
+
     /* En mobile los contenidos de v2 aparecen directamente sin animación */
     #v2-part1 .word-inner { transform: translateY(0) !important; opacity: 1 !important; }
     #v2-part2, #v2-part3, #v2-link-container, #v2-topbar, #v2-bottom,
@@ -1256,7 +1492,13 @@ a { text-decoration: none; color: inherit; }
 
     /* ── SPLIT SECTIONS (Servicios) ── */
     .split-section { flex-direction: column; height: auto; overflow: visible; } /* En mobile se scrollea normal, sin el limite de una pantalla */
+    .split-section.single-half { min-height: auto; }
     .split-half { flex: none; min-height: 60vw; width: 100%; box-shadow: none !important; scroll-snap-align: none; }
+    /* En mobile el texto ocupa casi toda la mitad: scrim parejo y firme */
+    .split-half:has(.on-dark) .split-bg::after,
+    .split-half:has(.left-layout.on-dark) .split-bg::after {
+        background: rgba(20, 12, 6, 0.5);
+    }
     .split-content {
         padding: 2.5rem 6%;
         flex-direction: column;
@@ -1281,26 +1523,21 @@ a { text-decoration: none; color: inherit; }
 
     /* ── CTA ── */
     #vista-cta { padding: 5rem 6% 4rem; }
-    .cta-container { flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
-    .cta-left-col {
-        position: relative; left: auto; top: auto; transform: none;
-        display: flex; justify-content: center;
-    }
-    .cta-spiral { width: 100px !important; height: 100px !important; }
-    .cta-right-col { align-items: center; text-align: center; width: 100%; }
-    .cta-title { align-items: center; margin-bottom: 1.5rem; }
-    .cta-btn-wrapper { justify-content: center; }
-    .cta-btn { padding: 1rem 2.5rem; font-size: 0.75rem; }
+    .cta-reassurance span { display: block; }
+    .cta-reassurance span + span::before { content: none; }
+    .cta-spiral { width: 84px !important; height: 84px !important; margin-bottom: 1.5rem; }
+    .cta-title { font-size: clamp(1.9rem, 8vw, 2.6rem); margin-bottom: 1.75rem; }
+    .cta-btn { padding: 0.95rem 1.6rem; font-size: 0.72rem; letter-spacing: 0.1em; gap: 0.55rem; }
 
     /* ── FOOTER ── */
-    #contacto { padding: 3rem 0 0; min-height: auto; align-items: flex-start; overflow-x: hidden; }
-    .v6-redes-container {
-        transform: none;
-        justify-content: flex-start;
+    #contacto { padding: 3rem 0 0; min-height: auto; align-items: flex-start; gap: 3rem; overflow-x: hidden; }
+    .v6-meta {
+        flex-direction: column-reverse; /* REDES arriba, copyright abajo */
+        align-items: flex-start;
+        gap: 2.5rem;
         padding: 0 6%;
-        margin-top: 0;
-        margin-bottom: 2rem;
     }
+    .v6-copyright { max-width: none; }
     .v6-redes h3 { font-size: 1rem; }
     .social-link { font-size: 1rem; }
     .v6-logo {
@@ -1348,12 +1585,12 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     position: relative;
-    transform: translateY(28px);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: translateY(28px) scale(0.98);
+    transition: transform 0.4s var(--ease-out);
     box-shadow: 0 30px 80px rgba(74, 36, 16, 0.35);
 }
 .call-modal-overlay.active .call-modal-box {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 /* La franja de progreso es parte fija de la tarjeta (no scrollea con el
    resto) — un acento fino pegado al borde superior. */
@@ -1375,14 +1612,13 @@ a { text-decoration: none; color: inherit; }
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;
-    color: var(--color-brown);
-    opacity: 0.55;
-    transition: opacity 0.2s;
+    font-size: 1.15rem;
+    color: var(--color-brown-soft);
+    transition: color 0.2s, transform 0.2s var(--ease-out);
     line-height: 1;
     padding: 0;
 }
-.call-modal-close:hover { opacity: 1; }
+.call-modal-close:hover { color: var(--color-brown); transform: rotate(90deg); }
 .call-modal-header {
     display: flex;
     align-items: center;
@@ -1390,8 +1626,8 @@ a { text-decoration: none; color: inherit; }
     margin-bottom: 0.6rem;
 }
 .call-modal-header .spiral-icon {
-    width: 75px !important;
-    height: 75px !important;
+    width: var(--spiral-sm) !important;
+    height: var(--spiral-sm) !important;
 }
 .call-modal-title {
     font-family: var(--font-main);
@@ -1406,8 +1642,7 @@ a { text-decoration: none; color: inherit; }
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    color: var(--color-brown);
-    opacity: 0.55;
+    color: var(--color-brown-soft);
     text-transform: uppercase;
     margin-bottom: 2rem;
 }
@@ -1458,8 +1693,8 @@ a { text-decoration: none; color: inherit; }
     opacity: 0.9;
 }
 .call-input::placeholder {
-    color: var(--color-brown);
-    opacity: 0.4;
+    color: var(--color-brown-soft);
+    opacity: 1;
 }
 .call-input:focus {
     opacity: 1;
@@ -1472,7 +1707,7 @@ a { text-decoration: none; color: inherit; }
     border: 1.5px solid var(--color-brown);
     padding: 0.7rem;
     margin-top: 0.25rem;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s var(--ease-out);
 }
 .call-textarea:focus {
     background: rgba(255, 255, 255, 0.45);
@@ -1762,7 +1997,7 @@ a { text-decoration: none; color: inherit; }
     letter-spacing: 0.15em;
     padding: 0.95rem 2.5rem;
     border-radius: 50px;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.3s var(--ease-out), background 0.3s ease, color 0.3s ease, box-shadow 0.3s var(--ease-out);
 }
 .call-form-submit:hover {
     background: transparent;
@@ -1820,4 +2055,45 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 480px) {
     .call-form-row { grid-template-columns: 1fr; }
     .call-modal-scroll { padding: 2.5rem 1.75rem 2rem; }
+}
+
+
+/* ─── ACCESIBILIDAD: PREFERS-REDUCED-MOTION ───
+   El usuario pidió reducir el movimiento (a nivel SO). Desactivamos
+   animaciones decorativas y transiciones largas, pero dejamos los
+   elementos en su estado final visible (opacity/transform reseteados).
+   El zoom cinematográfico del hero se desactiva desde main.js. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    html { scroll-behavior: auto !important; }
+
+    /* Asegurar que todo lo que arranca oculto quede visible */
+    .fade-in-up,
+    .sr-item,
+    .sr-item.sr-active,
+    #v2-part1 .word-inner,
+    #v2-part2,
+    #v2-link-container,
+    #v2-bottom-bg,
+    #v2-logo,
+    #v2-logo .spiral-icon {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Detener animaciones infinitas decorativas */
+    .cta-spiral { animation: none !important; }
+
+    /* Sin cambios de escala/translación al pasar el mouse (evita saltos bruscos) */
+    .cta-btn:hover { transform: none !important; }
 }

@@ -6,15 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CALUVA | Agencia Creativa y Estratégica</title>
     <meta name="description" content="CALUVA es una agencia creativa y estratégica. Ayudamos a las marcas a crecer a través de creatividad, estrategia y ejecución.">
+    <link rel="canonical" href="https://caluvaagency.com/">
+    <meta name="theme-color" content="#041E2F">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/caluva-spiral.png">
+    <link rel="apple-touch-icon" href="assets/caluva-spiral.png">
+
+    <!-- Open Graph / redes sociales -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CALUVA">
+    <meta property="og:title" content="CALUVA | Agencia Creativa y Estratégica">
+    <meta property="og:description" content="Ayudamos a las marcas a crecer a través de creatividad, estrategia y ejecución.">
+    <meta property="og:url" content="https://caluvaagency.com/">
+    <meta property="og:image" content="https://caluvaagency.com/assets/hero_ocean.png">
+    <meta property="og:locale" content="es_ES">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CALUVA | Agencia Creativa y Estratégica">
+    <meta name="twitter:description" content="Ayudamos a las marcas a crecer a través de creatividad, estrategia y ejecución.">
+    <meta name="twitter:image" content="https://caluvaagency.com/assets/hero_ocean.png">
+
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "CALUVA",
+        "description": "Agencia creativa y estratégica. Ayudamos a las marcas a crecer a través de creatividad, estrategia y ejecución.",
+        "url": "https://caluvaagency.com/",
+        "logo": "https://caluvaagency.com/assets/caluva-spiral.png",
+        "email": "contact@caluvaagency.com",
+        "sameAs": ["https://www.instagram.com/caluvaagency/"]
+    }
+    </script>
 </head>
 <body>
 
+    <a href="#inicio" class="skip-link">Saltar al contenido</a>
+
     <!-- Fullscreen Menu -->
-    <nav class="fullscreen-menu" id="fullscreenMenu">
+    <nav class="fullscreen-menu" id="fullscreenMenu" aria-label="Menú principal" aria-hidden="true" inert>
         <div class="menu-content">
             <ul class="menu-links">
                 <li><a href="index.html" class="menu-link">INICIO</a></li>
@@ -50,9 +85,8 @@
             <!-- VISTA 1: HERO (Se queda pegada mientras scrolleamos) -->
             <section id="inicio" style="position: sticky; top: 0; overflow: hidden; z-index: 10; pointer-events: auto;">
                 <div class="hero-background">
-                    <video autoplay loop muted playsinline>
+                    <video autoplay loop muted playsinline preload="auto" poster="assets/hero_ocean.webp">
                         <source src="assets/hero_video_opt.mp4" type="video/mp4">
-                        <source src="assets/IMG_3031.MOV" type="video/quicktime">
                     </video>
                     <div class="overlay"></div>
                 </div>
@@ -63,6 +97,7 @@
                     </p>
                     <div class="hero-logo-large fade-in-up delay-1" id="hero-caluva-text">CALUVA</div>
                 </div>
+                <div class="scroll-cue" id="scrollCue" aria-hidden="true"><span></span></div>
             </section>
         </div>
 
@@ -87,7 +122,7 @@
                         <div class="v2-col">
                             <p class="v2-col-text" id="v2-part3">Viajamos, consumimos y nos preguntamos todo. Después lo convertimos en estrategia.</p>
                             <div class="v2-elegant-link-container" id="v2-link-container">
-                                <a href="quienes-somos.html" class="v2-elegant-link">Ver más <span class="v2-arrow">→</span></a>
+                                <a href="quienes-somos.html" class="v2-elegant-link">VER MAS</a>
                             </div>
                         </div>
                     </div>
@@ -129,7 +164,12 @@
                         <span class="v2-services-circle">↓</span>
                     </button>
                 </div>
-
+                <div class="v2-prev-marca">MARCA</div>
+                <div class="v2-prev-desc">
+                    <p class="v2-preview-sub">Punto de partida para ordenar, entender y potenciar una marca.</p>
+                    <p class="v2-preview-body">Analizamos qué vende, a quién le habla, qué quiere lograr y qué valor puede comunicar mejor. A partir de eso, detectamos oportunidades y construimos una dirección clara para que la marca conecte con su audiencia y crezca con estrategia.</p>
+                </div>
+                <a href="universo-de-marca.html" class="v2-preview-link">VER MAS</a>
             </div>
         </section>
 
@@ -156,7 +196,7 @@
             <!-- Mitad inferior: Pauta Publicitaria -->
             <div class="split-half bg-cocoa scrim-right reveal-section">
                 <div class="split-bg sr-item sr-scale no-img-zoom">
-                    <img src="assets/duna-collection.jpg" alt="Duna Collection" loading="lazy">
+                    <img src="assets/duna-collection.webp" alt="Duna Collection" loading="lazy" decoding="async">
                 </div>
                 <div class="split-content right-layout on-dark" style="z-index:2;">
                     <div class="split-texts">
@@ -176,7 +216,7 @@
             <div class="split-half bg-cream reveal-section">
                 <div class="split-content left-image-layout">
                     <div class="split-image sr-item sr-left">
-                        <img src="assets/email_marketing.png" alt="Email Marketing" loading="lazy">
+                        <img src="assets/email_marketing.webp" alt="Email Marketing" loading="lazy" decoding="async">
                     </div>
                     <div class="split-texts right-align">
                         <h2 class="split-title sr-item sr-up sr-delay-1">EMAIL MARKETING</h2>
@@ -188,7 +228,7 @@
             </div>
             <div class="split-half bg-deep scrim-left warm-img reveal-section">
                 <div class="split-bg no-img-zoom">
-                    <img src="assets/utlimo-fondo.png" alt="Social Media" loading="lazy">
+                    <img src="assets/utlimo-fondo.webp" alt="Social Media" loading="lazy" decoding="async">
                 </div>
                 <div class="split-content left-layout on-dark">
                     <div class="split-texts pl-5">
@@ -203,31 +243,26 @@
         <!-- SECCIÓN CTA PRE-FOOTER -->
         <section id="vista-cta" class="section reveal-section">
             <div class="cta-container">
-                <div class="cta-left-col">
-                    <div class="spiral-icon dark cta-spiral sr-item sr-up"></div>
+                <div class="spiral-icon dark cta-spiral sr-item sr-up"></div>
+                <h2 class="cta-title sr-item sr-up sr-delay-1">¿Listo para potenciar tu marca?</h2>
+                <div class="cta-btn-wrapper sr-item sr-up sr-delay-2">
+                    <button class="btn-agendemos-trigger cta-btn magnetic-btn">
+                        <span class="cta-btn-label">AGENDEMOS UNA CALL :)</span>
+                        <span class="cta-btn-arrow">→</span>
+                    </button>
                 </div>
-                <div class="cta-right-col">
-                    <h2 class="cta-title sr-item sr-up sr-delay-1">
-                        <span class="cta-title-small">¿Listo para potenciar tu marca?</span>
-                    </h2>
-                    
-                    <div class="cta-btn-wrapper sr-item sr-up sr-delay-2">
-                        <button class="btn-agendemos-trigger cta-btn magnetic-btn">
-                            <span class="cta-btn-label">AGENDEMOS UNA CALL :)</span>
-                            <span class="cta-btn-arrow">→</span>
-                        </button>
-                    </div>
-                </div>
+                <p class="cta-reassurance sr-item sr-up sr-delay-3"><span>Te respondemos dentro de las 24&nbsp;hs</span> <span>Sin compromiso</span></p>
             </div>
         </section>
 
         <!-- VISTA 6: FOOTER / REDES -->
         <section id="contacto" class="reveal-section">
-            <div class="v6-redes-container">
+            <div class="v6-meta">
+                <p class="v6-copyright">© <span id="footerYear">2026</span> CALUVA · Agencia creativa y estratégica</p>
                 <div class="v6-redes">
                     <h3>REDES</h3>
-                    <a href="https://www.instagram.com/caluvaagency/" target="_blank" class="social-link">Instagram</a>
-                    <a href="mailto:contact@caluvaagency.com" class="social-link">Mail</a>
+                    <a href="https://www.instagram.com/caluvaagency/" target="_blank" rel="noopener" class="social-link">Instagram</a>
+                    <a href="mailto:contact@caluvaagency.com" class="social-link">Escribinos</a>
                 </div>
             </div>
             <div class="v6-logo">
@@ -482,6 +517,7 @@
             <span class="line"></span>
         </div>
     </button>
+
     <script src="main.js"></script>
 </body>
 </html>
