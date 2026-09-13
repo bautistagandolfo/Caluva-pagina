@@ -1351,13 +1351,12 @@ textarea:focus-visible,
     .v2-hand { padding-bottom: 0; }
     .v2-hand.is-left  { order: 2; align-items: flex-end; }
     .v2-hand.is-right { order: 3; align-items: flex-start; }
-    .v2-hand-arrow { width: clamp(52px, 16vw, 80px); }
-    /* La flecha está dibujada para el layout de escritorio (nombre arriba,
-       apunta en diagonal desde la foto de al lado). Acá arriba las fotos
-       están centradas y ari/guada quedan uno a cada lado, así que se
-       rota para que apunte hacia arriba, a su propio nombre. */
-    .v2-hand.is-left  .v2-hand-arrow { margin-left: 0; transform: rotate(67deg); transform-origin: center; }
-    .v2-hand.is-right .v2-hand-arrow { margin-right: 0; transform: scaleX(-1) rotate(67deg); transform-origin: center; }
+    /* La flecha va primero (pegada a la foto de arriba) y el nombre
+       después, para que se lea como que la flecha SALE de la foto y
+       baja hasta el nombre — no al revés. */
+    .v2-hand-arrow { width: clamp(52px, 16vw, 80px); order: -1; }
+    .v2-hand.is-left  .v2-hand-arrow { margin-left: 0; transform: rotate(-113deg); transform-origin: center; }
+    .v2-hand.is-right .v2-hand-arrow { margin-right: 0; transform: scaleX(-1) rotate(-113deg); transform-origin: center; }
     .v2-services-cta { position: static; justify-content: center; }
 
     /* En mobile el velo de las fotos es vertical: el texto ocupa todo el ancho */
