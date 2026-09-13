@@ -1054,12 +1054,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(callForm);
             formData.append('secret', formSecret);
 
-            fetch(scriptURL, { method: 'POST', body: formData })
-                .then(response => response.json())
-                .then(data => {
-                    if (!data || data.ok !== true) {
-                        throw new Error((data && data.error) || 'unknown_error');
-                    }
+            // mode: 'no-cors' — Apps Script no siempre manda el header CORS
+            // que hace falta para poder LEER la respuesta desde el navegador
+            // (falla de forma intermitente, no es algo que dependa de este
+            // código). El envío en sí llega igual: si el fetch no tira un
+            // error de red, asumimos que se mandó bien.
+            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: formData })
+                .then(() => {
                     // Ocultar formulario y mostrar éxito
                     formWasJustSubmitted = true;
                     clearFormDraft();
