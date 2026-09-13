@@ -1343,20 +1343,40 @@ textarea:focus-visible,
     .v2-col-text { font-size: clamp(0.9rem, 3.8vw, 1.05rem); max-width: 100%; }
     .v2-elegant-link-container { text-align: left; }
 
-    /* Fotos centradas y nombres debajo, con las flechas apuntando hacia arriba */
+    /* Fotos centradas y nombres debajo, con las flechas apuntando hacia arriba.
+       Grid (no flex-wrap) para que cada foto quede en su propia columna, con
+       su propia flecha y su propio nombre exactamente debajo — antes, con
+       flexbox, las dos filas (fotos / nombres) se centraban cada una por su
+       lado y no coincidian bien entre si (por eso a "ari" la flecha le
+       erraba y en "guada" el nombre quedaba mal ubicado). */
     .v2-bottom { flex-direction: column; align-items: center; gap: 1.2rem; }
-    .v2-team { flex-wrap: wrap; justify-content: center; gap: 0.8rem 3rem; width: 100%; }
-    .v2-photos { order: 1; flex: 0 0 100%; justify-content: center; }
+    .v2-team {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: center;
+        justify-items: center;
+        column-gap: clamp(0.6rem, 1.1vw, 1.1rem);
+        row-gap: 0.5rem;
+        width: 100%;
+    }
+    .v2-photos { display: contents; }
     .v2-photo { height: clamp(80px, 20vw, 120px); }
-    .v2-hand { padding-bottom: 0; }
-    .v2-hand.is-left  { order: 2; align-items: flex-end; }
-    .v2-hand.is-right { order: 3; align-items: flex-start; }
+    .v2-photo:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .v2-photo:nth-child(2) { grid-column: 2; grid-row: 1; }
+    .v2-hand {
+        grid-row: 2;
+        padding-bottom: 0;
+    }
+    .v2-hand.is-left  { grid-column: 1; align-items: center; }
+    .v2-hand.is-right { grid-column: 2; align-items: center; }
     /* La flecha va primero (pegada a la foto de arriba) y el nombre
        después, para que se lea como que la flecha SALE de la foto y
-       baja hasta el nombre — no al revés. */
+       baja hasta el nombre — no al revés. Se corre hacia el costado
+       interno (hacia la otra foto) para que salga del borde de la
+       foto, no del medio. */
     .v2-hand-arrow { width: clamp(52px, 16vw, 80px); order: -1; }
-    .v2-hand.is-left  .v2-hand-arrow { margin-left: 0; transform: rotate(-113deg); transform-origin: center; }
-    .v2-hand.is-right .v2-hand-arrow { margin-right: 0; transform: scaleX(-1) rotate(-113deg); transform-origin: center; }
+    .v2-hand.is-left  .v2-hand-arrow { transform: translateX(30%) rotate(-113deg); transform-origin: center; }
+    .v2-hand.is-right .v2-hand-arrow { transform: translateX(-30%) scaleX(-1) rotate(-113deg); transform-origin: center; }
     .v2-services-cta { position: static; justify-content: center; }
 
     /* En mobile el velo de las fotos es vertical: el texto ocupa todo el ancho */
