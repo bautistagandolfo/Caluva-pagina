@@ -989,22 +989,6 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     justify-content: center;
 }
-.cta-reassurance {
-    margin: 1.2rem 0 0;
-    text-align: center;
-    font-family: var(--font-main);
-    font-weight: 500;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-brown-soft);
-    text-wrap: balance;
-}
-/* Separador entre las dos mitades — sólo en una línea; en mobile apilan */
-.cta-reassurance span + span::before {
-    content: '·';
-    margin: 0 0.5em;
-}
 .cta-btn {
     background: var(--color-brown);
     color: var(--color-cream);
@@ -1372,8 +1356,8 @@ textarea:focus-visible,
        apunta en diagonal desde la foto de al lado). Acá arriba las fotos
        están centradas y ari/guada quedan uno a cada lado, así que se
        rota para que apunte hacia arriba, a su propio nombre. */
-    .v2-hand.is-left  .v2-hand-arrow { margin-left: 0; transform: rotate(40deg); transform-origin: center; }
-    .v2-hand.is-right .v2-hand-arrow { margin-right: 0; transform: scaleX(-1) rotate(40deg); transform-origin: center; }
+    .v2-hand.is-left  .v2-hand-arrow { margin-left: 0; transform: rotate(67deg); transform-origin: center; }
+    .v2-hand.is-right .v2-hand-arrow { margin-right: 0; transform: scaleX(-1) rotate(67deg); transform-origin: center; }
     .v2-services-cta { position: static; justify-content: center; }
 
     /* En mobile el velo de las fotos es vertical: el texto ocupa todo el ancho */
@@ -1443,8 +1427,6 @@ textarea:focus-visible,
     /* ── CTA ── */
     #vista-cta { padding: 5rem 6% 4rem; }
     .cta-container { flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
-    .cta-reassurance span { display: block; }
-    .cta-reassurance span + span::before { content: none; }
     .cta-left-col {
         position: relative; left: auto; top: auto; transform: none;
         display: flex; justify-content: center;
